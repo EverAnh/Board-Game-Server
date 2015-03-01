@@ -74,7 +74,7 @@ namespace Game
             StreamWriter sw = new StreamWriter(nws);
             sw.AutoFlush = true;
 
-            Player p = new Player(nws, sock, sr, sw);
+            Player p = new Player(nws, sock, sr, sw, playerNumber);
 
             activePlayers.Add(p);
 
@@ -98,21 +98,23 @@ namespace Game
             }
         }
 
-        class Player
+        private class Player
         {
             private NetworkStream stream;
             private Socket sock;
             private StreamReader reader;
             private StreamWriter writer;
+            private int playerNumber;
 
             public bool connected;
 
-            public Player(NetworkStream newStream, Socket newSocket, StreamReader newReader, StreamWriter newWriter)
+            public Player(NetworkStream newStream, Socket newSocket, StreamReader newReader, StreamWriter newWriter, int newNumber)
             {
                 stream = newStream;
                 sock = newSocket;
                 reader = newReader;
                 writer = newWriter;
+                playerNumber = newNumber;
             }
 
             public NetworkStream getPlayerStream()
@@ -133,6 +135,11 @@ namespace Game
             public StreamWriter getPlayerWriter()
             {
                 return writer;
+            }
+
+            public int getNumber()
+            {
+                return playerNumber;
             }
         }
     }
