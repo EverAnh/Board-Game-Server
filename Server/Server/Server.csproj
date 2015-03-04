@@ -35,6 +35,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericGame.cs" />
+    <Compile Include="GenericPiece.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>
