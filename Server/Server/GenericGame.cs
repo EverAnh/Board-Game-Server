@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server
+namespace Game
 {
     class GenericGame
     {
         private int[ , ] gameBoard;
+
+        int numberPlayers;
 
         GenericGame(int x_size, int y_size)
         {
@@ -23,6 +25,11 @@ namespace Server
         public void assignPiece(int getX, int getY, int value)
         {
             gameBoard[getX, getY] = value;
+        }
+
+        public void setNumberPlayers(int p)
+        {
+            numberPlayers = p;
         }
     }
 }
