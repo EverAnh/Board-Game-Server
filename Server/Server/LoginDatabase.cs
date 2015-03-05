@@ -7,13 +7,12 @@ using System.Text;
 
 using System.Data.SQLite;
 
-namespace ServerDatabase
+namespace Game
 {
     class LoginDatabase
     {
         // Holds our connection with the database
         SQLiteConnection m_dbConnection;
-
 
         // Creates an empty database file
         // only needed for creating a new database

@@ -20,11 +20,14 @@ namespace Game
         private static List<GenericGame> games = new List<GenericGame>();
         private IPAddress local = IPAddress.Parse("127.0.0.1");
         private int port = 54389;
+        private LoginDatabase db;
 
         public Server()
         {
             startListener();
             startServer();
+
+            db.createNewDatabase();
 
             // Console.WriteLine("number players " + numberPlayers);
             // string stop = Console.ReadLine();
