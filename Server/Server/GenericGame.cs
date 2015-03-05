@@ -9,12 +9,13 @@ namespace Game
     class GenericGame
     {
         private int[ , ] gameBoard;
-
-        int numberPlayers;
+        private List<GenericPiece> gamePieces;
+        private int numberPlayers;
 
         GenericGame(int x_size, int y_size)
         {
             gameBoard = new int[x_size, y_size];
+            gamePieces = new List<GenericPiece>();
         }
 
         public int getPiece(int getX, int getY)
@@ -27,7 +28,7 @@ namespace Game
             gameBoard[getX, getY] = value;
         }
 
-        public void setNumberPlayers(int p)
+        public void addPlayer(int p)
         {
             numberPlayers = p;
         }

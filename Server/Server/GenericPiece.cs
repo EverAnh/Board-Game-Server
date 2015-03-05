@@ -10,6 +10,7 @@ namespace Game
     {
         private int x_pos;
         private int y_pos;
+        private int value;
 
         public void setPosition(int newX, int newY)
         {
@@ -35,6 +36,16 @@ namespace Game
         public void setY(int newY)
         {
             y_pos = newY;
+        }
+
+        public int getValue()
+        {
+            return value;
+        }
+
+        public void setValue(int v)
+        {
+            value = v;
         }
     }
 }

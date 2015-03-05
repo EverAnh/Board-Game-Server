@@ -16,11 +16,8 @@ namespace Game
     class Server
     {
         private static TcpListener listener;
-        private int numberPlayers;
-
         private static List<Player> activePlayers = new List<Player>();
         private static List<GenericGame> games = new List<GenericGame>();
-
         private IPAddress local = IPAddress.Parse("127.0.0.1");
         private int port = 54389;
 
@@ -58,6 +55,7 @@ namespace Game
 
             ListenerThread lt = new ListenerThread();
             Thread gameThread = new Thread(new ThreadStart(lt.addPlayers ) );
+            gameThread.Start();
 
             // Console.WriteLine("TCP Listener is running");
         }
@@ -74,7 +72,7 @@ namespace Game
             Console.WriteLine("calling add player " + playerNumber);
 
             
-            Console.WriteLine("   player socket has accepted the socket " + playerNumber);
+            
 
             // activePlayers.Add(p);
 
@@ -108,8 +106,6 @@ namespace Game
             private StreamWriter writer;
             private int playerNumber;
             private String userName;
-
-            public bool connected;
 
             public Player(NetworkStream newStream, Socket newSocket, StreamReader newReader, StreamWriter newWriter)
             {
@@ -167,6 +163,9 @@ namespace Game
                 while (true)
                 {
                     Socket sock = listener.AcceptSocket();
+
+                    Console.WriteLine("   player socket has accepted the socket ");
+
                     NetworkStream nws = new NetworkStream(sock);
                     StreamReader sr = new StreamReader(nws);
                     StreamWriter sw = new StreamWriter(nws);
