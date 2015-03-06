@@ -53,8 +53,13 @@ namespace Game
 
         private void startListener()
         {
+
+            // Declare a new listener with local 127.0.0.1 and port 54389
+
             listener = new TcpListener(local, port);
             listener.Start();
+
+            // Create a new ListenerThread.
 
             ListenerThread lt = new ListenerThread();
             Thread gameThread = new Thread(new ThreadStart(lt.addPlayers ) );
@@ -110,6 +115,8 @@ namespace Game
             private int playerNumber;
             private String userName;
 
+            // Player constructor
+
             public Player(NetworkStream newStream, Socket newSocket, StreamReader newReader, StreamWriter newWriter)
             {
                 stream = newStream;
@@ -163,7 +170,7 @@ namespace Game
         { // start thread for TCP listener
             public void addPlayers()
             {
-                while (true)
+                while (true) // Only add players 
                 {
                     Socket sock = listener.AcceptSocket();
 
