@@ -7,7 +7,7 @@ using System.Text;
 
 using System.Data.SQLite;
 
-namespace ServerDatabase
+namespace Game
 {
     class LoginDatabase
     {
@@ -15,6 +15,7 @@ namespace ServerDatabase
         SQLiteConnection m_dbConnection;
 
         // Creates an empty database file
+        // only needed for creating a new database
         public void createNewDatabase()
         {
             SQLiteConnection.CreateFile("LoginDatabase.sqlite");
@@ -41,11 +42,11 @@ namespace ServerDatabase
             {
                 Console.WriteLine("CREATING TABLE");
 
-                sql = "create table users (name varchar(32), pw varchar(32) )";
+                sql = "create table users (userID integer autoincrement, name varchar(32) not null, pw varchar(32) not null )";
                 command = new SQLiteCommand(sql, m_dbConnection);
                 command.ExecuteNonQuery();
 
-                Console.WriteLine("HI!");
+                Console.WriteLine("CREATING TABLE 'USERS'!");
             }
             else
             {
@@ -55,7 +56,7 @@ namespace ServerDatabase
 
         // Inserts some values in the highscores table.
         // As you can see, there is quite some duplicate code here, we'll solve this in part two.
-        public void fillTable()
+        public bool fillTable(string userName, string newPW)
         {
             /*
             string sql = "insert into users (name, pw) values ('Me', 3000)";
@@ -71,25 +72,45 @@ namespace ServerDatabase
             command.ExecuteNonQuery();
              */
 
+            /*
             attemptToLogin("Me", "3000");
             attemptToLogin("Myself", "6000");
             attemptToLogin("And I", "9001");
+            */
+
+
+            string sql = "select * from users where name = '" + userName + "' and " + "pw = '" + newPW + "'";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                string sql1 = "insert into users (name, pw) values ('" + userName + "', '" + newPW + "')";
+                SQLiteCommand command1 = new SQLiteCommand(sql1, m_dbConnection);
+                command1.ExecuteNonQuery();
+                return true;
+            }
+            
+
+            return false;
 
         }
-
+        /*
         void addElement(string userName, string newPW)
         {
             string sql = "insert into users (name, pw) values ('" + userName + "', '" + newPW + "')";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             command.ExecuteNonQuery();
         }
+         * */
+
 
         // return 1 if the login attempt was a success
         // return 0 if the login attempt was a fail
-        int verifyPassword(string loginName, string loginPW)
+        bool verifyPassword(string loginName, string loginPW)
         {
             // check that newPW matches password of userName
-            string sql = "select * from users where name= '" + loginName + "'";
+            string sql = "select * from users where name = '" + loginName + "'";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
@@ -107,16 +128,16 @@ namespace ServerDatabase
                 // return true;
 
                 // send TCP packet back to client setting player as logged in
-                return 1;
+                return true;
             }
 
             else
             {
-                Console.WriteLine("  &&  Password is NOT a match  " + loginName);
+                Console.WriteLine("    Password is NOT a match  " + loginName);
                 // return false;
 
                 // send TCP packet back to client that login failed 
-                return 0;
+                return false;
             }
         }
 
@@ -145,24 +166,27 @@ namespace ServerDatabase
         // return 1 if login attempt was a success
         // return 0 if the login attempt was a fail 
         // return 3 if the new user was created
-        public int attemptToLogin(string checkName, string checkPW)
+        public bool attemptToLogin(string checkName, string checkPW)
         {
             bool returningUser = checkIfUserNameExists(checkName);
 
             // Console.WriteLine("  calling login " + checkName);
-
-            if (returningUser)
+            if (returningUser && verifyPassword(checkName, checkPW))
             {
-                int verify = verifyPassword(checkName, checkPW);
-
-                return verify;
+                return true;
             }
+            
+            Console.WriteLine("Invalid Login username and password!");
+            return false;
+          
 
+            /*
             else
             {
-                addElement(checkName, checkPW);
+                fillTable(checkName, checkPW);
                 return 3;
             }
+            */
         }
 
         // Writes the highscores to the console sorted on score in descending order.

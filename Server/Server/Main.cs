@@ -8,11 +8,12 @@ namespace Game
 {
     class ServerGameBoard
     {
-        static Server serv;
-
         static void Main(string[] args)
         {
-            serv = new Server();
+            Server serv = new Server();
+
+            Console.Write("Input to end : ");
+            Console.ReadLine();
         }
     }
 }
