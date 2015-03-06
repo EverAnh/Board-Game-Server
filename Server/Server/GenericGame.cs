@@ -12,7 +12,7 @@ namespace Game
         private List<GenericPiece> gamePieces;
         private int numberPlayers;
 
-        GenericGame(int x_size, int y_size)
+        public GenericGame(int x_size, int y_size)
         {
             gameBoard = new int[x_size, y_size];
             gamePieces = new List<GenericPiece>();
