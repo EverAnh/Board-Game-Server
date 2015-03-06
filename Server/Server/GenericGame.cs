@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class GenericGame
+    public class GenericGame
     {
         private int[ , ] gameBoard;
         private List<GenericPiece> gamePieces;
