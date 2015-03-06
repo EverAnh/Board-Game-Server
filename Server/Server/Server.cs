@@ -27,6 +27,8 @@ namespace Game
             startListener();
             startServer();
 
+            db = new LoginDatabase();
+
             db.createNewDatabase();
 
             // Console.WriteLine("number players " + numberPlayers);

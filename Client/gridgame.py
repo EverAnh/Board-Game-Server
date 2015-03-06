@@ -20,7 +20,7 @@ class GridGame:
         pygame.font.init()
         self._screen = pygame.display.set_mode((GridGame.WINDOW_LENGTH, GridGame.WINDOW_LENGTH))
         pygame.display.set_caption("Grid Game")
-        self._clock = pygame.time.Clock()
+        ##self._clock = pygame.time.Clock()
 
         # initialize the game board & graphics
         self._init_board()
@@ -38,7 +38,7 @@ class GridGame:
 
 
     def update(self):
-        self._clock.tick(60)
+        ##self._clock.tick(60)
         self._screen.fill(GridGame.BACKGROUND_COLOR)
         self._draw_board()
         for event in pygame.event.get():
