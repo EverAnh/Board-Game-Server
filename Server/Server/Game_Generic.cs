@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class GenericGame
+    public class Game_Generic
     {
-        private int[ , ] gameBoard;
-        private List<GenericPiece> gamePieces;
-        private int numberPlayers;
+        protected int[ , ] gameBoard;
+        protected List<Piece_Generic> gamePieces;
+        protected int numberPlayers;
+        protected GameLoop_Server loop;
 
-        public GenericGame(int x_size, int y_size)
+        public Game_Generic()
+        {
+
+        }
+
+        public Game_Generic(int x_size, int y_size)
         {
             gameBoard = new int[x_size, y_size];
-            gamePieces = new List<GenericPiece>();
+            gamePieces = new List<Piece_Generic>();
         }
 
         public int getPiece(int getX, int getY)

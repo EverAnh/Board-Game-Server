@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class GenericPiece
+    public class Piece_Generic
     {
         private int x_pos;
         private int y_pos;
         private int value;
 
-        public GenericPiece()
+        public Piece_Generic()
         {
 
         }
+
         public void setPosition(int newX, int newY)
         {
             setX(newX);

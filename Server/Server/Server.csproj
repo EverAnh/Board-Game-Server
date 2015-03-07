@@ -50,10 +50,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenericGame.cs" />
-    <Compile Include="GenericPiece.cs" />
+    <Compile Include="GameLoop_Server.cs" />
+    <Compile Include="Game_ConnectFour.cs" />
+    <Compile Include="Game_Generic.cs" />
+    <Compile Include="Piece_ConnectFour_Black.cs" />
+    <Compile Include="Piece_ConnectFour_Red.cs" />
+    <Compile Include="Piece_Generic.cs" />
     <Compile Include="LoginDatabase.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>
   <ItemGroup>

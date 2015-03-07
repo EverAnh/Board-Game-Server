@@ -17,7 +17,7 @@ namespace Game
     {
         private static TcpListener listener;
         private static List<Player> activePlayers = new List<Player>();
-        private static List<GenericGame> games = new List<GenericGame>();
+        private static List<Game_Generic> games = new List<Game_Generic>();
         private IPAddress local = IPAddress.Parse("127.0.0.1");
         private int port = 54389;
         private LoginDatabase db;
@@ -108,65 +108,7 @@ namespace Game
          * 
          * */
 
-        private class Player
-        { // start Player class 
-            private NetworkStream stream;
-            private Socket sock;
-            private StreamReader reader;
-            private StreamWriter writer;
-            private int playerNumber;
-            private String userName;
 
-            // Player constructor
-
-            public Player(NetworkStream newStream, Socket newSocket, StreamReader newReader, StreamWriter newWriter)
-            {
-                stream = newStream;
-                sock = newSocket;
-                reader = newReader;
-                writer = newWriter;
-            }
-
-            public NetworkStream getPlayerStream()
-            {
-                return stream;
-            }
-
-            public Socket getPlayerSocket()
-            {
-                return sock;
-            }
-
-            public StreamReader getPlayerReader()
-            {
-                return reader;
-            }
-
-            public StreamWriter getPlayerWriter()
-            {
-                return writer;
-            }
-
-            public int getNumber()
-            {
-                return playerNumber;
-            }
-
-            public void setPlayerNumber(int newNum)
-            {
-                playerNumber = newNum;
-            }
-
-            public String getUserName()
-            {
-                return userName;
-            }
-
-            public void setUserName(String n)
-            {
-                userName = n;
-            }
-        } // end Player class 
 
         private class ListenerThread
         { // start thread for TCP listener
