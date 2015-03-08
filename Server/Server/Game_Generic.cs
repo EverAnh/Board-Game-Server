@@ -11,7 +11,9 @@ namespace Game
         protected int[ , ] gameBoard;
         protected List<Piece_Generic> gamePieces;
         protected int numberPlayers;
+        protected int maxPlayers;
         protected Server_GameLoop loop;
+        protected String gameType;
 
         public Game_Generic()
         {

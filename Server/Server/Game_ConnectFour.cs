@@ -17,7 +17,8 @@ namespace Game
         public Game_ConnectFour()
         {
             gameBoard = new int[cols, rows];
-            numberPlayers = 2;
+            gameType = "connectFour";
+            maxPlayers = 2;
         }
 
 

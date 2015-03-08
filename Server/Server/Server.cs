@@ -80,6 +80,20 @@ namespace Game
             Console.ReadLine();
         }
 
+        private static int getIndexOfGameToJoin()
+        {
+            int numberGames = games.Capacity;
+
+
+            // counting by g
+            for (int g = 0; g < numberGames; g++)
+            {
+
+            }
+
+            return -1;
+        }
+
         /*
         private void addPlayer(int playerNumber)
         {
@@ -136,6 +150,8 @@ namespace Game
 
                     Console.WriteLine("new player number " + playerNumber);
                     p.getPlayerWriter().WriteLine(playerNumber);
+
+                    getIndexOfGameToJoin();
                 }
             }
         } // end thread for TCP listener
