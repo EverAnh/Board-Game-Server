@@ -16,7 +16,7 @@ class GridGame:
     GAMEPIECE_COLOR_2 = pygame.Color(139,69,19)
     
     
-
+  
     
     def __init__(self):
         pygame.init()
@@ -92,6 +92,8 @@ class GridGame:
 
 ##if __name__ == 'main':
 game = GridGame()
+clock = pygame.time.Clock()
 while not game._should_quit:
+    clock.tick(30)
     game.update()
 pygame.quit()
