@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class GameLoop_Server
+    public class Server_GameLoop
     {
-        public GameLoop_Server()
+        public Server_GameLoop()
         {
 
         }

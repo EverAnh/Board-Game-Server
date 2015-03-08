@@ -8,6 +8,9 @@ namespace Game
 {
     public class Game_ConnectFour : Game_Generic
     {
+
+        // Declare a grid of 7 columns and 6 rows.
+
         private int cols = 7;
         private int rows = 6;
         

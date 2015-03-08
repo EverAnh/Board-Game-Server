@@ -24,11 +24,15 @@ namespace Game
 
         public Server()
         {
+            
+            // Start the TCP listener and the server.
+            
             startListener();
             startServer();
 
-            db = new LoginDatabase();
+            // Initialize the login database and create a new database.
 
+            db = new LoginDatabase();
             db.createNewDatabase();
 
             // Console.WriteLine("number players " + numberPlayers);

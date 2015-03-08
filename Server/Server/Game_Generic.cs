@@ -11,11 +11,11 @@ namespace Game
         protected int[ , ] gameBoard;
         protected List<Piece_Generic> gamePieces;
         protected int numberPlayers;
-        protected GameLoop_Server loop;
+        protected Server_GameLoop loop;
 
         public Game_Generic()
         {
-
+            // Empty constructor
         }
 
         public Game_Generic(int x_size, int y_size)
