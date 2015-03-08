@@ -35,21 +35,30 @@ class GridGame:
 
         # add test pieces
         self._gameboard[4][2] = (1,2)
-        #self._gameboard[1][4] = (1,2)
+        self._gameboard[1][4] = (1,2)
         #self._gameboard[7][2] = (2,5)
         #self._gameboard[7][3] = (2,5)
 
 
     def update(self):
-        #pygame.time.Clock.tick(framerate=30)
         self._screen.fill(GridGame.BACKGROUND_COLOR)
         self._draw_board()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self._should_quit = True
                 break
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mousePosition = pygame.mouse.get_pos()
+                print "mouse pressed down at ", mousePosition
+                pygame.draw.circle(self._screen, pygame.Color(222,184,135), mousePosition, 50, width=0)
+                #game.placeNewPiece(mousePosition)
+                
         
         pygame.display.flip()
+
+    def placeNewPiece(self, mousePosition):
+        game._draw_gamepiece(mousePosition[0], mousePosition[1],1)
+        game._draw_gamepieces()
         
 
     def _init_board(self):
