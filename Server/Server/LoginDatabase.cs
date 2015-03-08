@@ -37,7 +37,6 @@ namespace Game
             string sql = "SELECT * FROM sqlite_master WHERE type='table' AND name='users'";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
-            Console.Write("@right before creating table@");
 
             if (!reader.HasRows)
             {
@@ -98,14 +97,14 @@ namespace Game
         }
 
        
-        /*
-        void addElement(string userName, string newPW)
+        
+        public void addNewPlayer(int newUserId,string newEmail ,string newLoginId ,string newPw)
         {
-            string sql = "insert into users (name, pw) values ('" + userName + "', '" + newPW + "')";
+            string sql = "insert into users (userID,email,loginID,pw) values ('" + newUserId + "', '" +newEmail + "','" +newLoginId+"','"+ newPw + "')";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             command.ExecuteNonQuery();
         }
-         * */
+        
 
         //**NOW MODIFIED FOR BOARD GAME SERVER**
         // return 1 if the login attempt was a success
@@ -176,7 +175,6 @@ namespace Game
         public bool attemptToLogin(string checkLogin, string checkPw)
         {
             bool returningUser = checkIfLogInExists(checkLogin);
-            Console.Write(returningUser+"\n");
 
             // Console.WriteLine("  calling login " + checkName);
             if (returningUser && verifyPassword(checkLogin, checkPw))
@@ -207,7 +205,7 @@ namespace Game
 
             while (reader.Read())
             {
-                Console.WriteLine("UserID: " + reader["userID"] + "\tPassword: " + reader["pw"] + "\tlogin ID" + reader["loginID"] + "\tEmail" + reader["email"]);
+                Console.WriteLine("UserID: " + reader["userID"] + "\tPassword: " + reader["pw"] + "\tlogin ID: " + reader["loginID"] + "\tEmail: " + reader["email"]);
             }
 
             Console.ReadLine();

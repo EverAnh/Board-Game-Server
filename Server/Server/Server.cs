@@ -37,6 +37,7 @@ namespace Game
             db.connectToDatabase();
             db.createTable();
             db.fillTable(2," anom@anom.net","Tom", "password");
+            db.addNewPlayer(3, "anom2@anom.net", "bill", "pwwbrah");
             db.attemptToLogin("Tom", "password");
             db.printUsers();
 
