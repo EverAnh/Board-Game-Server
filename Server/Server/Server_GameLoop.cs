@@ -34,12 +34,23 @@ namespace Game
                 game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
-                if(game.handlePlayerTurn(move) )
+                // player tried to make an invalid move. Force them to try again until they send a valid move
+                // the condition of the while loop makes the move. 
+                while(! game.handlePlayerTurn(move) )
                 {
+                    String notValid = "Player " + activePlayer.ToString() + " attempted a move that was not valid.";
                     sendToAllPlayers(game.getPlayers(), numberPlayers, move);
+                    move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
                 }
 
-                
+                // if the move was valid, then it was made when handlePlayerTurn is called 
+                // notify all players that a valid move was made 
+
+                sendToAllPlayers(game.getPlayers(), numberPlayers, move);
+
+                // increment the value of active player to the next player
+                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
+
             }
         }
 
@@ -66,6 +77,9 @@ namespace Game
             }
         }
 
+        // for a 2 player game, max will equal 2
+        // player values will be either 0 or 1
+        // increments from 0 to (max -1) for multi player games 
         private int getNextPlayerIndex(int i, int max)
         {
             int index = 0;
