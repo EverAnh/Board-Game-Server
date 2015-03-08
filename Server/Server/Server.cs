@@ -86,15 +86,24 @@ namespace Game
             Console.ReadLine();
         }
 
-        private static int getIndexOfGameToJoin()
+        private static int getIndexOfGameToJoin(Player p)
         {
             int numberGames = games.Capacity;
+            String playerGame = p.getGame();
 
-
+            // check each existing game for a game type match AND room for an available player 
             // counting by g
             for (int g = 0; g < numberGames; g++)
             {
+                String gameType = games[g].getGameType();
 
+                int currentPlayers = games[g].getNumberPlayers();
+                int maxPlayers = games[g].getMaxPlayers();
+
+                if ( (playerGame == gameType ) && (currentPlayers < maxPlayers) )
+                {
+                    return g;
+                }
             }
 
             return -1;
@@ -157,18 +166,20 @@ namespace Game
                     Console.WriteLine("new player number " + playerNumber);
                     p.getPlayerWriter().WriteLine(playerNumber);
 
-                    getIndexOfGameToJoin();
+                    int gameToJoin = getIndexOfGameToJoin(p);
+
+                    games[gameToJoin].addPlayer(p);
                 }
             }
         } // end thread for TCP listener
 
         private class GameThread
         { // start GameThread
-            int gameNumber = -1;
+            // int gameNumber = -1;
 
-            GameThread(int newGame)
+            GameThread(String newGame)
             {
-                gameNumber = newGame;
+                // gameNumber = newGame;
             }
 
         } // end GameThread
