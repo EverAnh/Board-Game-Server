@@ -13,27 +13,33 @@ namespace Game
 
         }
 
-        public void gameLoop(List<Player> players, int maxPlayers)
+        public void gameLoop(Game_Generic game)
         {
             // needs number of players
             // needs the Player object for each player in the game
             //      which includes stream reader/writer
             // 
 
-            int numberPlayers = players.Capacity;
+            int numberPlayers = game.getNumberPlayers();
             int turn = 0;
             int activePlayer = 0;
 
-            while (allPlayersConnected(players, numberPlayers) )
+            while (allPlayersConnected(game.getPlayers(), game.getPlayers().Capacity) )
             {
                 turn++;
                 String turnMessage = "Starting Turn " + turn.ToString() + ".";
 
-                sendToAllPlayers(players, numberPlayers, turnMessage);
+                sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
-                players[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
-                players[activePlayer].getPlayerReader().ReadLine();
+                game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
+                String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
+                if(game.handlePlayerTurn(move) )
+                {
+                    sendToAllPlayers(game.getPlayers(), numberPlayers, move);
+                }
+
+                
             }
         }
 

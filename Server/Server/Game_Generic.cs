@@ -29,9 +29,9 @@ namespace Game
             gamePieces = new List<Piece_Generic>();
         }
 
-        public String getGameType()
+        public List<Player> getPlayers()
         {
-            return gameType;
+            return currentPlayers;
         }
 
         public int getNumberPlayers()
@@ -42,6 +42,11 @@ namespace Game
         public int getMaxPlayers()
         {
             return maxPlayers;
+        }
+
+        public String getGameType()
+        {
+            return gameType;
         }
 
         public int getPiece(int getX, int getY)
@@ -61,7 +66,11 @@ namespace Game
                 currentPlayers.Add(p);
                 numberPlayers = currentPlayers.Capacity;
             }
-            
+        }
+
+        public bool handlePlayerTurn(String s)
+        {
+            return true;
         }
     }
 }

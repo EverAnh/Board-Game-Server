@@ -22,7 +22,7 @@ namespace Game
             maxPlayers = 2;
         }
 
-        public void handlePlayerTurn(String s) // each player will call this function with their input.
+        public bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
             int placeX = 0;
             int placeY = 0;
@@ -47,8 +47,11 @@ namespace Game
                     Console.Write("Game over!"); // print to console log 
                 }
 
+                return true;
             }
 
+            // the move was not valid
+            return false;
         }
 
         // Game Logic
