@@ -37,12 +37,13 @@ namespace Game
             string sql = "SELECT * FROM sqlite_master WHERE type='table' AND name='users'";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
+            Console.Write("@right before creating table@");
 
             if (!reader.HasRows)
             {
                 Console.WriteLine("CREATING TABLE");
 
-                sql = "create table users (userID integer autoincrement, name varchar(32) not null, pw varchar(32) not null )";
+                sql = "create table users (userID integer NOT NULL, email VARCHAR(50), pw VARCHAR(8) NOT NULL,loginID VARCHAR(20), UNIQUE(userID),UNIQUE(pw) )";
                 command = new SQLiteCommand(sql, m_dbConnection);
                 command.ExecuteNonQuery();
 
@@ -56,7 +57,7 @@ namespace Game
 
         // Inserts some values in the highscores table.
         // As you can see, there is quite some duplicate code here, we'll solve this in part two.
-        public bool fillTable(string userName, string newPW)
+        public bool fillTable(int newUserId,string newEmail ,string newLoginId ,string newPW)
         {
             /*
             string sql = "insert into users (name, pw) values ('Me', 3000)";
@@ -79,13 +80,13 @@ namespace Game
             */
 
 
-            string sql = "select * from users where name = '" + userName + "' and " + "pw = '" + newPW + "'";
+            string sql = "select * from users where userID = '" + newUserId + "' and email = '" +newEmail+"' and pw = '" +newPW + "' and loginID = '" + newLoginId + "'";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
             if (!reader.HasRows)
             {
-                string sql1 = "insert into users (name, pw) values ('" + userName + "', '" + newPW + "')";
+                string sql1 = "insert into users (userID,email,loginID, pw) values ('" + newUserId + "','" +newEmail+"','"+newLoginId+"','"+ newPW + "')";
                 SQLiteCommand command1 = new SQLiteCommand(sql1, m_dbConnection);
                 command1.ExecuteNonQuery();
                 return true;
@@ -95,6 +96,8 @@ namespace Game
             return false;
 
         }
+
+       
         /*
         void addElement(string userName, string newPW)
         {
@@ -104,13 +107,14 @@ namespace Game
         }
          * */
 
-
+        //**NOW MODIFIED FOR BOARD GAME SERVER**
         // return 1 if the login attempt was a success
         // return 0 if the login attempt was a fail
-        bool verifyPassword(string loginName, string loginPW)
+       
+        bool verifyPassword(string loginId, string pw)
         {
             // check that newPW matches password of userName
-            string sql = "select * from users where name = '" + loginName + "'";
+            string sql = "select * from users where loginId = '" + loginId + "'";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
@@ -122,9 +126,9 @@ namespace Game
             */
 
             // the password is a match
-            if (reader["pw"].Equals(loginPW))
+            if (reader["pw"].Equals(pw))
             {
-                Console.WriteLine("    Password is a match    " + loginName);
+                Console.WriteLine("    Password is a match    " + loginId);
                 // return true;
 
                 // send TCP packet back to client setting player as logged in
@@ -133,7 +137,7 @@ namespace Game
 
             else
             {
-                Console.WriteLine("    Password is NOT a match  " + loginName);
+                Console.WriteLine("    Password is NOT a match  " + loginId);
                 // return false;
 
                 // send TCP packet back to client that login failed 
@@ -141,9 +145,9 @@ namespace Game
             }
         }
 
-        bool checkIfUserNameExists(string userName)
+        bool checkIfUserNameExists(string userId)
         {
-            string sql = "select * from users where name= '" + userName + "'";
+            string sql = "select * from users where userID= '" + userId + "'";
             Console.WriteLine("sql " + sql);
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
@@ -199,7 +203,7 @@ namespace Game
 
             while (reader.Read())
             {
-                Console.WriteLine("Name: " + reader["name"] + "\tPassword: " + reader["pw"]);
+                Console.WriteLine("Name: " + reader["userID"] + "\tPassword: " + reader["pw"] + "\tlogin ID" + reader["loginID"] + "\tEmail" + reader["email"]);
             }
 
             Console.ReadLine();
