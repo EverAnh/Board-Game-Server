@@ -1,4 +1,5 @@
 import pygame
+import os, sys
 
 class GridGame:
     WINDOW_LENGTH = 1200
@@ -14,6 +15,8 @@ class GridGame:
     GAMEPIECE_COLOR_1 = pygame.Color(222,184,135)
     GAMEPIECE_COLOR_2 = pygame.Color(139,69,19)
     
+    
+
     
     def __init__(self):
         pygame.init()
@@ -38,14 +41,14 @@ class GridGame:
 
 
     def update(self):
-        ##self._clock.tick(60)
+        #pygame.time.Clock.tick(framerate=30)
         self._screen.fill(GridGame.BACKGROUND_COLOR)
         self._draw_board()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self._should_quit = True
                 break
-                
+        
         pygame.display.flip()
         
 
