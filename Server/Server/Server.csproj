@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameLoop_Server.cs" />
+    <Compile Include="Server_GameLoop.cs" />
     <Compile Include="Game_ConnectFour.cs" />
     <Compile Include="Game_Generic.cs" />
     <Compile Include="Piece_ConnectFour_Black.cs" />
