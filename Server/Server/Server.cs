@@ -36,9 +36,10 @@ namespace Game
             db.createNewDatabase();
             db.connectToDatabase();
             db.createTable();
-            db.fillTable(2," anom@anom.net"," Tom12", "password");
+            db.fillTable(2," anom@anom.net","Tom", "password");
+            db.attemptToLogin("Tom", "password");
             db.printUsers();
-            Console.Write("last statement\n");
+
 
             // Console.WriteLine("number players " + numberPlayers);
             // string stop = Console.ReadLine();
