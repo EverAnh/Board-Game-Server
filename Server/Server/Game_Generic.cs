@@ -16,7 +16,7 @@ namespace Game
         protected Server_GameLoop loop;
         protected String gameType;
 
-        protected String delim = "%&%";
+        
 
         public Game_Generic()
         {
@@ -68,7 +68,7 @@ namespace Game
             }
         }
 
-        public bool handlePlayerTurn(String s)
+        public virtual bool handlePlayerTurn(String s)
         {
             return true;
         }

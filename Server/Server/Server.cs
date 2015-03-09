@@ -21,6 +21,7 @@ namespace Game
         private IPAddress local = IPAddress.Parse("127.0.0.1");
         private int port = 54389;
         private LoginDatabase db;
+        protected static char delim = '%';
 
         public Server()
         {
@@ -164,11 +165,64 @@ namespace Game
                     int playerNumber = activePlayers.IndexOf(p);
 
                     Console.WriteLine("new player number " + playerNumber);
-                    p.getPlayerWriter().WriteLine(playerNumber);
+                    p.getPlayerWriter().WriteLine(playerNumber.ToString() );
+
+                    String startMessage = p.getPlayerReader().ReadLine();
+                    String[] data = startMessage.Split(delim);
+
+                    /*
+                     * ATTEMPT TO LOG IN TO DATABASE HERE 
+                     * GET EITHER SUCCESS OR FAILURE RESULTS FROM DATABASE
+                     * 
+                     */
+
+                    /*
+                     * 
+                     if( login was successful)
+                     *  startMessage = "Login was successful.";
+                     * 
+                     else if ( new user was created)
+                     *  startMessage = "New User created.";
+                     * 
+                     else // login attempt failed
+                     *  startMessage = "Login attempt failed. Try again.";
+                     * 
+                     p.getPlayerWriter().WriteLine
+                     * 
+                     */
+
+                    p.setGame(data[2]);
 
                     int gameToJoin = getIndexOfGameToJoin(p);
+                    String newPlayerNumber = "0";
+                    String gameToPlay = "";
 
-                    games[gameToJoin].addPlayer(p);
+                    // there is no existing game of the type that the player wants to play
+                    // that also has room for an additional player
+                    if (gameToJoin == -1)
+                    {
+                        newPlayerNumber = "1";
+
+                        if (p.getGame() == "connectFour")
+                        {
+                            Game_Generic newGame = new Game_ConnectFour();
+                            games.Add(newGame);
+                            newGame.addPlayer(p);
+                            gameToPlay = p.getGame();
+                        }
+                    }
+
+                    // found a matching game type that needs an additional player
+                    else
+                    {
+                        newPlayerNumber = games[gameToJoin].getNumberPlayers().ToString();
+                        games[gameToJoin].addPlayer(p);
+                    }
+
+                    startMessage = newPlayerNumber + delim + gameToPlay;
+
+                    // start string is constructed to tell the client which game to start 
+                    p.getPlayerWriter().WriteLine(startMessage);
                 }
             }
         } // end thread for TCP listener

@@ -39,17 +39,16 @@ namespace Game
                 while(! game.handlePlayerTurn(move) )
                 {
                     String notValid = "Player " + activePlayer.ToString() + " attempted a move that was not valid.";
-                    sendToAllPlayers(game.getPlayers(), numberPlayers, move);
+                    sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
                     move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
                 }
 
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
-
                 sendToAllPlayers(game.getPlayers(), numberPlayers, move);
 
                 // increment the value of active player to the next player
-                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
+                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers() );
 
             }
         }

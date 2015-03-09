@@ -22,7 +22,7 @@ namespace Game
             maxPlayers = 2;
         }
 
-        public bool handlePlayerTurn(String s) // each player will call this function with their input.
+        public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
             int placeX = 0;
             int placeY = 0;
@@ -158,13 +158,6 @@ namespace Game
             else
                 return false;
         }
-        
-        
-
-
-
-
-
     }
 }
 
