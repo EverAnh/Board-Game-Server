@@ -16,8 +16,6 @@ namespace Game
         protected Server_GameLoop loop;
         protected String gameType;
 
-        
-
         public Game_Generic()
         {
             // Empty constructor for subclasses
@@ -52,6 +50,11 @@ namespace Game
         public int getPiece(int getX, int getY)
         {
             return gameBoard[getX, getY];
+        }
+
+        public Server_GameLoop getLoop()
+        {
+            return loop;
         }
 
         public void assignPiece(int getX, int getY, int value)
