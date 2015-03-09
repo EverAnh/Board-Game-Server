@@ -63,8 +63,8 @@ namespace Game
             // Create a new ListenerThread.
 
             ListenerThread lt = new ListenerThread();
-            Thread gameThread = new Thread(new ThreadStart(lt.addPlayers ) );
-            gameThread.Start();
+            Thread listenThread = new Thread(new ThreadStart(lt.addPlayers ) );
+            listenThread.Start();
 
             // Console.WriteLine("TCP Listener is running");
         }
@@ -160,7 +160,7 @@ namespace Game
 
                     /*
                      * ATTEMPT TO LOG IN TO DATABASE HERE 
-                     * GET EITHER SUCCESS OR FAILURE RESULTS FROM DATABASE
+                     * GET EITHER SUCCESS OR FAILURE RESULTS FROM DATABASE 
                      * 
                      */
 
@@ -185,7 +185,7 @@ namespace Game
                     String newPlayerNumber = "0";
                     String gameToPlay = "";
 
-                    // there is no existing game of the type that the player wants to play
+                    // there is no existing game of the type that the player wants to play 
                     // that also has room for an additional player
                     if (gameToJoin == -1)
                     {
@@ -197,6 +197,9 @@ namespace Game
                             games.Add(newGame);
                             newGame.addPlayer(p);
                             gameToPlay = p.getGame();
+
+                            GameThread gt = new GameThread(newGame);
+                            Thread gameThread = new Thread(new ThreadStart (gt.playGame ) );
                         }
                     }
 
@@ -207,7 +210,7 @@ namespace Game
                         games[gameToJoin].addPlayer(p);
                     }
 
-                    startMessage = newPlayerNumber + delim + gameToPlay;
+                    startMessage = newPlayerNumber;
 
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
@@ -219,9 +222,16 @@ namespace Game
         { // start GameThread
             // int gameNumber = -1;
 
-            GameThread(String newGame)
+            private Game_Generic currentGame;
+
+            public GameThread(Game_Generic newGame)
             {
-                // gameNumber = newGame;
+                currentGame = newGame;
+            }
+
+            public void playGame()
+            {
+                currentGame.getLoop().gameLoop(currentGame);
             }
 
         } // end GameThread
