@@ -38,7 +38,9 @@ namespace Game
 
         public bool getSocketConnected()
         {
-            return sock.Connected;
+            bool canRead = sock.Poll(500, SelectMode.SelectRead);
+            bool canWrite = sock.Poll(500, SelectMode.SelectWrite);
+            return (canRead && canWrite);
         }
 
         public Socket getPlayerSocket()
