@@ -22,6 +22,7 @@ namespace Game
         private int port = 54389;
         private LoginDatabase db;
         protected static char delim = '%';
+    
 
         public Server()
         {
@@ -34,35 +35,21 @@ namespace Game
             // Initialize the login database and create a new database.
 
             db = new LoginDatabase();
-            db.createNewDatabase();
+           
+            /*REMEMBER createNewdatabase() SHOULD ONLY BE USED TO CLEAR THE DB*/
+           // db.createNewDatabase();
             db.connectToDatabase();
             db.createTable();
-            db.fillTable(2," anom@anom.net","Tom", "password");
-            db.addNewPlayer(3, "anom2@anom.net", "bill", "pwwbrah");
-            db.attemptToLogin("Tom", "password");
+            
+            //testing functions
+
+            /*db.addNewPlayer("Chris", "passw1");
+            db.addNewPlayer("Tom", "password");
+            Console.WriteLine(db.attemptToLogin("Tom", "password"));*/
             db.printUsers();
 
 
-            // Console.WriteLine("number players " + numberPlayers);
-            // string stop = Console.ReadLine();
-
-            // numberPlayers will be assigned by player 1 choosing a game
-            // for now, defaulting value numberPlayers
-
-            // numberPlayers = 1;
-            // Console.WriteLine("player 0 ");
-            // addPlayer(0);
-
-            // activePlayers = new Player[numberPlayers];
-
-            // counting by c
-            /*
-            for (int c = 1; c < numberPlayers; c++)
-            {
-                Console.WriteLine("player c " + c);
-                addPlayer(c);
-            }
-             * */
+            
         }
 
         private void startListener()

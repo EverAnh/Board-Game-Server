@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.IO;
 using System.Data.SQLite;
 
 namespace Game
@@ -14,22 +14,25 @@ namespace Game
         // Holds our connection with the database
         SQLiteConnection m_dbConnection;
 
-        // Creates an empty database file
-        // only needed for creating a new database
+        //Creates a new database file but should really only be used for 
+        //to clear the database and start fresh. 
+        //WARNING ONLY USE TO CLEAR THE DB. IF CALLED THE DB WILL LOSE ALL DATA
         public void createNewDatabase()
         {
             SQLiteConnection.CreateFile("LoginDatabase.sqlite");
         }
 
-        // Creates a connection with our database file.
+        // Creates a connection with our database file or automatically creates the file
+        // depending on whether the file exists or not.
+        // will not clear the database and will hold all of the users even after the server is closed
         public void connectToDatabase()
         {
             m_dbConnection = new SQLiteConnection("Data Source=LoginDatabase.sqlite;Version=3;");
             m_dbConnection.Open();
         }
 
-        // Creates a table named 'highscores' with two columns: name (a string of max 20 characters) and password (a string of max 20 characters)
-        // password = pw
+        // Creates a table named 'users' with three columns: userID (an random int between 1 and 100,000) and password (a string of max 20 characters) 
+        // and a LoginID that will be chosen by the player. pw = password
         public void createTable()
         {
             //SELECT name FROM sqlite_master WHERE type='table' AND name='table_name';
@@ -42,7 +45,7 @@ namespace Game
             {
                 Console.WriteLine("CREATING TABLE");
 
-                sql = "create table users (userID integer NOT NULL, email VARCHAR(50), pw VARCHAR(10) NOT NULL,loginID VARCHAR(20), UNIQUE(userID),UNIQUE(pw) )";
+                sql = "create table users (userID integer NOT NULL, pw VARCHAR(20) NOT NULL,loginID VARCHAR(20), UNIQUE(userID) )";
                 command = new SQLiteCommand(sql, m_dbConnection);
                 command.ExecuteNonQuery();
 
@@ -53,54 +56,16 @@ namespace Game
                 Console.WriteLine("TABLE EXISTS!");
             }
         }
-
-        // Inserts some values in the highscores table.
-        // As you can see, there is quite some duplicate code here, we'll solve this in part two.
-        public void fillTable(int newUserId,string newEmail ,string newLoginId ,string newPw)
-        {
-            /*
-            string sql = "insert into users (name, pw) values ('Me', 3000)";
-            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-            command.ExecuteNonQuery();
-
-            sql = "insert into users (name, pw) values ('Myself', 6000)";
-            command = new SQLiteCommand(sql, m_dbConnection);
-            command.ExecuteNonQuery();
-
-            sql = "insert into users (name, pw) values ('And I', 9001)";
-            command = new SQLiteCommand(sql, m_dbConnection);
-            command.ExecuteNonQuery();
-             */
-
-            /*
-            attemptToLogin("Me", "3000");
-            attemptToLogin("Myself", "6000");
-            attemptToLogin("And I", "9001");
-            */
-
-
-            string sql = "select * from users where userID = '" + newUserId + "' and email = '" +newEmail+"' and loginID = '" +newLoginId + "' and pw = '" + newPw + "'";
-            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            if (!reader.HasRows)
-            {
-                string sql1 = "insert into users (userID,email,loginID, pw) values ('" + newUserId + "','" +newEmail+"','"+newLoginId+"','"+ newPw + "')";
-                SQLiteCommand command1 = new SQLiteCommand(sql1, m_dbConnection);
-                command1.ExecuteNonQuery();
-  
-            }
-
-
-     
-
-        }
+        
+        /*DELETED FILLTABLE() SINCE THERE IS NO NEED FOR IT.
+         ADDNEWPLAYERS() BELOW IS THE ONLY THING NEEDED TO REGISTER NEW PLAYERS.*/
 
        
-        
-        public void addNewPlayer(int newUserId,string newEmail ,string newLoginId ,string newPw)
+        //NO LONGER REQUIRES AN EMAIL- 03-9-15
+        public void addNewPlayer(string newLoginId ,string newPw)
         {
-            string sql = "insert into users (userID,email,loginID,pw) values ('" + newUserId + "', '" +newEmail + "','" +newLoginId+"','"+ newPw + "')";
+            var ranInt = Unique_userId();
+            string sql = "insert into users (userID,loginID,pw) values ('" + ranInt+ "','" +newLoginId+"','"+ newPw + "')";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             command.ExecuteNonQuery();
         }
@@ -117,13 +82,6 @@ namespace Game
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             Console.Write(reader["pw"]);
-
-            /*
-            Console.WriteLine("      inside verify password " + loginName);
-            Console.WriteLine("  verivy password values &" + reader["pw"] + "&  %" + loginPW + "% ");
-            Console.WriteLine( reader["pw"].Equals(loginPW) );
-            Console.WriteLine(loginPW.Equals(reader["pw"]) );
-            */
 
             // the password is a match
             if (reader["pw"].Equals(pw))
@@ -170,8 +128,10 @@ namespace Game
         }
 
         // return 1 if login attempt was a success
-        // return 0 if the login attempt was a fail 
-        // return 3 if the new user was created
+        // return 0 if the login attempt was a fail and will create a new player
+        //FIRST YOU WOULD ATTEMPT TO LOG IN AND IF THE LOGIN ATTEMP IS FAILS
+        //THEN THE ADDNEWPLAYER() FUNCTION IS CALLED AND A NEW PLAYER IS ADDED.
+ 
         public bool attemptToLogin(string checkLogin, string checkPw)
         {
             bool returningUser = checkIfLogInExists(checkLogin);
@@ -183,19 +143,14 @@ namespace Game
             }
             
             Console.WriteLine("Invalid Login username and password!");
+            Console.WriteLine("New player profile being Created!");
+            addNewPlayer(checkLogin, checkPw);
+            Console.WriteLine("New player has been created!");
             return false;
-          
-
-            /*
-            else
-            {
-                fillTable(checkName, checkPW);
-                return 3;
-            }
-            */
+        
         }
 
-        // Writes the highscores to the console sorted on score in descending order.
+        // Writes the users to the console sorted on score in descending order.
         public void printUsers()
         {
 
@@ -205,10 +160,19 @@ namespace Game
 
             while (reader.Read())
             {
-                Console.WriteLine("UserID: " + reader["userID"] + "\tPassword: " + reader["pw"] + "\tlogin ID: " + reader["loginID"] + "\tEmail: " + reader["email"]);
+                Console.WriteLine("UserID: " + reader["userID"] + "\tPassword: " + reader["pw"] + "\tlogin ID: " + reader["loginID"]);
             }
 
             Console.ReadLine();
         }
+
+        //creates a random numner for userID between 1 and 100,000
+        int Unique_userId()
+        {
+            Random ranId = new Random();
+            return ranId.Next(100000);
+        }
+
+
     }
 }
