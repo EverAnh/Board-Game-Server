@@ -50,7 +50,10 @@ class GridGame:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mousePosition = pygame.mouse.get_pos()
                 print "mouse pressed down at ", mousePosition
-                pygame.draw.circle(self._screen, pygame.Color(222,184,135), mousePosition, 50, width=0)
+                column = mousePosition[0]/self.CELL_SIZE
+                row = mousePosition[1]/self.CELL_SIZE
+                self._gameboard[column][row] = (1,2)
+                pygame.draw.circle(self._screen, pygame.Color(222,184,135), mousePosition, 50, 0)
                 #game.placeNewPiece(mousePosition)
                 
         
