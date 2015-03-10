@@ -1,5 +1,6 @@
 import pygame
 import os, sys
+import socket
 
 class GridGame:
     WINDOW_LENGTH = 1200
@@ -38,6 +39,7 @@ class GridGame:
         self._gameboard[1][4] = (1,2)
         #self._gameboard[7][2] = (2,5)
         #self._gameboard[7][3] = (2,5)
+
 
 
     def update(self):
@@ -99,9 +101,64 @@ class GridGame:
             pygame.draw.circle(self._screen, GridGame.GAMEPIECE_COLOR_2, (i*GridGame.CELL_SIZE + GridGame.CELL_SIZE/2, j*GridGame.CELL_SIZE + GridGame.CELL_SIZE/2), GridGame.CELL_SIZE/2 - GridGame.CELL_SIZE/18, 0)
 
 
+    def connect_to_server(self):
+        host = '127.0.0.1'
+        port = 54389
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect( (host, port) )
+        print 'socket connected'
+
+        print 'received message 1: '
+        playerID = s.recv(4096)
+        print playerID
+
+        DELIM = "%"
+        user_name = "Heath"
+        user_pass = "abc123"
+        game_type = "connectFour"
+
+        message_two = user_name + DELIM + user_pass + DELIM + game_type + '\n'
+
+        print 'client sends: ' + message_two
+        try :
+            #Send message 2
+            s.sendall(message_two)
+
+######## server is throwing a null pointer here when it calls currentPlayers.add(p)
+######## VS2012 debugger is showing a few null fields, both in Game.Player and in Game.Game_ConnectFour
+            
+            #Receive message 3
+            message_three = s.recv(4096)
+            print 'server sends: ' + message_three
+            
+        except socket.error:
+            #Send failed
+            print 'Send failed'
+            sys.exit()
+'''
+        message_four = 
+        try :
+            #Send message 4
+            
+        except socket.error:
+            print 'Send failed'
+            sys.exit()
+'''
+'''
+        while True:
+            print s.recv(4096)
+            m = raw_input('type a message:')
+            mess = str(m) + '\n'
+            s.sendall(mess)
+'''        
+
 ##if __name__ == 'main':
 game = GridGame()
 clock = pygame.time.Clock()
+game.connect_to_server()
+
 while not game._should_quit:
     clock.tick(30)
     game.update()
