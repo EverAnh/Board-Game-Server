@@ -75,7 +75,7 @@ namespace Game
         // return 1 if the login attempt was a success
         // return 0 if the login attempt was a fail
        
-        bool verifyPassword(string loginId, string pw)
+        public bool verifyPassword(string loginId, string pw)
         {
             // check that newPW matches password of userName
             string sql = "select pw from users where pw = '" + pw + "'";
@@ -103,7 +103,7 @@ namespace Game
             }
         }
 
-        bool checkIfLogInExists(string loginId)
+        public bool checkIfLogInExists(string loginId)
         {
             string sql = "select loginID from users where loginID = '" +loginId+"'" ;
             Console.WriteLine("sql " + sql);

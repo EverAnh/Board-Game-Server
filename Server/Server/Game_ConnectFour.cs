@@ -56,7 +56,7 @@ namespace Game
 
         // Game Logic
 
-        public Boolean checkGameState(int x, int y) // x is the column, y is the row.
+        private bool checkGameState(int x, int y) // x is the column, y is the row.
         {
            // this function will take a game piece placement, and check all rows/columns next to it for a win condition.
             // note: if the game has not progressed past 4 turns, no need to even check.
@@ -70,8 +70,8 @@ namespace Game
             return true;            // game continues because none of the checks were valid.
         }
 
-        
-        public Boolean checkLeftRight(int x, int y) // x is column!
+
+        private bool checkLeftRight(int x, int y) // x is column!
         {
             // depends on column number (x)
             // 0 and col only need to check one possibility. 
@@ -120,22 +120,22 @@ namespace Game
                 return true;                                        // game continue
         }
 
-        public Boolean checkUpDown(int x, int y)
+        private bool checkUpDown(int x, int y)
         {
             return true;
         }
 
-        public Boolean checkDiagonalLeftUpRightDown(int x, int y)
+        private bool checkDiagonalLeftUpRightDown(int x, int y)
         {
             return true;
         }
 
-        public Boolean checkDiagonalRightUpLeftDown(int x, int y)
+        private bool checkDiagonalRightUpLeftDown(int x, int y)
         {
             return true;
         }
 
-        public Boolean parsePlayerInput(String s) // boolean for now 
+        private bool parsePlayerInput(String s) // boolean for now 
         {
             // Parses player input and store into local vars
 
@@ -145,7 +145,7 @@ namespace Game
 
         }
 
-        public Boolean checkOccupiedState(int x, int y)
+        private bool checkOccupiedState(int x, int y)
         {
             // will take in the recently added piece.
             // will return true if you are allowed to place a piece (unoccupied)
