@@ -71,10 +71,12 @@ namespace Game
         }
 
 
-        private bool checkLeftRight(int x, int y) // x is column!
+        private Boolean checkLeftRight(int x, int y) // x is column!
         {
             // depends on column number (x)
             // 0 and col only need to check one possibility. 
+
+            Console.Write("Checking Left and Right.");
 
             int typeToSearch = getPiece(x, y); // to be used later
 
@@ -83,10 +85,10 @@ namespace Game
 
             int[] snapShot = new int[7];                        //  temporary integer array that serves as a "snapshot" of what we are about tpo search
 
-            for (int i = 0; i < 7; i++ )                        // will fill the array with the array index values I SHOULD be searching for. 
+            for (int i = 0; i < 7; i++)                        // will fill the array with the array index values I SHOULD be searching for. 
             {
                 snapShot[i] = x + 3 - i;                        // example if x = 0; [3,2,1,0,-1.-2,-3] if x = 4; [7,6,5,4,3,2,1] ; if x = 3 [6,5,4,3,2,1,0]     
-                                                                // Snapshot is now filled with array indexes
+                // Snapshot is now filled with array indexes
 
                 if (snapShot[i] < 0 || snapShot[i] > cols - 1)  // replace the out of bounds array index with -1, which will allow our checking algorithm to ignore the index.
                 {
@@ -97,43 +99,207 @@ namespace Game
 
             // Now that the array is filled either with proper array indices or -1, we can now check "safely". [3,2,1,0,-1.-2,-3] ~ [3,2,1,0,-1.-1,-1] || 
 
-            for (int i = 0; i < 4; i++ )                            // we have a total of 4 arrays to search, max!
+            for (int i = 0; i < 4; i++)                            // we have a total of 4 arrays to search, max!
             {
-                if (snapShot[i] != -1 && snapShot [i+3] != -1)      // if the start or end indixes of the snapshot are -1, do not search it.
+                if (snapShot[i] != -1 && snapShot[i + 3] != -1)      // if the start or end indixes of the snapshot are -1, do not search it.
                 {
                     int totalToExpect = 4 * typeToSearch;           // generate a total to check against. Either 4, or 8.
 
-                    int totalAmt = getPiece(snapShot[i], y) 
-                        + getPiece(snapShot[i + 1], y) 
-                        + getPiece(snapShot[i + 2], y) 
-                        + getPiece(snapShot[i + 3], y); 
+                    int totalAmt = getPiece(snapShot[i], y)
+                        + getPiece(snapShot[i + 1], y)
+                        + getPiece(snapShot[i + 2], y)
+                        + getPiece(snapShot[i + 3], y);
+
+                    Console.WriteLine("Comparing: " + totalToExpect + "to " + totalAmt);
+                    Console.WriteLine("" + getPiece(snapShot[i], y)
+                        + getPiece(snapShot[i + 1], y)
+                        + getPiece(snapShot[i + 2], y)
+                        + getPiece(snapShot[i + 3], y));
 
                     if (totalToExpect == totalAmt)                  // if they are equal... THE GAME IS OVER.
                     {
+                        Console.WriteLine("Solution found. Game over.");
                         return false;                               // game end
 
                     }
                 }
-               
+
 
             }
-                return true;                                        // game continue
+            Console.WriteLine("No solutions found. Running next check.");
+            return true;                                        // game continue
         }
 
-        private bool checkUpDown(int x, int y)
+        private Boolean checkUpDown(int x, int y)
         {
+            // depends on column number (x)
+            // 0 and col only need to check one possibility. 
+
+            Console.Write("Checking Up and Down.");
+
+            int typeToSearch = getPiece(x, y); // to be used later
+
+            // my plan is to generate an array "snapshot" of the values next to the piece just implemented to check for the win.
+            // in this function, i'd generate an array of length [7]
+
+            int[] snapShot = new int[7];                        //  temporary integer array that serves as a "snapshot" of what we are about tpo search
+
+            for (int i = 0; i < 7; i++)                        // will fill the array with the array index values I SHOULD be searching for. 
+            {
+                snapShot[i] = y + 3 - i;                       // Snapshot is now filled with array indexes
+
+                if (snapShot[i] < 0 || snapShot[i] > rows - 1)  // replace the out of bounds array index with -1, which will allow our checking algorithm to ignore the index.
+                {
+                    snapShot[i] = -1;                           // set it directly to -1
+                }
+
+            }
+
+            for (int i = 0; i < 4; i++)                            // we have a total of 4 arrays to search, max!
+            {
+                if (snapShot[i] != -1 && snapShot[i + 3] != -1)      // if the start or end indixes of the snapshot are -1, do not search it.
+                {
+                    int totalToExpect = 4 * typeToSearch;           // generate a total to check against. Either 4, or 8.
+
+                    int totalAmt = getPiece(x, snapShot[i])
+                        + getPiece(x, snapShot[i + 1])
+                        + getPiece(x, snapShot[i + 2])
+                        + getPiece(x, snapShot[i + 3]);
+
+                    Console.WriteLine("Comparing: " + totalToExpect + "to " + totalAmt);
+                    Console.WriteLine("" + getPiece(x, snapShot[i])
+                        + getPiece(x, snapShot[i + 1])
+                        + getPiece(x, snapShot[i + 2])
+                        + getPiece(x, snapShot[i + 3]));
+
+                    if (totalToExpect == totalAmt)                  // if they are equal... THE GAME IS OVER.
+                    {
+                        Console.WriteLine("Solution found. Game over.");
+                        return false;                               // game end
+
+                    }
+                }
+
+
+            }
+            Console.WriteLine("No solutions found. Running next check.");
+            return true;                                        // game continue
+
+        }
+
+        private Boolean checkDiagonalLeftUpRightDown(int x, int y)
+        {
+            Console.Write("Checking Left Up and Right Down.");
+
+            int typeToSearch = getPiece(x, y); // to be used later
+            int[] snapShot = new int[7];                        //  temporary integer array that serves as a "snapshot" of what we are about tpo search
+
+            for (int i = 0; i < 7; i++)                        // will fill the array with the array index values I SHOULD be searching for. 
+            {
+                snapShot[i] = y + 3 - i;                       // Snapshot is now filled with array indexes
+
+                if (snapShot[i] < 0 || snapShot[i] > rows - 1)  // replace the out of bounds array index with -1, which will allow our checking algorithm to ignore the index.
+                {
+                    snapShot[i] = -1;                           // set it directly to -1
+                }
+
+            }
+
+            int xChange = x; // save X in here.
+
+            for (int i = 0; i < 4; i++)                            // we have a total of 4 arrays to search, max!
+            {
+
+                Console.WriteLine("xChange value:" + xChange);
+                if (snapShot[i] != -1 && snapShot[i + 3] != -1 && xChange > 2 && xChange < cols)      // if the start or end indixes of the snapshot are -1, do not search it.
+                {
+                    int totalToExpect = 4 * typeToSearch;           // generate a total to check against. Either 4, or 8.
+
+                    int totalAmt =
+                         getPiece(xChange, snapShot[i])
+                        + getPiece(xChange - 1, snapShot[i + 1])
+                        + getPiece(xChange - 2, snapShot[i + 2])
+                        + getPiece(xChange - 3, snapShot[i + 3]);
+
+                    Console.WriteLine("Comparing: " + totalToExpect + "to " + totalAmt);
+                    Console.WriteLine("" + getPiece(xChange, snapShot[i])
+                        + getPiece(xChange - 1, snapShot[i + 1])
+                        + getPiece(xChange - 2, snapShot[i + 2])
+                        + getPiece(xChange - 3, snapShot[i + 3]));
+
+
+
+                    if (totalToExpect == totalAmt)                  // if they are equal... THE GAME IS OVER.
+                    {
+                        Console.WriteLine("Solution found. Game over.");
+                        return false;                               // game end
+
+                    }
+                }
+
+                xChange++; // increment xChange to allow us to search.
+
+            }
+            Console.WriteLine("No solutions found. Running next check.");
             return true;
         }
 
-        private bool checkDiagonalLeftUpRightDown(int x, int y)
+        private Boolean checkDiagonalRightUpLeftDown(int x, int y)
         {
+            Console.Write("Checking Left Up and Right Down.");
+
+            int typeToSearch = getPiece(x, y); // to be used later
+            int[] snapShot = new int[7];                        //  temporary integer array that serves as a "snapshot" of what we are about tpo search
+
+            for (int i = 0; i < 7; i++)                        // will fill the array with the array index values I SHOULD be searching for. 
+            {
+                snapShot[i] = y + 3 - i;                       // Snapshot is now filled with array indexes
+
+                if (snapShot[i] < 0 || snapShot[i] > rows - 1)  // replace the out of bounds array index with -1, which will allow our checking algorithm to ignore the index.
+                {
+                    snapShot[i] = -1;                           // set it directly to -1
+                }
+
+            }
+
+            int xChange = x; // save X in here.
+
+            for (int i = 0; i < 4; i++)                            // we have a total of 4 arrays to search, max!
+            {
+
+                Console.WriteLine("xChange value:" + xChange);
+                if (snapShot[i] != -1 && snapShot[i + 3] != -1 && xChange > 2 && xChange < cols)      // if the start or end indixes of the snapshot are -1, do not search it.
+                {
+                    int totalToExpect = 4 * typeToSearch;           // generate a total to check against. Either 4, or 8.
+
+                    int totalAmt =
+                         getPiece(xChange - 3, snapShot[i])
+                        + getPiece(xChange - 2, snapShot[i + 1])
+                        + getPiece(xChange - 1, snapShot[i + 2])
+                        + getPiece(xChange, snapShot[i + 3]);
+
+                    Console.WriteLine("Comparing: " + totalToExpect + "to " + totalAmt);
+                    Console.WriteLine("" + getPiece(xChange - 3, snapShot[i])
+                        + getPiece(xChange - 2, snapShot[i + 1])
+                        + getPiece(xChange - 1, snapShot[i + 2])
+                        + getPiece(xChange, snapShot[i + 3]));
+
+
+                    if (totalToExpect == totalAmt)                  // if they are equal... THE GAME IS OVER.
+                    {
+                        Console.WriteLine("Solution found. Game over.");
+                        return false;                               // game end
+
+                    }
+                }
+
+                xChange++; // increment xChange to allow us to search.
+
+            }
+            Console.WriteLine("No solutions found. Running next check.");
             return true;
         }
 
-        private bool checkDiagonalRightUpLeftDown(int x, int y)
-        {
-            return true;
-        }
 
         private bool parsePlayerInput(String s) // boolean for now 
         {
