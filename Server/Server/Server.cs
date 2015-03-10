@@ -20,13 +20,12 @@ namespace Game
         private static List<Game_Generic> games = new List<Game_Generic>();
         private IPAddress local = IPAddress.Parse("127.0.0.1");
         private int port = 54389;
-        private LoginDatabase db;
+        private static LoginDatabase db;
         protected static char delim = '%';
     
 
         public Server()
         {
-            
             // Start the TCP listener and the server.
             
             startListener();
@@ -46,15 +45,11 @@ namespace Game
             /*db.addNewPlayer("Chris", "passw1");
             db.addNewPlayer("Tom", "password");
             Console.WriteLine(db.attemptToLogin("Tom", "password"));*/
-            db.printUsers();
-
-
-            
+            db.printUsers(); 
         }
 
         private void startListener()
         {
-
             // Declare a new listener with local 127.0.0.1 and port 54389
 
             listener = new TcpListener(local, port);
@@ -98,40 +93,6 @@ namespace Game
             return -1;
         }
 
-        /*
-        private void addPlayer(int playerNumber)
-        {
-            Console.WriteLine("calling add player " + playerNumber);
-
-            
-            
-
-            // activePlayers.Add(p);
-
-            Console.WriteLine(" player number equals " + playerNumber);
-
-            activePlayers[playerNumber].getPlayerWriter().WriteLine(playerNumber);
-            activePlayers[playerNumber].connected = true;
-
-            string data = activePlayers[playerNumber].getPlayerReader().ReadLine();
-            Console.WriteLine(data);
-            // Console.ReadLine();
-
-            while (true)
-            {
-                Console.Write("Input a message:  ");
-                data = Console.ReadLine();
-                activePlayers[playerNumber].getPlayerWriter().WriteLine(data);
-
-                data = activePlayers[playerNumber].getPlayerReader().ReadLine();
-                Console.WriteLine("Message recieved : " + data);
-            }
-        }
-         * 
-         * */
-
-
-
         private class ListenerThread
         { // start thread for TCP listener
             public void addPlayers()
@@ -158,11 +119,6 @@ namespace Game
                     String startMessage = p.getPlayerReader().ReadLine();
                     String[] data = startMessage.Split(delim);
 
-                    /*
-                     * ATTEMPT TO LOG IN TO DATABASE HERE 
-                     * GET EITHER SUCCESS OR FAILURE RESULTS FROM DATABASE 
-                     * 
-                     */
 
                     /*
                      * 
@@ -178,6 +134,28 @@ namespace Game
                      p.getPlayerWriter().WriteLine
                      * 
                      */
+
+                    // username is data[0]
+                    // password is data[1]
+                    // gameType is data[2]
+                    
+                    string loginMessage = "";
+                    if (db.attemptToLogin(data[0], data[1]) )
+                    {
+                        loginMessage = "Login was successful. Welcome back!";
+                    }
+
+                    else if (db.addNewPlayer(data[0], data[1]))
+                    {
+                        loginMessage = "New User created. We hope you enjoy our game!";
+                    }
+
+                    else
+                    {
+                        loginMessage = "Login attempt failed. Try again.";
+                    }
+
+                    p.getPlayerWriter().WriteLine(loginMessage);
 
                     p.setGame(data[2]);
 
@@ -220,8 +198,6 @@ namespace Game
 
         private class GameThread
         { // start GameThread
-            // int gameNumber = -1;
-
             private Game_Generic currentGame;
 
             public GameThread(Game_Generic newGame)
@@ -233,7 +209,6 @@ namespace Game
             {
                 currentGame.getLoop().gameLoop(currentGame);
             }
-
         } // end GameThread
     }
 }

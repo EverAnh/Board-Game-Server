@@ -62,12 +62,25 @@ namespace Game
 
        
         //NO LONGER REQUIRES AN EMAIL- 03-9-15
-        public void addNewPlayer(string newLoginId ,string newPw)
+
+        // JH : addNewPlayer now returns a bool
+        // if a new player was added because the ID did not previously exist, then addNewPlayer returns true
+        // if the username already exists, then a new player is not added, and addNewPlayer returns false
+        public bool addNewPlayer(string newLoginId ,string newPw)
         {
-            var ranInt = Unique_userId();
-            string sql = "insert into users (userID,loginID,pw) values ('" + ranInt+ "','" +newLoginId+"','"+ newPw + "')";
-            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-            command.ExecuteNonQuery();
+            bool newUser = false;
+
+            if (! checkIfLogInExists(newLoginId) )
+            {
+                newUser = true;
+
+                var ranInt = Unique_userId();
+                string sql = "insert into users (userID,loginID,pw) values ('" + ranInt + "','" + newLoginId + "','" + newPw + "')";
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                command.ExecuteNonQuery();
+            }
+
+            return newUser;
         }
         
 
@@ -111,8 +124,6 @@ namespace Game
             SQLiteDataReader reader = command.ExecuteReader();
 
            // Console.WriteLine("test");
- 
-           
 
             // command.Connection.Open();
             bool userExists = reader.Read();
@@ -128,7 +139,7 @@ namespace Game
         }
 
         // return 1 if login attempt was a success
-        // return 0 if the login attempt was a fail and will create a new player
+        // return 0 if the login attempt was a fail and/or will create a new player
         //FIRST YOU WOULD ATTEMPT TO LOG IN AND IF THE LOGIN ATTEMP IS FAILS
         //THEN THE ADDNEWPLAYER() FUNCTION IS CALLED AND A NEW PLAYER IS ADDED.
  
@@ -142,12 +153,13 @@ namespace Game
                 return true;
             }
             
+            /*
             Console.WriteLine("Invalid Login username and password!");
             Console.WriteLine("New player profile being Created!");
             addNewPlayer(checkLogin, checkPw);
             Console.WriteLine("New player has been created!");
+            */
             return false;
-        
         }
 
         // Writes the users to the console sorted on score in descending order.
