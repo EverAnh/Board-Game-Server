@@ -42,6 +42,11 @@ namespace Game
             return maxPlayers;
         }
 
+        public Server_GameLoop getLoop()
+        {
+            return loop;
+        }
+
         public String getGameType()
         {
             return gameType;
@@ -50,11 +55,6 @@ namespace Game
         public int getPiece(int getX, int getY)
         {
             return gameBoard[getX, getY];
-        }
-
-        public Server_GameLoop getLoop()
-        {
-            return loop;
         }
 
         public void assignPiece(int getX, int getY, int value)

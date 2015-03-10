@@ -36,13 +36,6 @@ namespace Game
             return stream;
         }
 
-        public bool getSocketConnected()
-        {
-            bool canRead = sock.Poll(500, SelectMode.SelectRead);
-            bool canWrite = sock.Poll(500, SelectMode.SelectWrite);
-            return (canRead && canWrite);
-        }
-
         public Socket getPlayerSocket()
         {
             return sock;
@@ -87,5 +80,13 @@ namespace Game
         {
             gameChosen = game;
         }
+
+        public bool getSocketConnected()
+        {
+            bool canRead = sock.Poll(500, SelectMode.SelectRead);
+            bool canWrite = sock.Poll(500, SelectMode.SelectWrite);
+            return (canRead && canWrite);
+        }
+
     } // end Player class 
 }
