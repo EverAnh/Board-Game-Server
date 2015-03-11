@@ -18,7 +18,8 @@ namespace Game
 
         public Game_Generic()
         {
-            // Empty constructor for subclasses
+            gamePieces = new List<Piece_Generic>();
+            currentPlayers = new List<Player>();
         }
 
         public Game_Generic(int x_size, int y_size)
