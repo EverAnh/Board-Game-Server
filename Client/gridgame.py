@@ -3,7 +3,7 @@ import os, sys
 import socket
 
 class GridGame:
-    WINDOW_LENGTH = 1200
+    WINDOW_LENGTH = 800
     GRID_LENGTH = 8
     CELL_SIZE = WINDOW_LENGTH / GRID_LENGTH
     
@@ -135,27 +135,20 @@ class GridGame:
             #Receive message 3
             message_three = s.recv(4096)
             print 'server sends: ' + message_three
+
+            message_four = s.recv(4096)
+            print 'server sends: ' + message_four
+                    
+            message_five = s.recv(4096)
+            print 'server sends: ' + message_five
             
         except socket.error:
             #Send failed
             print 'Send failed'
             sys.exit()
-'''
-        message_four = 
-        try :
-            #Send message 4
-            
-        except socket.error:
-            print 'Send failed'
-            sys.exit()
-'''
-'''
-        while True:
-            print s.recv(4096)
-            m = raw_input('type a message:')
-            mess = str(m) + '\n'
-            s.sendall(mess)
-'''        
+
+        
+
 
 ##if __name__ == 'main':
 game = GridGame()
