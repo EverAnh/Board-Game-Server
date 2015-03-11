@@ -197,8 +197,6 @@ namespace Game
                         }
                     }
 
-                    /*
-
                     // found a matching game type that needs an additional player
                     else
                     {
@@ -210,8 +208,6 @@ namespace Game
 
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
-                     * 
-                     * */
                 }
             }
         } // end thread for TCP listener
