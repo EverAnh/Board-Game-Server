@@ -14,8 +14,8 @@ import ConnectFourGameBoard
 # other components involved with the GUI. It is the one with an overall loop to
 # refresh the drawing of these managed GUI components.
 #
-# BoardGameClient takes an argument called "game_type" that determines which
-# board game's grid, pieces, etc. will be provided.
+# The BoardGameClient class takes an argument called "game_type" that determines
+# which board game's grid, pieces, etc. will be provided.
 #
 # ------------------------------------------------------------------------------
 
