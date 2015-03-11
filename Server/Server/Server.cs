@@ -28,8 +28,7 @@ namespace Game
         {
             // Start the TCP listener and the server.
             
-            startListener();
-            startServer();
+            
 
             // Initialize the login database and create a new database.
 
@@ -45,7 +44,10 @@ namespace Game
             /*db.addNewPlayer("Chris", "passw1");
             db.addNewPlayer("Tom", "password");
             Console.WriteLine(db.attemptToLogin("Tom", "password"));*/
-            db.printUsers(); 
+            db.printUsers();
+
+            startListener();
+            startServer();
         }
 
         private void startListener()
@@ -114,11 +116,12 @@ namespace Game
                     int playerNumber = activePlayers.IndexOf(p);
 
                     Console.WriteLine("new player number " + playerNumber);
+                    // message 1
                     p.getPlayerWriter().WriteLine(playerNumber.ToString() );
 
+                    // message 2
                     String startMessage = p.getPlayerReader().ReadLine();
                     String[] data = startMessage.Split(delim);
-
 
                     /*
                      * 
@@ -138,7 +141,9 @@ namespace Game
                     // username is data[0]
                     // password is data[1]
                     // gameType is data[2]
-                    
+
+                    p.setUserName(data[0]);
+
                     string loginMessage = "";
                     if (db.attemptToLogin(data[0], data[1]) )
                     {
@@ -155,13 +160,20 @@ namespace Game
                         loginMessage = "Login attempt failed. Try again.";
                     }
 
+                    // message 3
                     p.getPlayerWriter().WriteLine(loginMessage);
+
+                    Console.WriteLine("message 3 sent");
+
+                    
 
                     p.setGame(data[2]);
 
                     int gameToJoin = getIndexOfGameToJoin(p);
                     String newPlayerNumber = "0";
                     String gameToPlay = "";
+
+                    
 
                     // there is no existing game of the type that the player wants to play 
                     // that also has room for an additional player
@@ -171,15 +183,21 @@ namespace Game
 
                         if (p.getGame() == "connectFour")
                         {
+                            
                             Game_Generic newGame = new Game_ConnectFour();
                             games.Add(newGame);
                             newGame.addPlayer(p);
                             gameToPlay = p.getGame();
+                             
+                            Console.WriteLine("starting a new game");
 
                             GameThread gt = new GameThread(newGame);
                             Thread gameThread = new Thread(new ThreadStart (gt.playGame ) );
+                            gameThread.Start();
                         }
                     }
+
+                    /*
 
                     // found a matching game type that needs an additional player
                     else
@@ -192,6 +210,8 @@ namespace Game
 
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
+                     * 
+                     * */
                 }
             }
         } // end thread for TCP listener
@@ -207,6 +227,8 @@ namespace Game
 
             public void playGame()
             {
+                Console.WriteLine("starting game loop on a thread " + currentGame.getGameType() );
+
                 currentGame.getLoop().gameLoop(currentGame);
             }
         } // end GameThread

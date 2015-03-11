@@ -20,17 +20,24 @@ namespace Game
             //      which includes stream reader/writer
             // 
 
-            int numberPlayers = game.getNumberPlayers();
+            int numberPlayers = game.getPlayers().Count;
             int turn = 0;
             int activePlayer = 0;
 
-            while (allPlayersConnected(game.getPlayers(), game.getPlayers().Capacity) )
+            Console.WriteLine("about to start game loop");
+
+            while (allPlayersConnected(game.getPlayers(), numberPlayers) )
             {
+                
                 turn++;
                 String turnMessage = "Starting Turn " + turn.ToString() + ".";
 
+                Console.WriteLine(turnMessage);
+
+                // should be message 4
                 sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
+                
                 game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
@@ -49,7 +56,6 @@ namespace Game
 
                 // increment the value of active player to the next player
                 activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers() );
-
             }
         }
 

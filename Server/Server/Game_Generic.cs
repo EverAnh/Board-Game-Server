@@ -20,12 +20,15 @@ namespace Game
         {
             gamePieces = new List<Piece_Generic>();
             currentPlayers = new List<Player>();
+            loop = new Server_GameLoop();
         }
 
         public Game_Generic(int x_size, int y_size)
         {
             gameBoard = new int[x_size, y_size];
             gamePieces = new List<Piece_Generic>();
+            currentPlayers = new List<Player>();
+            loop = new Server_GameLoop();
         }
 
         public List<Player> getPlayers()

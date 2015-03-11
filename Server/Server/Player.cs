@@ -83,9 +83,13 @@ namespace Game
 
         public bool getSocketConnected()
         {
+            /*
             bool canRead = sock.Poll(500, SelectMode.SelectRead);
             bool canWrite = sock.Poll(500, SelectMode.SelectWrite);
             return (canRead && canWrite);
+             * */
+
+            return true;
         }
 
     } // end Player class 

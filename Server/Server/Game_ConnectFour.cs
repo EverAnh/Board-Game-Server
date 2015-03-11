@@ -19,7 +19,7 @@ namespace Game
         {
             gameBoard = new int[cols, rows];
             gameType = "connectFour";
-            maxPlayers = 2;
+            maxPlayers = 1;
         }
 
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
