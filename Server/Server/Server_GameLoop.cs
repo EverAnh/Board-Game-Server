@@ -53,6 +53,8 @@ namespace Game
                     move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
                 }
 
+                Console.WriteLine("The number of players is " + numberPlayers);
+
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, move);

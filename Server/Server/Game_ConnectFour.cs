@@ -22,7 +22,7 @@ namespace Game
             maxPlayers = 1;
         }
 
-        public int assignPiece(int getX, int getY, int value) // We don't care about getY, so override it.
+        public override int assignPiece(int getX, int getY, int value) // We don't care about getY, so override it.
         {
             // This function will instead drop it in the appropriate row; we don't care about the getY.
             // GetX is all that matters here. 
