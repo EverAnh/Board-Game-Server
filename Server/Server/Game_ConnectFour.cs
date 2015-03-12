@@ -22,36 +22,65 @@ namespace Game
             maxPlayers = 1;
         }
 
+        public int assignPiece(int getX, int getY, int value) // We don't care about getY, so override it.
+        {
+            // This function will instead drop it in the appropriate row; we don't care about the getY.
+            // GetX is all that matters here. 
+
+            int newGetY = returnTopOfRow(getX); // calls helper method to return top of the current row
+
+            if (newGetY != 100)
+            {
+                gameBoard[getX, newGetY] = value; // assigns the element to the top.
+                return newGetY;
+            }
+            else
+            {
+                Console.Write("Invalid move!");// invalid move 
+                return -1;          // return an error value
+            }
+                
+                
+           
+        }
+
+        private int returnTopOfRow(int getX) // a helper method to get the "top" of each row.
+        {
+            for (int i = rows; i >= 0; i--) // searches from the bottom, going up
+            {
+                if (gameBoard[getX, i] == 0) // accesses the element. if it is 1 or 2, we keep looping.
+                    return i;
+            }
+            return 100;                     // if we get to the end and it does not exist, return an "error code"
+        }
+
+
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
-            int placeX = 0;
-            int placeY = 0;
+            int placeX = 0; 
+            int placeY = 0; //will not need Y input.
             int color = 0;  // color: [1] for black, [2] for red.
          
-            // store what you parse into an array?
-            parsePlayerInput(s);
+            parsePlayerInput(s);   // store what you parse into an array?
+            placeY = assignPiece(placeX, placeY, color);        // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
-
-            // get input on where the piece has been placed and save it to gameBoard
-            // make sure to check that the spot is already occupied.
-            if (checkOccupiedState(placeX, placeY)) // if the spot is not yet occupied
+            // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
+            if (placeY != -1 && checkOccupiedState(placeX, placeY)) // if the spot is not yet occupied, and there is no error code.
             {
-                // place the piece in the spot
-                assignPiece(placeX, placeY, color); // we'd like posX, posY, color [1] for black, [2] for red. [0] indicates not occupied
+                assignPiece(placeX, placeY, color); // place the piece in the spot. we'd like posX, posY, color [1] for black, [2] for red. [0] indicates not occupied
 
-                // update the game board graphics
-                // using the piece, check if the state is a win condition
-                if (checkGameState(placeX, placeY)) // if the placement happens to be a win condition
+                if (checkGameState(placeX, placeY)) // using the piece, check if the state is a win condition. if the placement happens to be a win condition
                 {
-                    gameState = false; // game is over!
-                    Console.Write("Game over!"); // print to console log 
+                    gameState = false;              // game is over!
+                    Console.Write("Game over!");    // print to console log 
                 }
 
-                return true;
+                // Code here to echo back to server the string that we just got.
+                return true;            
             }
 
             // the move was not valid
-            return false;
+            return true;
         }
 
         // Game Logic
