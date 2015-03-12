@@ -65,11 +65,11 @@ class GridGame:
                 #######
                 ####### no response from server currently. when response received, take action.
                 #######
-                move = str(column) + '%' + str(row)
+                move = str(column) + '%' + str(row) + '\n'
+                self.s.sendall(move)
                 print move
-                #self.s.sendall(move)
-                #move_response = self.s.recv(4096)
-                #print 'server sends: ' + move_response
+                move_response = self.s.recv(4096)
+                print 'server sends: ' + move_response
                 
         
         pygame.display.flip()
