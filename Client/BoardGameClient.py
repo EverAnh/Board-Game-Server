@@ -1,6 +1,7 @@
 import pygame
 import os, sys
 
+import GameDisplay
 import DemoGameBoard
 import ConnectFourGameBoard
 
@@ -34,10 +35,11 @@ class BoardGameClient:
 
         self._game_type = game_type
         self._gameboard = self._make_game_board(game_type)
+        self._GameDisplay = GameDisplay()
 
     def _draw():
-        #TODO
-        return
+        #creates instance of GameDisplay 
+        pass
 
     def _make_game_board(self, game_type):
         if game_type == "connectfour":
@@ -57,6 +59,7 @@ class BoardGameClient:
 ##if __name__ == 'main':
 
 game = BoardGameClient("demo")
+
 game.report_game_type()
 
 print "(end reached)"
