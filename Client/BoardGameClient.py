@@ -25,6 +25,7 @@ class BoardGameClient:
     # private member variables -------------------------------------------------
 
     _game_type = "demo"
+    #instance of GameDisplay is created
     GD = GameDisplay.GameDisplay("demo")
 
     # methods ------------------------------------------------------------------

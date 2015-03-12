@@ -47,10 +47,14 @@ class GameDisplay:
                 column = mousePosition[0]/self.CELL_SIZE
                 row = mousePosition[1]/self.CELL_SIZE
                 print "row,column" ,(column,row)
-                if self.CheckValidMove():
+                #will display valid move,invalid move text, or error
+                if self.CheckValidMove() == 1:
                     #this is where we add to game board temporarily inside here
                     self._gameboard[column][row] = (1,2)
                     self._drawGamePiece((column,row),1)
+                if self.CheckValidMove() == 2:
+                    self._drawError()
+                    
 
 
         pygame.display.flip()
@@ -87,7 +91,12 @@ class GameDisplay:
    
 
     def _drawError(self):
-        pass
+        fontObject = pygame.font.Font(None,100)
+        ErrorMessage = fontObject.render("Error",1,(100,100,100))
+        self._screen.blit(ErrorMessage,(400,400))
+        
+        
+        
 
 
 ##if __name__ == 'main':
