@@ -57,11 +57,16 @@ namespace Game
 
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
-            int placeX = 0; 
-            int placeY = 0; //will not need Y input.
+
+            String[] move = s.Split('%');
+            // move[0] is new x location
+            // move[1] is new y location
+
+            int placeX = System.Convert.ToInt32(move[0]);
+            int placeY = System.Convert.ToInt32(move[1]);
             int color = 0;  // color: [1] for black, [2] for red.
          
-            parsePlayerInput(s);   // store what you parse into an array?
+            // parsePlayerInput(s);   // store what you parse into an array?
             placeY = assignPiece(placeX, placeY, color);        // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
             // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
@@ -74,9 +79,6 @@ namespace Game
                     gameState = false;              // game is over!
                     Console.Write("Game over!");    // print to console log 
                 }
-
-                // Code here to echo back to server the string that we just got.
-                return true;            
             }
 
             // the move was not valid
@@ -329,16 +331,6 @@ namespace Game
             return true;
         }
 
-
-        private bool parsePlayerInput(String s) // boolean for now 
-        {
-            // Parses player input and store into local vars
-
-            // recieve inputString here:
-
-            return true;
-
-        }
 
         private bool checkOccupiedState(int x, int y)
         {
