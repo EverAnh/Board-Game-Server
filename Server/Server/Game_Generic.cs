@@ -31,6 +31,9 @@ namespace Game
             loop = new Server_GameLoop();
             gameType = "generic";
             maxPlayers = 1;
+            gamePieces.Add(new Piece_Generic());
+            gamePieces[0].setX(2);
+            gamePieces[0].setY(2);
         }
 
         public List<Player> getPlayers()
