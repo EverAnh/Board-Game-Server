@@ -41,6 +41,11 @@ namespace Game
             return currentPlayers;
         }
 
+        public List<Piece_Generic> getPieces()
+        {
+            return gamePieces;
+        }
+
         public int getNumberPlayers()
         {
             return numberPlayers;

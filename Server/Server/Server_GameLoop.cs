@@ -42,6 +42,9 @@ namespace Game
 
                 // message 5
                 game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
+
+                Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX() + " " + game.getPieces()[activePlayer].getY() );
+
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
                 // player tried to make an invalid move. Force them to try again until they send a valid move
