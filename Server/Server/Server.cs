@@ -27,9 +27,6 @@ namespace Game
         public Server()
         {
             // Start the TCP listener and the server.
-            
-            
-
             // Initialize the login database and create a new database.
 
             db = new LoginDatabase();
