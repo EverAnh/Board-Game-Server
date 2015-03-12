@@ -94,7 +94,7 @@ namespace Game
         {
             int index = 0;
 
-            if (i++ < max)
+            if ( (i +1) < max)
             {
                 index = i++;
             }
@@ -103,6 +103,8 @@ namespace Game
             {
                 index = 0;
             }
+
+            Console.WriteLine("The next player to take a turn is " + index);
 
             return index;
         }
