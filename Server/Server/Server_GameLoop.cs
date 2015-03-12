@@ -8,7 +8,7 @@ namespace Game
 {
     public class Server_GameLoop
     {
-        int activePlayer = 0;
+        private int activePlayer = 0;
 
         public Server_GameLoop()
         {
@@ -36,7 +36,7 @@ namespace Game
                 Console.WriteLine(turnMessage);
 
                 // should be message 4
-                // sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
+                sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
                 System.Threading.Thread.Sleep(500);
 
