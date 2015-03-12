@@ -165,15 +165,11 @@ namespace Game
 
                     Console.WriteLine("message 3 sent");
 
-                    
-
                     p.setGame(data[2]);
 
                     int gameToJoin = getIndexOfGameToJoin(p);
                     String newPlayerNumber = "0";
                     String gameToPlay = "";
-
-                    
 
                     // there is no existing game of the type that the player wants to play 
                     // that also has room for an additional player
