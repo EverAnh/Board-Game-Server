@@ -78,26 +78,30 @@ namespace Game
 
         public virtual bool handlePlayerTurn(String s)
         {
+            String[] move = s.Split('%');
+            // move[0] is new x location
+            // move[1] is new y location
 
-            return true;
+
+            return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
         }
 
-        private bool checkGameState(Piece_Generic p, int x, int y)
+        private bool checkGameState(int x, int y)
         {
             // move up or down, not left/right
-            if (p.getX() == x)
+            if (gamePieces[loop.getActivePlayer()].getX() == x)
             {
                 // check to see if moved exactly 1
-                if ( (p.getY() -1 == y) || (p.getY() +1 == y) )
+                if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
                 {
                     return true;
                 }
             }
 
-            else if (p.getY() == y)
+            else if (gamePieces[loop.getActivePlayer()].getY() == y)
             {
                 // check to see if moved exactly 1
-                if ( (p.getX() -1 == x) || (p.getX() +1 == x) )
+                if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
                 {
                     return true;
                 }

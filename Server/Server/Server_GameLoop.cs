@@ -8,6 +8,8 @@ namespace Game
 {
     public class Server_GameLoop
     {
+        int activePlayer = 0;
+
         public Server_GameLoop()
         {
 
@@ -19,10 +21,9 @@ namespace Game
             // needs the Player object for each player in the game
             //      which includes stream reader/writer
             // 
-
             int numberPlayers = game.getPlayers().Count;
             int turn = 0;
-            int activePlayer = 0;
+            
 
             Console.WriteLine("about to start game loop");
 
@@ -102,6 +103,11 @@ namespace Game
             }
 
             return index;
+        }
+
+        public int getActivePlayer()
+        {
+            return activePlayer;
         }
     }
 }
