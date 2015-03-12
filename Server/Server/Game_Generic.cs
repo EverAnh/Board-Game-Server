@@ -30,7 +30,7 @@ namespace Game
             currentPlayers = new List<Player>();
             loop = new Server_GameLoop();
             gameType = "generic";
-            maxPlayers = 1;
+            maxPlayers = 2;
         }
 
         public List<Player> getPlayers()
