@@ -30,6 +30,7 @@ namespace Game
             currentPlayers = new List<Player>();
             loop = new Server_GameLoop();
             gameType = "generic";
+            maxPlayers = 2;
         }
 
         public List<Player> getPlayers()
@@ -62,9 +63,11 @@ namespace Game
             return gameBoard[getX, getY];
         }
 
-        public void assignPiece(int getX, int getY, int value)
+        public virtual int assignPiece(int getX, int getY, int value)
         {
             gameBoard[getX, getY] = value;
+
+            return 0;
         }
 
         public void addPlayer(Player p)
