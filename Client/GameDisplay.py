@@ -47,9 +47,10 @@ class GameDisplay:
                 column = mousePosition[0]/self.CELL_SIZE
                 row = mousePosition[1]/self.CELL_SIZE
                 print "row,column" ,(column,row)
-                #this is where we add to game board temporarily inside here
-                self._gameboard[column][row] = (1,2)
-                self._drawGamePiece((column,row),1)
+                if self.CheckValidMove():
+                    #this is where we add to game board temporarily inside here
+                    self._gameboard[column][row] = (1,2)
+                    self._drawGamePiece((column,row),1)
 
 
         pygame.display.flip()
@@ -90,11 +91,11 @@ class GameDisplay:
 
 
 ##if __name__ == 'main':
-game = GameDisplay("demo")
-clock = pygame.time.Clock()
+#game = GameDisplay("demo")
+#clock = pygame.time.Clock()
 #game.connect_to_server()
 
-while not game._should_quit:
-    clock.tick(30)
-    game.update()
-pygame.quit()
+#while not game._should_quit:
+  #  clock.tick(30)
+  #  game.update()
+#pygame.quit()

@@ -25,20 +25,15 @@ class BoardGameClient:
     # private member variables -------------------------------------------------
 
     _game_type = "demo"
+    GD = GameDisplay.GameDisplay("demo")
 
     # methods ------------------------------------------------------------------
 
     def __init__(self, game_type):
-
-        pygame.init()
-        self._clock = pygame.time.Clock()
-
         self._game_type = game_type
         self._gameboard = self._make_game_board(game_type)
-        self._GameDisplay = GameDisplay()
 
-    def _draw():
-        #creates instance of GameDisplay 
+    def draw(self):
         pass
 
     def _make_game_board(self, game_type):
@@ -59,7 +54,12 @@ class BoardGameClient:
 ##if __name__ == 'main':
 
 game = BoardGameClient("demo")
+clock = pygame.time.Clock()
+#game.connect_to_server()
 
-game.report_game_type()
+while not game.GD._should_quit:
+    clock.tick(30)
+    game.GD.update()
+pygame.quit()
 
 print "(end reached)"
