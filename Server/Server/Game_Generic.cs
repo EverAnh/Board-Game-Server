@@ -29,11 +29,21 @@ namespace Game
             gamePieces = new List<Piece_Generic>();
             currentPlayers = new List<Player>();
             loop = new Server_GameLoop();
+            gameType = "generic";
+            maxPlayers = 1;
+            gamePieces.Add(new Piece_Generic());
+            gamePieces[0].setX(2);
+            gamePieces[0].setY(2);
         }
 
         public List<Player> getPlayers()
         {
             return currentPlayers;
+        }
+
+        public List<Piece_Generic> getPieces()
+        {
+            return gamePieces;
         }
 
         public int getNumberPlayers()
@@ -61,9 +71,11 @@ namespace Game
             return gameBoard[getX, getY];
         }
 
-        public void assignPiece(int getX, int getY, int value)
+        public virtual int assignPiece(int getX, int getY, int value)
         {
             gameBoard[getX, getY] = value;
+
+            return 0;
         }
 
         public void addPlayer(Player p)
@@ -77,7 +89,41 @@ namespace Game
 
         public virtual bool handlePlayerTurn(String s)
         {
-            return true;
+            String[] move = s.Split('%');
+            // move[0] is new x location
+            // move[1] is new y location
+
+
+            return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
+        }
+
+        // returns true if the move is a valid move, otherwise returns false
+        private bool checkGameState(int x, int y)
+        {
+            // move up or down, not left/right
+            if (gamePieces[loop.getActivePlayer()].getX() == x)
+            {
+                // check to see if moved exactly 1
+                if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
+                {
+                    gamePieces[loop.getActivePlayer()].setY(y);
+
+                    return true;
+                }
+            }
+
+            else if (gamePieces[loop.getActivePlayer()].getY() == y)
+            {
+                // check to see if moved exactly 1
+                if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
+                {
+                    gamePieces[loop.getActivePlayer()].setX(x);
+
+                    return true;
+                }
+            }
+            
+            return false;
         }
     }
 }

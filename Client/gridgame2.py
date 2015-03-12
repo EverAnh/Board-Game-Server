@@ -35,8 +35,10 @@ class GridGame:
         self.is_turn = True
 
         # add initial piece
-        self._last_location = (2,2)
-        self._gameboard[self._last_location[0]][self._last_location[1]] = (1,2)
+        self._gameboard[3][3] = (1,2)
+        #self._gameboard[1][4] = (1,2)
+        #self._gameboard[7][2] = (2,5)
+        #self._gameboard[7][3] = (2,5)
 
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ##socket needs to stay in scope, thus its here for now!!!
 
@@ -54,34 +56,22 @@ class GridGame:
                 print "mouse pressed down at ", mousePosition
                 column = mousePosition[0]/self.CELL_SIZE
                 row = mousePosition[1]/self.CELL_SIZE
-                move = str(column) + '%' + str(row) + '\n'
-                self.s.sendall(move)
-                print move
-                move_response = self.s.recv(4096)
-                print 'server sends: ' + move_response
-                if move_response[0] == move[0]:
-                    #remove old piece
-                    print 'removing old'
-                    self._gameboard[self._last_location[0]][self._last_location[1]] = (0,0)
-                    
-                    #add new piece
-                    print 'adding new'
+                if self._gameboard[column][row] != (0,0):
+                    self._gameboard[column][row] = (0,0)
+                else:
                     self._gameboard[column][row] = (1,2)
                     self.placeNewPiece(mousePosition)
-
-                    #make new location the last location
-                    print 'last is new'
-                    self._last_location = (column,row)
-                else:
-                    print 'invalid move!'
-
-                    
+                ##pygame.draw.circle(self._screen, pygame.Color(222,184,135), mousePosition, 50, 0)
+                #######
+                ####### no response from server currently. when response received, take action.
+                #######
+                move = str(column) + '%' + str(row)
+                print move
+                #self.s.sendall(move)
+                #move_response = self.s.recv(4096)
+                #print 'server sends: ' + move_response
                 
-                '''
-                if self._gameboard[column][row] != (0,0): ## this removes a piece 
-                    self._gameboard[column][row] = (0,0)
-                '''
-                
+        
         pygame.display.flip()
 
     def placeNewPiece(self, mousePosition):

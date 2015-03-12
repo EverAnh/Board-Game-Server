@@ -165,36 +165,41 @@ namespace Game
 
                     Console.WriteLine("message 3 sent");
 
-                    
-
                     p.setGame(data[2]);
 
                     int gameToJoin = getIndexOfGameToJoin(p);
                     String newPlayerNumber = "0";
                     String gameToPlay = "";
 
-                    
-
                     // there is no existing game of the type that the player wants to play 
                     // that also has room for an additional player
                     if (gameToJoin == -1)
                     {
                         newPlayerNumber = "1";
+                        Game_Generic newGame = null;
 
-                        if (p.getGame() == "connectFour")
+                        if(p.getGame() == "generic")
+                        {
+                            newGame = new Game_Generic(8, 8);
+
+                        }
+
+                        else if (p.getGame() == "connectFour")
                         {
                             
-                            Game_Generic newGame = new Game_ConnectFour();
-                            games.Add(newGame);
-                            newGame.addPlayer(p);
-                            gameToPlay = p.getGame();
-                             
-                            Console.WriteLine("starting a new game");
-
-                            GameThread gt = new GameThread(newGame);
-                            Thread gameThread = new Thread(new ThreadStart (gt.playGame ) );
-                            gameThread.Start();
+                            newGame = new Game_ConnectFour();
+                            
                         }
+
+                        games.Add(newGame);
+                        newGame.addPlayer(p);
+                        gameToPlay = p.getGame();
+
+                        Console.WriteLine("starting a new game");
+
+                        GameThread gt = new GameThread(newGame);
+                        Thread gameThread = new Thread(new ThreadStart(gt.playGame));
+                        gameThread.Start();
                     }
 
                     // found a matching game type that needs an additional player
