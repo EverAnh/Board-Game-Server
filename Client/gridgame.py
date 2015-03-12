@@ -34,11 +34,13 @@ class GridGame:
         self._should_quit = False
         self.is_turn = True
 
-        # add test pieces
-        self._gameboard[4][2] = (1,2)
-        self._gameboard[1][4] = (1,2)
+        # add initial piece
+        self._gameboard[3][3] = (1,2)
+        #self._gameboard[1][4] = (1,2)
         #self._gameboard[7][2] = (2,5)
         #self._gameboard[7][3] = (2,5)
+
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ##socket needs to stay in scope, thus its here for now!!!
 
 
 
@@ -56,6 +58,14 @@ class GridGame:
                 row = mousePosition[1]/self.CELL_SIZE
                 self._gameboard[column][row] = (1,2)
                 pygame.draw.circle(self._screen, pygame.Color(222,184,135), mousePosition, 50, 0)
+#######
+####### no response from server currently. when response received, take action.
+#######
+                move = str(column) + '%' + str(row)
+                self.s.sendall(move)
+                move_response = self.s.recv(4096)
+                print 'server sends: ' + move_response
+            
                 #game.placeNewPiece(mousePosition)
                 
         
@@ -108,13 +118,13 @@ class GridGame:
         host = '127.0.0.1'
         port = 54389
 
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ##s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        s.connect( (host, port) )
+        self.s.connect( (host, port) )
         print 'socket connected'
 
         print 'received message 1: '
-        playerID = s.recv(4096)
+        playerID = self.s.recv(4096)
         print playerID
 
         DELIM = "%"
@@ -127,20 +137,17 @@ class GridGame:
         print 'client sends: ' + message_two
         try :
             #Send message 2
-            s.sendall(message_two)
-
-######## server is throwing a null pointer here when it calls currentPlayers.add(p)
-######## VS2012 debugger is showing a few null fields, both in Game.Player and in Game.Game_ConnectFour
+            self.s.sendall(message_two)
             
             #Receive message 3
-            message_three = s.recv(4096)
-            print 'server sends: ' + message_three
+            message_three = self.s.recv(4096)
+            print 'server sends msg 3: ' + message_three
 
-            message_four = s.recv(4096)
-            print 'server sends: ' + message_four
+            message_four = self.s.recv(4096)
+            print 'server sends msg 4: ' + message_four
                     
-            message_five = s.recv(4096)
-            print 'server sends: ' + message_five
+            message_five = self.s.recv(4096)
+            print 'server sends msg 5: ' + message_five
             
         except socket.error:
             #Send failed
