@@ -1,0 +1,12 @@
+
+
+So, for the balloon example, here is the way it works. 
+
+Have some x value, call it whatever you want. In this case, I call it positionX. 
+Then, have some positionY. 
+
+As the game makes changes, make any necessary changes to positionX and positionY. 
+
+Then, at the very end inside the while(true) loop, add something like _display.blit( ******(positionX, positionY)). In this case, replace the *'s with the name of the actual sprite/object being displayed.
+
+I hope that this example helps. 
