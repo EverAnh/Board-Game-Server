@@ -29,6 +29,7 @@ namespace Game
             gamePieces = new List<Piece_Generic>();
             currentPlayers = new List<Player>();
             loop = new Server_GameLoop();
+            gameType = "generic";
         }
 
         public List<Player> getPlayers()
@@ -77,7 +78,32 @@ namespace Game
 
         public virtual bool handlePlayerTurn(String s)
         {
+
             return true;
+        }
+
+        private bool checkGameState(Piece_Generic p, int x, int y)
+        {
+            // move up or down, not left/right
+            if (p.getX() == x)
+            {
+                // check to see if moved exactly 1
+                if ( (p.getY() -1 == y) || (p.getY() +1 == y) )
+                {
+                    return true;
+                }
+            }
+
+            else if (p.getY() == y)
+            {
+                // check to see if moved exactly 1
+                if ( (p.getX() -1 == x) || (p.getX() +1 == x) )
+                {
+                    return true;
+                }
+            }
+            
+            return false;
         }
     }
 }

@@ -37,7 +37,9 @@ namespace Game
                 // should be message 4
                 sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
-                
+                System.Threading.Thread.Sleep(500);
+
+                // message 5
                 game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 

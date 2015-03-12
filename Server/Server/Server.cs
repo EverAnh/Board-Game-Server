@@ -180,21 +180,30 @@ namespace Game
                     if (gameToJoin == -1)
                     {
                         newPlayerNumber = "1";
+                        Game_Generic newGame = null;
 
-                        if (p.getGame() == "connectFour")
+                        if(p.getGame() == "generic")
+                        {
+                            newGame = new Game_Generic(8, 8);
+
+                        }
+
+                        else if (p.getGame() == "connectFour")
                         {
                             
-                            Game_Generic newGame = new Game_ConnectFour();
-                            games.Add(newGame);
-                            newGame.addPlayer(p);
-                            gameToPlay = p.getGame();
-                             
-                            Console.WriteLine("starting a new game");
-
-                            GameThread gt = new GameThread(newGame);
-                            Thread gameThread = new Thread(new ThreadStart (gt.playGame ) );
-                            gameThread.Start();
+                            newGame = new Game_ConnectFour();
+                            
                         }
+
+                        games.Add(newGame);
+                        newGame.addPlayer(p);
+                        gameToPlay = p.getGame();
+
+                        Console.WriteLine("starting a new game");
+
+                        GameThread gt = new GameThread(newGame);
+                        Thread gameThread = new Thread(new ThreadStart(gt.playGame));
+                        gameThread.Start();
                     }
 
                     // found a matching game type that needs an additional player

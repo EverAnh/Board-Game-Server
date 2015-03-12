@@ -100,7 +100,7 @@ namespace Game
         }
 
 
-        private Boolean checkLeftRight(int x, int y) // x is column!
+        private bool checkLeftRight(int x, int y) // x is column!
         {
             // depends on column number (x)
             // 0 and col only need to check one possibility. 
@@ -159,7 +159,7 @@ namespace Game
             return true;                                        // game continue
         }
 
-        private Boolean checkUpDown(int x, int y)
+        private bool checkUpDown(int x, int y)
         {
             // depends on column number (x)
             // 0 and col only need to check one possibility. 
@@ -216,7 +216,7 @@ namespace Game
 
         }
 
-        private Boolean checkDiagonalLeftUpRightDown(int x, int y)
+        private bool checkDiagonalLeftUpRightDown(int x, int y)
         {
             Console.Write("Checking Left Up and Right Down.");
 
@@ -273,7 +273,7 @@ namespace Game
             return true;
         }
 
-        private Boolean checkDiagonalRightUpLeftDown(int x, int y)
+        private bool checkDiagonalRightUpLeftDown(int x, int y)
         {
             Console.Write("Checking Left Up and Right Down.");
 
