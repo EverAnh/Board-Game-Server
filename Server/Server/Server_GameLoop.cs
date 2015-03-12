@@ -41,7 +41,7 @@ namespace Game
                 System.Threading.Thread.Sleep(500);
 
                 // message 5
-                game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
+                // game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
 
                 Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX() + " " + game.getPieces()[activePlayer].getY() );
 
