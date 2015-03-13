@@ -8,9 +8,9 @@ namespace Game
 {
     public class Piece_Generic
     {
-        private int x_pos;
-        private int y_pos;
-        private int value;
+        protected int x_pos;
+        protected int y_pos;
+        protected int value;
 
         public Piece_Generic()
         {

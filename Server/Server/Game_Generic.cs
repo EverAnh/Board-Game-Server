@@ -98,7 +98,7 @@ namespace Game
         }
 
         // returns true if the move is a valid move, otherwise returns false
-        private bool checkGameState(int x, int y)
+        protected virtual bool checkGameState(int x, int y)
         {
             // move up or down, not left/right
             if (gamePieces[loop.getActivePlayer()].getX() == x)
