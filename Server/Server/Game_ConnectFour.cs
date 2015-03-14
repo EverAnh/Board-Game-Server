@@ -13,33 +13,87 @@ namespace Game
 
         private int cols = 7;
         private int rows = 6;
-        private bool gameState = true; // true while the game is active? may be unused
         
         public Game_ConnectFour()
         {
-            gameBoard = new int[cols, rows];
-            gameType = "connectFour";
-            maxPlayers = 1;
+            gameBoard = new int[cols, rows];            // set the rows and columns into the gameboard we made earlier. 
+            gameType = "connectFour";                   // Server will know that we made a connectFour game
+            gamePieces = new List<Piece_Generic>();     // May not need this for our implementation
+            currentPlayers = new List<Player>();        // list of players
+            loop = new Server_GameLoop();               // Make a new server_gameloop (unecessary?)
+            maxPlayers = 2;                             // 2 players max
+
         }
 
-        public override int assignPiece(int getX, int getY, int value) // We don't care about getY, so override it.
+        // handlePlayerTurn METHOD THAT OVERRIDES THE ONE IN GENERIC GAME
+        // Returns ....
+        // TODO: How do we assign a player color or turn? 
+        // Do we change the send packet so that the second character after the delim is the player's assigned number?
+
+        public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
-            // This function will instead drop it in the appropriate row; we don't care about the getY.
-            // GetX is all that matters here. 
+            String[] move = s.Split('%');                               // Split the string by the delimiter.
 
-            int newGetY = returnTopOfRow(getX); // calls helper method to return top of the current row
+            int placeX = System.Convert.ToInt32(move[0]);               // Convert Strings to int for the placeX
+            int placeY = System.Convert.ToInt32(move[1]);               // Technically we don't need this... TODO: is there something we can do?
+            int color = 0;                                              // color: [1] for black, [2] for red. We will 
 
-            if (newGetY != 100)
+            // assignPiece to the place; if it is valid, the method will go ahead and place it.
+            // On a not successful attempt, placeY will instead be null.
+            placeY = assignPiece(placeX, placeY, color);                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
+
+            // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
+            if (placeY != -1)                                           // if placeY is not the error code
             {
-                gameBoard[getX, newGetY] = value; // assigns the element to the top.
+                if (checkGameState(placeX, placeY))                     // using the recently placed piece, check if the state is a win condition. 
+                {
+                    Console.Write("Game over!");    // print to console log 
+
+                }
+            }  
+            return true; // the move was not valid
+        }
+
+        protected override bool checkGameState(int x, int y) // x is the column, y is the row.
+        {
+            // this function will take a game piece placement, and check all rows/columns next to it for a win condition.
+            // TODO: If the game has not progressed past 4 turns, no need to even check.
+
+            // if any of the checks return true, this statement will evaluate to true.
+            if (checkLeftRight(x, y) || 
+                checkUpDown(x, y) || 
+                checkDiagonalLeftUpRightDown(x, y) || 
+                checkDiagonalRightUpLeftDown(x, y)) 
+            {
+                return true;                                     // return true; the game is over
+            }
+
+            return false;                                        // game continues because none of the checks were true.
+        }
+
+        // ADDITION METHOD THAT OVERRIDES THE ONE IN GENERIC GAME
+        // Returns either -1 (not valid move) or the Y value of the piece that was dropped (vertical value)
+
+        public override int assignPiece(int getX, int getY, int value)              // We don't care about getY
+        {
+            // This function will drop it in the appropriate position
+
+            int newGetY = returnTopOfRow(getX);                                     // calls helper method to return top of the current row
+
+            if (newGetY != 100)                                                     // if no error code, good to go.
+            {
+                gameBoard[getX, newGetY] = value;                                   // assigns the element to the top.
                 return newGetY;
             }
             else
             {
-                Console.Write("Invalid move!");// invalid move 
-                return -1;          // return an error value
+                Console.Write("Invalid move!");                                     // invalid move 
+                return -1;                                                          // return an error value
             }
         }
+        
+        // HELPER METHOD THAT IS CALLED BY ASSIGNPIECE (assignPiece)
+        // Returns either 100 (error code, the column is full) or the Y value of the piece that we intend to put it in. * does not yet assign!
 
         private int returnTopOfRow(int getX) // a helper method to get the "top" of each row.
         {
@@ -48,66 +102,14 @@ namespace Game
                 if (gameBoard[getX, i] == 0) // accesses the element. if it is 1 or 2, we keep looping.
                     return i;
             }
-            return 100;                     // if we get to the end and it does not exist, return an "error code"
+            return 100;                     // if we get to the end and it does not exist, return an error code of "100"
         }
 
+  
 
-        public override bool handlePlayerTurn(String s) // each player will call this function with their input.
+
+        private bool checkLeftRight(int x, int y)
         {
-
-            String[] move = s.Split('%');
-            // move[0] is new x location
-            // move[1] is new y location
-
-            int placeX = System.Convert.ToInt32(move[0]);
-            int placeY = System.Convert.ToInt32(move[1]);
-            int color = 0;  // color: [1] for black, [2] for red.
-         
-            // parsePlayerInput(s);   // store what you parse into an array?
-
-            String[] turn = s.Split('%');
-
-
-            placeY = assignPiece(placeX, placeY, color);        // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
-
-            // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
-            if (placeY != -1 && checkOccupiedState(placeX, placeY)) // if the spot is not yet occupied, and there is no error code.
-            {
-                assignPiece(placeX, placeY, color); // place the piece in the spot. we'd like posX, posY, color [1] for black, [2] for red. [0] indicates not occupied
-
-                if (checkGameState(placeX, placeY)) // using the piece, check if the state is a win condition. if the placement happens to be a win condition
-                {
-                    gameState = false;              // game is over!
-                    Console.Write("Game over!");    // print to console log 
-                }
-            }
-
-            // the move was not valid
-            return true;
-        }
-
-        // Game Logic
-
-        protected override bool checkGameState(int x, int y) // x is the column, y is the row.
-        {
-           // this function will take a game piece placement, and check all rows/columns next to it for a win condition.
-            // note: if the game has not progressed past 4 turns, no need to even check.
-
-
-            if (!checkLeftRight(x, y) || !checkUpDown(x,y) || !checkDiagonalLeftUpRightDown(x,y) || !checkDiagonalRightUpLeftDown(x,y)) // if any of the checks return false, this statement will evaluate to true.
-            {
-                return false;       // return immediately; the game is over
-            }
-            
-            return true;            // game continues because none of the checks were valid.
-        }
-
-
-        private bool checkLeftRight(int x, int y) // x is column!
-        {
-            // depends on column number (x)
-            // 0 and col only need to check one possibility. 
-
             Console.Write("Checking Left and Right.");
 
             int typeToSearch = getPiece(x, y); // to be used later
