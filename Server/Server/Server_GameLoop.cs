@@ -8,7 +8,7 @@ namespace Game
 {
     public class Server_GameLoop
     {
-        int activePlayer = 0;
+        private int activePlayer = 0;
 
         public Server_GameLoop()
         {
@@ -36,12 +36,15 @@ namespace Game
                 Console.WriteLine(turnMessage);
 
                 // should be message 4
-                sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
+                // sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
                 System.Threading.Thread.Sleep(500);
 
                 // message 5
-                game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
+                // game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
+
+                Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX() + " " + game.getPieces()[activePlayer].getY() );
+
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
                 // player tried to make an invalid move. Force them to try again until they send a valid move
@@ -94,7 +97,7 @@ namespace Game
         {
             int index = 0;
 
-            if (i++ < max)
+            if ( (i +1) < max)
             {
                 index = i++;
             }
@@ -103,6 +106,8 @@ namespace Game
             {
                 index = 0;
             }
+
+            Console.WriteLine("The next player to take a turn is " + index);
 
             return index;
         }

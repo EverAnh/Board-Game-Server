@@ -39,9 +39,6 @@ namespace Game
                 Console.Write("Invalid move!");// invalid move 
                 return -1;          // return an error value
             }
-                
-                
-           
         }
 
         private int returnTopOfRow(int getX) // a helper method to get the "top" of each row.
@@ -67,6 +64,10 @@ namespace Game
             int color = 0;  // color: [1] for black, [2] for red.
          
             // parsePlayerInput(s);   // store what you parse into an array?
+
+            String[] turn = s.Split('%');
+
+
             placeY = assignPiece(placeX, placeY, color);        // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
             // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
@@ -87,7 +88,7 @@ namespace Game
 
         // Game Logic
 
-        private bool checkGameState(int x, int y) // x is the column, y is the row.
+        protected override bool checkGameState(int x, int y) // x is the column, y is the row.
         {
            // this function will take a game piece placement, and check all rows/columns next to it for a win condition.
             // note: if the game has not progressed past 4 turns, no need to even check.
@@ -330,7 +331,6 @@ namespace Game
             Console.WriteLine("No solutions found. Running next check.");
             return true;
         }
-
 
         private bool checkOccupiedState(int x, int y)
         {

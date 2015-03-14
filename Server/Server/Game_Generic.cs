@@ -41,6 +41,11 @@ namespace Game
             return currentPlayers;
         }
 
+        public List<Piece_Generic> getPieces()
+        {
+            return gamePieces;
+        }
+
         public int getNumberPlayers()
         {
             return numberPlayers;
@@ -92,7 +97,8 @@ namespace Game
             return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
         }
 
-        private bool checkGameState(int x, int y)
+        // returns true if the move is a valid move, otherwise returns false
+        protected virtual bool checkGameState(int x, int y)
         {
             // move up or down, not left/right
             if (gamePieces[loop.getActivePlayer()].getX() == x)
@@ -100,6 +106,8 @@ namespace Game
                 // check to see if moved exactly 1
                 if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
                 {
+                    gamePieces[loop.getActivePlayer()].setY(y);
+
                     return true;
                 }
             }
@@ -109,6 +117,8 @@ namespace Game
                 // check to see if moved exactly 1
                 if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
                 {
+                    gamePieces[loop.getActivePlayer()].setX(x);
+
                     return true;
                 }
             }
