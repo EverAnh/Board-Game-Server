@@ -15,6 +15,7 @@ namespace Game
         protected int maxPlayers;
         protected Server_GameLoop loop;
         protected String gameType;
+        protected bool gameState;         // True for running / False for not
 
         public Game_Generic()
         {
@@ -34,6 +35,7 @@ namespace Game
             gamePieces.Add(new Piece_Generic());
             gamePieces[0].setX(2);
             gamePieces[0].setY(2);
+            gameState = true;                // set to true for running.
         }
 
         public List<Player> getPlayers()
@@ -41,7 +43,7 @@ namespace Game
             return currentPlayers;
         }
 
-        public List<Piece_Generic> getPieces()
+        public virtual List<Piece_Generic> getPieces()
         {
             return gamePieces;
         }
@@ -64,6 +66,11 @@ namespace Game
         public String getGameType()
         {
             return gameType;
+        }
+
+        public bool getGameState()
+        {
+            return gameState;
         }
 
         public int getPiece(int getX, int getY)
@@ -90,16 +97,28 @@ namespace Game
         public virtual bool handlePlayerTurn(String s)
         {
             String[] move = s.Split('%');
-            // move[0] is new x location
-            // move[1] is new y location
-
-
             return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
+        }
+
+        public virtual void endGame()
+        {
+            Console.Write("[Not yet implemented] Terminating game...thanks for playing! Come back soon");
+
+
         }
 
         // returns true if the move is a valid move, otherwise returns false
         protected virtual bool checkGameState(int x, int y)
         {
+            // setting up additional logic so once any player reaches 0,0
+            // we'll pass a "game over" message.   
+            if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
+            {
+                Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
+                gameState = false;      // set to false
+                endGame();              // attempt to end the game.
+                return true;            // quick termination, return back to the caller
+            }
             // move up or down, not left/right
             if (gamePieces[loop.getActivePlayer()].getX() == x)
             {
@@ -122,6 +141,8 @@ namespace Game
                     return true;
                 }
             }
+
+
             
             return false;
         }
