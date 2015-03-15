@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Game
+
 {
     public class Game_ConnectFour : Game_Generic
     {
-
         // Declare a grid of 7 columns and 6 rows.
 
         private int cols = 7;
@@ -25,6 +25,7 @@ namespace Game
 
             // Add two player's info in here, we don't really need to track all the pieces as gameBoard handles a lot of that for us.
             // We'll use gamePieces to track the last known move of each respective player.
+            
             gamePieces.Add(new Piece_Generic());
             gamePieces[0].setX(0);
             gamePieces[0].setY(0);
@@ -60,6 +61,7 @@ namespace Game
 
             // assignPiece to the place; if it is valid, the method will go ahead and place it.
             // On a not successful attempt, placeY will instead be null.
+            
             placeY = assignPiece(placeX, placeY, color);                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
             // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
@@ -134,10 +136,6 @@ namespace Game
             Console.Write("Checking Left and Right.");
 
             int typeToSearch = getPiece(x, y);                      
-
-            // my plan is to generate an array "snapshot" of the values next to the piece just implemented to check for the win.
-            // in this function, i'd generate an array of length [7]
-
             int[] snapShot = new int[7];                            //  temporary integer array that serves as a "snapshot" of what we are about tpo search
 
             for (int i = 0; i < 7; i++)                             // will fill the array with the array index values I SHOULD be searching for. 
@@ -226,11 +224,8 @@ namespace Game
                     {
                         Console.WriteLine("Solution found. Game over.");
                         return true;                               // game end
-
                     }
                 }
-
-
             }
             Console.WriteLine("No solutions found. Running next check.");
             return false;                                        // game continue
