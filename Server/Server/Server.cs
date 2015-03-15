@@ -21,8 +21,6 @@ namespace Game
 
         // private IPAddress local = IPAddress.Parse("127.0.0.1");
 
-        private IPAddress local = IPAddress.Parse("127.0.0.1");
-
         private int port = 3445;
         private static LoginDatabase db;
         protected static char delim = '%';
