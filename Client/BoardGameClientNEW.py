@@ -19,13 +19,6 @@ class BoardGameClient:
     
     # class variables -------------------------------------------------
 
-    # messages received from server indicating whether a login or
-    # create account attempt was successful
-    CREATE_SUCC  = "CREATESUCC"
-    LOGIN_FAIL   = "LOGINFAIL"
-    CREATE_FAIL  = "CREATEFAIL"
-
-    # available games
     CONNECT_FOUR = "CONNECTFOUR"
     OTHELLO      = "OTHELLO"
     BATTLESHIP   = "BATTLESHIP"
@@ -49,12 +42,12 @@ class BoardGameClient:
                     self._connection.logged_in = True
                     temp_player_number = # number received from server
             # elif create, and success:
-                    message = CREATE_SUCC
+                    message = ServerConnection.CREATE_SUCC
                     # clear maindisplay
             # elif login, and fail:
-                    message = LOGIN_FAIL
+                    message = ServerConnection.LOGIN_FAIL
             # elif create, and fail:
-                    message = CREATE_FAIL
+                    message = ServerConnection.CREATE_FAIL
             self._display.update(message)
             
         self._game_package = board_game_factory(game_choice)
@@ -84,10 +77,11 @@ class BoardGameClient:
             self._game_manager.manage_turn()
             
         self._game_manager.manage_endgame()
-        
+        # logic here to set 'replay' mode: NEWGAME, RESTART
 
 # ------------------------------------------------------------------------------
 if __name__ == 'main':
     bgc = BoardGameClient()
+    ## logic here to wait until QUIT has been selected (X or button)
     bgc.start()
     

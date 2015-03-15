@@ -1,42 +1,62 @@
-## ServerConnection.py
-## INF 122 - W15
-##
 import socket
 
-SERVER_IP = "127.0.0.1"
-SERVER_PORT = 54389
+import Response
+
 
 class ServerConnection:
+
+    DEFAULT_IP = "127.0.0.1"
+    DEFAULT_PORT = 54389
+    
+    CREATE_SUCC  = "CREATESUCC"
+    LOGIN_FAIL   = "LOGINFAIL"
+    CREATE_FAIL  = "CREATEFAIL"
+
+    WINNER = "WINNER"
+
+    CATG_DELIM = "&"
+    MOVE_DELIM = "#"
+    SCOR_DELIM = "$"
+    VALU_DELIM = "%"
+
     def __init__(self):
-        self._connection_active = False
-        self._session_id = ""
-        self._connection_ip = SERVER_IP
-        self._connection_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self._host_address = DEFAULT_IP
+        self._host_port = DEFAULT_PORT
+        self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def connect(self, host = SERVER_IP, port = SERVER_PORT):
-        try:
-            self._connection_socket.connect( (host, port) )
-            print 'socket connected'
-            return True;
-        except socket.error:
-            print 'connection failed'
-            return False;
 
+    def open_connection(self):
+        self._socket.connect( (self._host_address, self._host_port) )
+
+            
     def send_request(self, request):
-        self._connection_socket.sendall(request)
+        self._connection_socket.sendall(request + '\n')
 
-    def receive_response(self):
-        return s.recv(4096)
+        
+    def send_move(self, move):
+        send_string = ""
+        for coord in move:
+            send_string.append(coord[1] + VALU_DELIM + coord[2] + MOVE_DELIM)
+        self.send_request(send_string[:-1]) #cut off last move delimiter
 
-    def handle_response(self):
-        pass
+
+    def get_response(self):
+        raw_response = self._connection_socket.recv(4096)
+        category_tokens = raw_response.split(CATG_DELIM)
+        turn_number = category_tokens[0]
+        player_turn = category_tokens[1]
+        raw_scores = category_tokens[2]
+        message = category_tokens[3]
+        raw_pieces = category_tokens[4].split(MOVE_DELIM)
+
+        scores = [score for score in scores.split(SCORE_DELIM)] #list comprehension ftw
+
+        pieces = []
+        for piece in raw_pieces:
+            p = piece.split(VALU_DELIM)
+            pieces.add(GamePiece(p[0], p[1], p[2], p[3]))
+            return Response(turn_number, player_turn, message, scores, pieces)
+        
 
     def close_connection(self):
         self._connection_socket.close()
-        print 'connection closed'
-
-## do getters and setters
-
-#sc = ServerConnection()
-#sc.connect()
-#sc.close_connection()
