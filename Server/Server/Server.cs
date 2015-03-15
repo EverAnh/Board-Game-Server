@@ -212,6 +212,7 @@ namespace Game
 
                     startMessage = newPlayerNumber;
 
+                    // the REAL message 4
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
                 }

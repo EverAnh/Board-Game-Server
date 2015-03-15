@@ -43,7 +43,7 @@ namespace Game
             return currentPlayers;
         }
 
-        public List<Piece_Generic> getPieces()
+        public virtual List<Piece_Generic> getPieces()
         {
             return gamePieces;
         }
@@ -112,7 +112,7 @@ namespace Game
         {
             // setting up additional logic so once any player reaches 0,0
             // we'll pass a "game over" message.   
-            if (gamePiece[loop.getActivePlayer()].getX() == 0 && [loop.getActivePlayer()].getY() == 0)
+            if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
             {
                 Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
                 gameState = false;      // set to false

@@ -33,12 +33,12 @@ namespace Game
 
                 Console.WriteLine(turnMessage);
 
-                // should be message 4
+                // should be message 5
                 // sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
                 System.Threading.Thread.Sleep(500);
 
-                // message 5
+                // message 6
                 // game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
 
                 Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX() + " " + game.getPieces()[activePlayer].getY() );

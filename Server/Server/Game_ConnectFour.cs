@@ -39,7 +39,7 @@ namespace Game
 
         // getPieces might need to be redefined here, for each specific player..?
 
-        public List<Piece_Generic> getPieces()
+        public override List<Piece_Generic> getPieces()
         {
             return gamePieces;                          
         }
