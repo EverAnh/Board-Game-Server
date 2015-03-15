@@ -35,11 +35,8 @@ class BoardGameClient:
         self._display = MainDisplay()
         session_info = self._display.retrieve_user_info()
         
-        ###### Some pseudocode below. Please Define #######
-        
-        #run main display to receive game_choice, username, and password.
-        while not account.logged_in:
-            # if login, and success:
+        while not self._account.logged_in:
+            if login, and success:
                     self._connection.logged_in = True
                     temp_player_number = # number received from server
             # elif create, and success:

@@ -17,18 +17,7 @@ class GameManager(connection: ServerConnection, game_package: GamePackage):
         handle_opponent_move()
 
     def manage_endgame(self):
-        
-        ##### Some pseudocode below. Please define #####
-
-        #while no endgame_user_response:
-            #endgame_user_response = self._display._____
-        #if endgame_user_response == NEW_GAME:
-            #self._connection.close_connection()
-            #let main loop in BoardGameClient end 
-        #elif endgame_user_response == RESTART:
-            #### not sure if this is feasible at this point
-        #elif endgame_user_response == QUIT:
-            #quit in same way as closing window
+        self._display.end_game()
 
     def handle_my_move(self, location: (int,int)):
         if self._game.is_my_turn():
