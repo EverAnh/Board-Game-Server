@@ -258,3 +258,4 @@ target/
 *.df3
 Server/Server.v12.suo
 *.suo
+*.csproj
