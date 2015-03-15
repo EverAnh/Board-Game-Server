@@ -128,7 +128,7 @@ class GridGame:
 
 
     def connect_to_server(self):
-        host = '169.234.99.167'
+        host = '169.234.90.122'
         port = 3445
 
         ##s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
