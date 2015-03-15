@@ -73,22 +73,26 @@ namespace Game
 
         private static int getIndexOfGameToJoin(Player p)
         {
-            int numberGames = games.Capacity;
+            int numberGames = games.Count;
             String playerGame = p.getGame();
+
+            Console.WriteLine("games capacity " + games.Count);
 
             // check each existing game for a game type match AND room for an available player 
             // counting by g
             for (int g = 0; g < numberGames; g++)
             {
-                String gameType = games[g].getGameType();
 
-                int currentPlayers = games[g].getNumberPlayers();
-                int maxPlayers = games[g].getMaxPlayers();
+               String gameType = games[g].getGameType();
 
-                if ( (playerGame == gameType ) && (currentPlayers < maxPlayers) )
-                {
-                    return g;
-                }
+               int currentPlayers = games[g].getNumberPlayers();
+               int maxPlayers = games[g].getMaxPlayers();
+
+               if ((playerGame == gameType) && (currentPlayers < maxPlayers))
+               {
+                   return g;
+               }
+   
             }
 
             return -1;
