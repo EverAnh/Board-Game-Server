@@ -30,7 +30,11 @@ class ServerConnection:
 
             
     def send_request(self, request):
-        self._connection_socket.sendall(request + '\n')
+        self._socket.sendall(request + '\n')
+
+
+    def get_response(self):
+        return self._socket.recv(4096)
 
         
     def send_move(self, move):
@@ -40,8 +44,8 @@ class ServerConnection:
         self.send_request(send_string[:-1]) #cut off last move delimiter
 
 
-    def get_response(self):
-        raw_response = self._connection_socket.recv(4096)
+    def get_move(self):
+        raw_response = self._socket.recv(4096)
         category_tokens = raw_response.split(CATG_DELIM)
         turn_number = category_tokens[0]
         player_turn = category_tokens[1]
@@ -59,4 +63,4 @@ class ServerConnection:
         
 
     def close_connection(self):
-        self._connection_socket.close()
+        self._socket.close()

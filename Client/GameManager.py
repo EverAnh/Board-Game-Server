@@ -36,7 +36,7 @@ class GameManager(connection: ServerConnection, game_package: GamePackage):
                 store_move(location)
                 return
             self._connection.send_move(stored_move)
-            response = self._connection.get_response()
+            response = self._connection.get_move()
             if response.player_number != self._game.get_my_player_number():
                 self._game.set_my_turn(False)
             self._game.update_board(response.pieces)
@@ -44,7 +44,7 @@ class GameManager(connection: ServerConnection, game_package: GamePackage):
             return response
 
     def handle_opponent_move(self):
-        response = self._connection.get_response()
+        response = self._connection.get_move()
         self._game.update_board(response.pieces)
         if response.player_turn == self._game.get_my_player_number():
             self._game.set_my_turn(True)
