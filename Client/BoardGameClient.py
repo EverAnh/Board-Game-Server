@@ -32,7 +32,8 @@ class BoardGameClient:
 
 
     def start(self):
-        self._display = MainDisplay(account)
+        self._display = MainDisplay()
+        session_info = self._display.retrieve_user_info()
         
         ###### Some pseudocode below. Please Define #######
         

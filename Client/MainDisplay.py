@@ -1,7 +1,7 @@
 import pygame
 import os, sys
 
-class MainDisplay:
+class MainDisplay(Display):
     WINDOW_LENGTH = 1200
 
     BACKGROUND_COLOR = pygame.Color(160,160,160)
@@ -23,6 +23,12 @@ class MainDisplay:
                 break
         
         pygame.display.flip()
+
+    def retrieve_user_info(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self._should_quit = True
+        
 
     def _draw_screen(self):
         

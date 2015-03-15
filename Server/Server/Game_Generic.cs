@@ -104,7 +104,7 @@ namespace Game
         {
             Console.Write("[Not yet implemented] Terminating game...thanks for playing! Come back soon");
         }
-        protected virtual checkWinCondition(int x, int y)
+        protected virtual bool checkWinCondition(int x, int y)
         {
             if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
             {
@@ -128,8 +128,8 @@ namespace Game
                 {
                     gamePieces[loop.getActivePlayer()].setY(y);
                     if (checkWinCondition(
-                        [loop.getActivePlayer()].getX(),
-                        [loop.getActivePlayer()].getY()))
+                       gamePieces[loop.getActivePlayer()].getX(),
+                        gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
                         Console.Write("Code this in, Jason 2!");
@@ -145,8 +145,8 @@ namespace Game
                 {
                     gamePieces[loop.getActivePlayer()].setX(x);
                      if (checkWinCondition(
-                        [loop.getActivePlayer()].getX(),
-                        [loop.getActivePlayer()].getY()))
+                        gamePieces[loop.getActivePlayer()].getX(),
+                        gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
                         Console.Write("Code this in, Jason 2!");
