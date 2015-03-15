@@ -1,9 +1,7 @@
 class GamePiece:
 
-    _value = -1
-
-    def __init__(self):
-        return
-
-    def set_value(self, v):
-        self._value = v
+    def __init__(row, col, player, value):
+        self.row = row
+        self.col = col
+        self.player = player
+        self.value = value

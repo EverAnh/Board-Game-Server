@@ -1,9 +1,11 @@
 import pygame
 import os, sys
 
-import GameDisplay
-import DemoGameBoard
-import ConnectFourGameBoard
+import Account
+import Display
+import BoardGamePackage
+import GameManager
+import ServerConnection
 
 # ------------------------------------------------------------------------------
 #
@@ -11,56 +13,75 @@ import ConnectFourGameBoard
 # a single instance of the class BoardGameClient to handle the rest of the
 # program flow.
 #
-# BoardGameClient is the central component that manages the references to all
-# other components involved with the GUI. It is the one with an overall loop to
-# refresh the drawing of these managed GUI components.
-#
-# The BoardGameClient class takes an argument called "game_type" that determines
-# which board game's grid, pieces, etc. will be provided.
-#
 # ------------------------------------------------------------------------------
 
 class BoardGameClient:
+    
+    # class variables -------------------------------------------------
 
-    # private member variables -------------------------------------------------
+    CONNECT_FOUR = "CONNECTFOUR"
+    OTHELLO      = "OTHELLO"
+    BATTLESHIP   = "BATTLESHIP"
 
-    _game_type = "demo"
-    #instance of GameDisplay is created
-    GD = GameDisplay.GameDisplay("demo")
 
     # methods ------------------------------------------------------------------
 
     def __init__(self, game_type):
-        self._game_type = game_type
-        self._gameboard = self._make_game_board(game_type)
+        self._connection = ServerConnection()
+        self._account = Account()
 
-    def draw(self):
-        pass
 
-    def _make_game_board(self, game_type):
-        if game_type == "connectfour":
-            return ConnectFourGameBoard.ConnectFourGameBoard()
-        else:
-            return DemoGameBoard.DemoGameBoard()
+    def start(self):
+        self._display = MainDisplay(account)
+        
+        ###### Some pseudocode below. Please Define #######
+        
+        #run main display to receive game_choice, username, and password.
+        while not account.logged_in:
+            # if login, and success:
+                    self._connection.logged_in = True
+                    temp_player_number = 1 # number received from server
+            # elif create, and success:
+                    message = ServerConnection.CREATE_SUCC
+                    # clear maindisplay
+            # elif login, and fail:
+                    message = ServerConnection.LOGIN_FAIL
+            # elif create, and fail:
+                    message = ServerConnection.CREATE_FAIL
+            self._display.update(message)
+            
+        self._game_package = board_game_factory(game_choice)
+        self._game_package.game.set_my_player_number(temp_player_number)
+        self._game_manager = GameManager(self._connection, self._game_package.game)
+        run_game()
 
-    # debugging ----------------------------------------------------------------
+  
+    def _board_game_factory(self, choice):
+        if choice == CONNECT_FOUR:
+            game = ConnectFourGame()
+            display = ConnectFourGameDisplay(manager, game)
+            
+        elif choice == OTHELLO:
+            game = OthelloFourGame()
+            display = OthelloGameDisplay(manager, game)
+            
+        elif choice == BATTLESHIP:
+            game = BattleshipFourGame()
+            display = BattleshipGameDisplay(manager, game)
+            
+        return GamePackage(game, display)
 
-    def get_current_game(self):
-        return self._game_type
 
-    def report_game_type(self):
-        print self._gameboard.get_game_type()
+    def _run_game(self):
+        while not self._game_package.game.is_over():
+            self._game_manager.manage_turn()
+            
+        self._game_manager.manage_endgame()
+        # logic here to set 'replay' mode: NEWGAME, RESTART
 
 # ------------------------------------------------------------------------------
-##if __name__ == 'main':
-
-game = BoardGameClient("demo")
-clock = pygame.time.Clock()
-#game.connect_to_server()
-
-while not game.GD._should_quit:
-    clock.tick(30)
-    game.GD.update()
-pygame.quit()
-
-print "(end reached)"
+if __name__ == 'main':
+    bgc = BoardGameClient()
+    ## logic here to wait until QUIT has been selected (X or button)
+    bgc.start()
+    

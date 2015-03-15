@@ -59,7 +59,7 @@ class GridGame:
                 print move
                 move_response = self.s.recv(4096)
                 print 'server sends: ' + move_response
-                if move_response[0] == move[0]:
+                if move_response[0] == move[0]: ##kludge. for some reason, havin issues seeing if they're equal. blame it on tired
                     #remove old piece
                     print 'removing old'
                     self._gameboard[self._last_location[0]][self._last_location[1]] = (0,0)
@@ -128,8 +128,8 @@ class GridGame:
 
 
     def connect_to_server(self):
-        host = '127.0.0.1'
-        port = 54389
+        host = '169.234.206.158'
+        port = 3445
 
         ##s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

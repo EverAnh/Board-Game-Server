@@ -11,9 +11,7 @@ namespace Game
         private int activePlayer = 0;
 
         public Server_GameLoop()
-        {
-
-        }
+        {  }
 
         public void gameLoop(Game_Generic game)
         {
@@ -36,7 +34,7 @@ namespace Game
                 Console.WriteLine(turnMessage);
 
                 // should be message 4
-                sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
+                // sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
                 System.Threading.Thread.Sleep(500);
 

@@ -3,7 +3,7 @@ import os,sys
 
 class GameDisplay:
 
-    WINDOW_LENGTH = 800
+    WINDOW_LENGTH = 720 #800
     GRID_LENGTH = 8
     CELL_SIZE = WINDOW_LENGTH / GRID_LENGTH
 
@@ -13,7 +13,7 @@ class GameDisplay:
     CELL_COLOR_2 = pygame.Color(255,255,255)
 
     PLAYER = 1
-    
+
     GAMEPIECE_BORDER_COLOR = pygame.Color(218,165,32)
     GAMEPIECE_COLOR_1 = pygame.Color(222,184,135)
     GAMEPIECE_COLOR_2 = pygame.Color(139,69,19)
@@ -54,7 +54,7 @@ class GameDisplay:
                     self._drawGamePiece((column,row),1)
                 if self.CheckValidMove() == 2:
                     self._drawError()
-                    
+
 
 
         pygame.display.flip()
@@ -71,10 +71,10 @@ class GameDisplay:
         self._drawGrid()
         self._tempBoard = board
         for i in range(GameDisplay.GRID_LENGTH):
-            for j in range(GameDisplay.GRID_LENGTH):    
+            for j in range(GameDisplay.GRID_LENGTH):
                 if self._tempBoard[i][j][0] == 1 and  self._tempBoard[i][j][1] > 0:
                     self._drawGamePiece((i,j),1)
-        
+
     #draws board at the beginning of the game
     def _drawGrid(self):
         for i in range(GameDisplay.GRID_LENGTH):
@@ -83,20 +83,20 @@ class GameDisplay:
                     pygame.draw.rect(self._screen, GameDisplay.CELL_COLOR_1, pygame.Rect(i*GameDisplay.CELL_SIZE, j*GameDisplay.CELL_SIZE, GameDisplay.CELL_SIZE, GameDisplay.CELL_SIZE).inflate(-1,-1), 0)
                 else:
                     pygame.draw.rect(self._screen, GameDisplay.CELL_COLOR_2, pygame.Rect(i*GameDisplay.CELL_SIZE, j*GameDisplay.CELL_SIZE, GameDisplay.CELL_SIZE, GameDisplay.CELL_SIZE).inflate(-1,-1), 0)
-               
+
 
     #will draw new pieces every time a valid move has been made
     def _drawGamePiece(self,pos,Player):
         pygame.draw.circle(self._screen,pygame.Color(222,184,135),(pos[0]*GameDisplay.CELL_SIZE+GameDisplay.CELL_SIZE/2,pos[1]*GameDisplay.CELL_SIZE + GameDisplay.CELL_SIZE/2),50,0)
-   
+
 
     def _drawError(self):
         fontObject = pygame.font.Font(None,100)
         ErrorMessage = fontObject.render("Error",1,(100,100,100))
         self._screen.blit(ErrorMessage,(400,400))
-        
-        
-        
+
+
+
 
 
 ##if __name__ == 'main':

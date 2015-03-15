@@ -19,7 +19,7 @@ namespace Game
         private static List<Player> activePlayers = new List<Player>();
         private static List<Game_Generic> games = new List<Game_Generic>();
         private IPAddress local = IPAddress.Parse("127.0.0.1");
-        private int port = 54389;
+        private int port = 3445;
         private static LoginDatabase db;
         protected static char delim = '%';
     
@@ -51,7 +51,7 @@ namespace Game
         {
             // Declare a new listener with local 127.0.0.1 and port 54389
 
-            listener = new TcpListener(local, port);
+            listener = new TcpListener(port);
             listener.Start();
 
             // Create a new ListenerThread.
