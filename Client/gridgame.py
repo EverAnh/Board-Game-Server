@@ -128,7 +128,7 @@ class GridGame:
 
 
     def connect_to_server(self):
-        host = '169.234.206.158'
+        host = '169.234.99.167'
         port = 3445
 
         ##s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -156,8 +156,8 @@ class GridGame:
             message_three = self.s.recv(4096)
             print 'server sends msg 3: ' + message_three
 
-            ## message_four = self.s.recv(4096)
-            ## print 'server sends msg 4: ' + message_four
+            message_four = self.s.recv(4096)
+            print 'server sends msg 4: ' + message_four
 
             ## time.sleep(1)
                     
