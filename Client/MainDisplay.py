@@ -1,36 +1,48 @@
 import pygame
 import os, sys
+import Tkinter as tk
+from Tkinter import *
 
 class MainDisplay:
-    WINDOW_LENGTH = 1200
-
-    BACKGROUND_COLOR = pygame.Color(160,160,160)
-
-    def __init__(self):
-        pygame.init()
-        pygame.font.init()
-        self._screen = pygame.display.set_mode((MainDisplay.WINDOW_LENGTH, MainDisplay.WINDOW_LENGTH))
-
-        ## set flags
-        self._should_quit = False
-        
-    def update(self):
-        self._screen.fill(MainDisplay.BACKGROUND_COLOR)
-        self._draw_screen()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self._should_quit = True
-                break
-        
-        pygame.display.flip()
-
-    def _draw_screen(self):
-        
     
-##if __name__ == 'main':
+   
+    def __init__(self):
+        win = Tk()
+        
+        L1 = Label(win, text="User Name")
+        L1.grid(row=0, column=0)
+        E1 = Entry(win, bd =5)
+        E1.grid(row=0, column=1)
+
+        L2 = Label(win, text="Password")
+        L2.grid(row=1, column=0)
+        E2 = Entry(win, bd=5)
+        E2.grid(row=1, column=1)
+
+
+        ## radiobutton
+        R1 = Radiobutton(win, text="OTHELLO", value=StringVar())
+        R1.grid(row=2, column=0)
+        R2 = Radiobutton(win, text="BATTLESHIP", value=StringVar())
+        R2.grid(row=2, column=1)
+        R3 = Radiobutton(win, text="CONNECTFOUR", value=StringVar())
+        R3.grid(row=2, column=2)
+
+        submitButton = Button(win, text="Submit")
+        submitButton.grid(row=3)
+
+
+        win.mainloop()
+
+        
+
+##if __name__ == 'main'
+
+
 
 mainDisplay = MainDisplay()
-while not mainDisplay._should_quit:
+#e = Entry(mainDisplay)
+#while not mainDisplay._should_quit:
     ## clock.tick(30)
-    mainDisplay.update()
-pygame.quit()
+#    mainDisplay.update()
+#pygame.quit()
