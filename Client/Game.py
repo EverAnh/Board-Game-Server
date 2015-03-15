@@ -2,42 +2,37 @@ import GameBoard
 
 
 class Game:
-    #board = GameBoard()
-    #board = [8][8]
-    my_turn = 0 # bool
-
-    WINDOW_LENGTH = 800
-    GRID_LENGTH = 8
-    CELL_SIZE = WINDOW_LENGTH / GRID_LENGTH
     
     def __init__(self):
-        # initialize the game board & graphics
-        self._init_board()
-        #self._load_assets()
-
-        # set flags
-        self._should_quit = False
-        self.is_turn = True
-
-        # add test pieces
-        self._gameboard[4][2] = (1,2)
-        self._gameboard[1][4] = (1,2)
+        self._player_number = None
+        self._winner = None
+        self._my_turn = False
+        self._gameboard = [[None for x in range(self._board_width)] for y in range(self._board_height)]
 
 
-    def _init_board(self):
-        self._gameboard = [[(0,0) for x in range(Game.GRID_LENGTH)] for y in range(Game.GRID_LENGTH)]
+    def update_board(self, changed_pieces):
+        for piece in changed_pieces:
+            if piece.value == 0:
+                remove_piece(piece)
+            else:
+                add_piece(piece)
 
-    def MakeMove():
-        #TODO
-        return
 
-    def printToConsole(self):
-        #for x in range(Game.GRID_LENGTH):
-            #for y in range(Game.GRID_LENGTH):
-                #print(self._gameboard[x][y])
-        for x in range(Game.GRID_LENGTH):
-            print(self._gameboard[x])
+    def clear_board(self):
+        self._create_board()
 
-game = Game()
-game.printToConsole()
-#game.MakeMove(3, 5)
+
+    def remove_piece(self, piece):
+        self._gameboard[piece.col][piece.row] = None
+
+
+    def add_piece(self, piece):
+        self._gameboard[piece.col][piece.row] = piece
+
+
+    def is_over(self):
+        return winner is not None
+
+
+    def is_my_turn(self):
+        return self._my_turn

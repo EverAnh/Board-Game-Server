@@ -11,9 +11,7 @@ namespace Game
         private int activePlayer = 0;
 
         public Server_GameLoop()
-        {
-
-        }
+        {  }
 
         public void gameLoop(Game_Generic game)
         {
