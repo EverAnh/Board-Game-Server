@@ -103,15 +103,9 @@ namespace Game
         public virtual void endGame()
         {
             Console.Write("[Not yet implemented] Terminating game...thanks for playing! Come back soon");
-
-
         }
-
-        // returns true if the move is a valid move, otherwise returns false
-        protected virtual bool checkGameState(int x, int y)
+        protected virtual checkWinCondition(int x, int y)
         {
-            // setting up additional logic so once any player reaches 0,0
-            // we'll pass a "game over" message.   
             if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
             {
                 Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
@@ -119,6 +113,13 @@ namespace Game
                 endGame();              // attempt to end the game.
                 return true;            // quick termination, return back to the caller
             }
+            return false; // not a win
+        }
+        // returns true if the move is a valid move, otherwise returns false
+        protected virtual bool checkGameState(int x, int y)
+        {
+            // setting up additional logic so once any player reaches 0,0
+            // we'll pass a "game over" message.   
             // move up or down, not left/right
             if (gamePieces[loop.getActivePlayer()].getX() == x)
             {
@@ -126,7 +127,13 @@ namespace Game
                 if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
                 {
                     gamePieces[loop.getActivePlayer()].setY(y);
-
+                    if (checkWinCondition(
+                        [loop.getActivePlayer()].getX(),
+                        [loop.getActivePlayer()].getY()))
+                    {
+                        // Do something!
+                        Console.Write("Code this in, Jason 2!");
+                    }
                     return true;
                 }
             }
@@ -137,6 +144,13 @@ namespace Game
                 if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
                 {
                     gamePieces[loop.getActivePlayer()].setX(x);
+                     if (checkWinCondition(
+                        [loop.getActivePlayer()].getX(),
+                        [loop.getActivePlayer()].getY()))
+                    {
+                        // Do something!
+                        Console.Write("Code this in, Jason 2!");
+                    }
 
                     return true;
                 }
@@ -146,5 +160,7 @@ namespace Game
             
             return false;
         }
+
+
     }
 }
