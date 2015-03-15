@@ -50,6 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game_Othello.cs" />
     <Compile Include="Server_GameLoop.cs" />
     <Compile Include="Game_ConnectFour.cs" />
     <Compile Include="Game_Generic.cs" />

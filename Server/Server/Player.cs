@@ -19,6 +19,7 @@ namespace Game
         private StreamWriter writer;
         private int playerNumber;
         private String userName;
+        private String gameChosen;
 
         // Player constructor
 
@@ -69,5 +70,27 @@ namespace Game
         {
             userName = n;
         }
+
+        public String getGame()
+        {
+            return gameChosen;
+        }
+
+        public void setGame(String game)
+        {
+            gameChosen = game;
+        }
+
+        public bool getSocketConnected()
+        {
+            /*
+            bool canRead = sock.Poll(500, SelectMode.SelectRead);
+            bool canWrite = sock.Poll(500, SelectMode.SelectWrite);
+            return (canRead && canWrite);
+             */
+
+            return true;
+        }
+
     } // end Player class 
 }

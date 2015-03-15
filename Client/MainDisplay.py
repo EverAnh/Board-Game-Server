@@ -34,6 +34,13 @@ class MainDisplay:
 
         win.mainloop()
 
+
+    def retrieve_user_info(self):
+        #retrieve user info
+
+        pass
+
+
         
 
 ##if __name__ == 'main'

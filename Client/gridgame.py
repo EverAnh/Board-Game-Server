@@ -1,8 +1,9 @@
 import pygame
-import os, sys
+import os, sys, time
+import socket
 
 class GridGame:
-    WINDOW_LENGTH = 1200
+    WINDOW_LENGTH = 600
     GRID_LENGTH = 8
     CELL_SIZE = WINDOW_LENGTH / GRID_LENGTH
     
@@ -33,11 +34,12 @@ class GridGame:
         self._should_quit = False
         self.is_turn = True
 
-        # add test pieces
-        self._gameboard[4][2] = (1,2)
-        self._gameboard[1][4] = (1,2)
-        #self._gameboard[7][2] = (2,5)
-        #self._gameboard[7][3] = (2,5)
+        # add initial piece
+        self._last_location = (2,2)
+        self._gameboard[self._last_location[0]][self._last_location[1]] = (1,2)
+
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) ##socket needs to stay in scope, thus its here for now!!!
+
 
 
     def update(self):
@@ -52,16 +54,39 @@ class GridGame:
                 print "mouse pressed down at ", mousePosition
                 column = mousePosition[0]/self.CELL_SIZE
                 row = mousePosition[1]/self.CELL_SIZE
-                self._gameboard[column][row] = (1,2)
-                pygame.draw.circle(self._screen, pygame.Color(222,184,135), mousePosition, 50, 0)
-                #game.placeNewPiece(mousePosition)
+                move = str(column) + '%' + str(row) + '\n'
+                self.s.sendall(move)
+                print move
+                move_response = self.s.recv(4096)
+                print 'server sends: ' + move_response
+                if move_response[0] == move[0]: ##kludge. for some reason, havin issues seeing if they're equal. blame it on tired
+                    #remove old piece
+                    print 'removing old'
+                    self._gameboard[self._last_location[0]][self._last_location[1]] = (0,0)
+                    
+                    #add new piece
+                    print 'adding new'
+                    self._gameboard[column][row] = (1,2)
+                    self.placeNewPiece(mousePosition)
+
+                    #make new location the last location
+                    print 'last is new'
+                    self._last_location = (column,row)
+                else:
+                    print 'invalid move!'
+
+                    
                 
-        
+                '''
+                if self._gameboard[column][row] != (0,0): ## this removes a piece 
+                    self._gameboard[column][row] = (0,0)
+                '''
+                
         pygame.display.flip()
 
     def placeNewPiece(self, mousePosition):
         game._draw_gamepiece(mousePosition[0], mousePosition[1],1)
-        game._draw_gamepieces()
+        ##game._draw_gamepieces()
         
 
     def _init_board(self):
@@ -102,9 +127,56 @@ class GridGame:
             pygame.draw.circle(self._screen, GridGame.GAMEPIECE_COLOR_2, (i*GridGame.CELL_SIZE + GridGame.CELL_SIZE/2, j*GridGame.CELL_SIZE + GridGame.CELL_SIZE/2), GridGame.CELL_SIZE/2 - GridGame.CELL_SIZE/18, 0)
 
 
+    def connect_to_server(self):
+        host = '169.234.90.122'
+        port = 3445
+
+        ##s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        self.s.connect( (host, port) )
+        print 'socket connected'
+
+        print 'received message 1: '
+        playerID = self.s.recv(4096)
+        print playerID
+
+        DELIM = "%"
+        user_name = "Heath"
+        user_pass = "abc123"
+        game_type = "generic"
+
+        message_two = user_name + DELIM + user_pass + DELIM + game_type + '\n'
+
+        print 'client sends: ' + message_two
+        try :
+            #Send message 2
+            self.s.sendall(message_two)
+            
+            #Receive message 3
+            message_three = self.s.recv(4096)
+            print 'server sends msg 3: ' + message_three
+
+            message_four = self.s.recv(4096)
+            print 'server sends msg 4: ' + message_four
+
+            ## time.sleep(1)
+                    
+            ## message_five = self.s.recv(4096)
+            ## print 'server sends msg 5: ' + message_five
+            
+        except socket.error:
+            #Send failed
+            print 'Send failed'
+            sys.exit()
+
+        
+
+
 ##if __name__ == 'main':
 game = GridGame()
 clock = pygame.time.Clock()
+game.connect_to_server()
+
 while not game._should_quit:
     clock.tick(30)
     game.update()
