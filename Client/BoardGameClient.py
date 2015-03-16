@@ -49,17 +49,21 @@ class BoardGameClient:
                 response = self._account.login(self._connection, game_choice)
                 player_id = int(response[0])
                 status = response[1]
-                print 'login response received'
+                print 'bgc received messages 1 and 3'
+                print 'player_id: ',player_id
+                print 'status: ',status
                 
                 if Account.FAIL_KEYWORD not in status.upper():
                     self._account.set_logged_in(True)
                     player_num = int(self._connection.get_response())
+                    print 'bgc received message 4'
+                    print 'player_num: ',player_num
                 else: 
                     self._message = status
-            except:
-                print "connection failed!"
+            except Exception as e:
+                print e
                 sys.exit()
-            
+          
         self._game_package = self._board_game_factory(game_choice)
         self._game_package.game.set_my_player_number(player_num)
         self._game_package.game.set_my_player_id(player_id)

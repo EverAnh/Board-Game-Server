@@ -38,8 +38,9 @@ class ServerConnection:
 
 
     def get_response(self):
-        time.sleep(1)
+        print 'sc receiving packet'
         return self._socket.recv(4096)
+        print 'sc received packet'
 
         
     def send_move(self, move):
