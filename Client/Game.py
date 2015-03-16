@@ -8,10 +8,11 @@ class Game:
         self._winner = False
         self._turn_number = 0
         self._my_turn = False
-        self._gameboard = [[None for x in range(self._board_width)] for y in range(self._board_height)]
-        self._move_type = 1
         self._board_width = 3
         self._board_height = 6
+        self._gameboard = [[None for x in range(self._board_width)] for y in range(self._board_height)]
+        self._move_type = 1
+        
         self._init_board()
 
     def _init_board(self):
@@ -39,7 +40,7 @@ class Game:
 
 
     def is_over(self):
-        return winner is not None
+        return self._winner is not None
 
 
     def is_my_turn(self):

@@ -1,11 +1,11 @@
-class GameManager(connection: ServerConnection, game_package: GamePackage):
+class GameManager:
 
     NEW_GAME = "NEWGAME"
     RESTART = "RESTART"
     QUIT = "QUIT"
 
     
-    def __init__(self):
+    def __init__(self, connection, game_package):
         self._connection = connection
         self._game = game_package.game
         self._display = game_package.display
@@ -19,7 +19,7 @@ class GameManager(connection: ServerConnection, game_package: GamePackage):
     def manage_endgame(self):
         self._display.end_game()
 
-    def handle_my_move(self, location: (int,int)):
+    def handle_my_move(self, location):
         if self._game.is_my_turn():
             if len(stored_move) < self._game.move_type:
                 store_move(location)

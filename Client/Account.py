@@ -3,19 +3,20 @@
 ##
 import ServerConnection
 
-class Account:
+FAIL_KEYWORD = "FAIL"
 
-    FAIL_KEYWORD = "FAIL"
+class Account:
     
     def __init__(self):
         self._username = ""
         self._password = ""
         self._logged_in = False
-
             
     def login(self, connection, game_choice):
         login_string = self._username + ServerConnection.CATG_DELIM + self._password + ServerConnection.CATG_DELIM + game_choice
+        print 'opening connection'
         connection.open_connection()
+        print 'connection opened'
         player_number = connection.get_response()  #message 1 <-        
         connection.send_request(login_string)      #message 2 ->
         status_message = connection.get_response() #message 3 <-
@@ -45,3 +46,6 @@ class Account:
 
     def is_logged_in(self):
         return self._logged_in
+
+    def set_logged_in(self, a_bool):
+        self._logged_in = a_bool

@@ -1,9 +1,10 @@
+import Display
 import pygame
 import os, sys
 import Tkinter as tk
 from Tkinter import *
 
-class MainDisplay:
+class MainDisplay(Display.Display):
     
    
     def __init__(self):
@@ -45,7 +46,7 @@ class MainDisplay:
 
 
 
-mainDisplay = MainDisplay()
+#mainDisplay = MainDisplay()
 #e = Entry(mainDisplay)
 #while not mainDisplay._should_quit:
     ## clock.tick(30)

@@ -1,5 +1,5 @@
 import pygame
-import os,sys
+import os,sys,time
 
 class GameDisplay:
 
@@ -18,8 +18,7 @@ class GameDisplay:
     GAMEPIECE_COLOR_1 = pygame.Color(222,184,135)
     GAMEPIECE_COLOR_2 = pygame.Color(139,69,19)
 
-    #Needs gametype for future implementation of other games
-    def __init__(self,GameType):
+    def __init__(self):
         self._should_quit = False
         self._turn = 1
         #temporarily to test pygame
@@ -54,12 +53,15 @@ class GameDisplay:
                     self._drawGamePiece((column,row),1)
                 if self.CheckValidMove() == 2:
                     self._drawError()
-                    
-
 
         pygame.display.flip()
+        
 
+    def end_game(self):
+        time.sleep(3)
+        pygame.quit()
 
+        
     def getGameBoard(self):
         return self._gameboard
 
