@@ -23,7 +23,6 @@ class BoardGameClient:
     OTHELLO      = "OTHELLO"
     BATTLESHIP   = "BATTLESHIP"
 
-
     # methods ------------------------------------------------------------------
 
     def __init__(self, game_type):
@@ -33,23 +32,26 @@ class BoardGameClient:
 
     def start(self):
         self._display = MainDisplay()
-        session_info = self._display.retrieve_user_info()
-        
-        while not self._account.logged_in:
-            if login, and success:
-                    self._connection.logged_in = True
-                    temp_player_number = # number received from server
-            # elif create, and success:
-                    message = ServerConnection.CREATE_SUCC
-                    # clear maindisplay
-            # elif login, and fail:
-                    message = ServerConnection.LOGIN_FAIL
-            # elif create, and fail:
-                    message = ServerConnection.CREATE_FAIL
+
+        while not self._account.is_logged_in():
+            session_info = self._display.retrieve_user_info()
+            self._account.set_username(session_info[0])
+            self._account.set_password(session_info[1])
+            game_choice = session_info[2]
+            
+            response = self._account.log_in(self._connection, game_choice)
+            player = int(response[0])
+            status = response[1]
+            
+            if Account.FAIL_KEYWORD not in status.upper():
+                self._connection.logged_in = True
+                turn = int(self._connection.get_response())
+                
             self._display.update(message)
             
         self._game_package = board_game_factory(game_choice)
-        self._game_package.game.set_my_player_number(temp_player_number)
+        self._game_package.game.set_my_player_number(player)
+        self._game_package.game.set_turn_number(turn)
         self._game_manager = GameManager(self._connection, self._game_package.game)
         run_game()
 
@@ -75,11 +77,9 @@ class BoardGameClient:
             self._game_manager.manage_turn()
             
         self._game_manager.manage_endgame()
-        # logic here to set 'replay' mode: NEWGAME, RESTART
 
 # ------------------------------------------------------------------------------
 if __name__ == 'main':
     bgc = BoardGameClient()
-    ## logic here to wait until QUIT has been selected (X or button)
     bgc.start()
     

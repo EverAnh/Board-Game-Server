@@ -4,20 +4,23 @@
 import ServerConnection
 
 class Account:
+
+    FAIL_KEYWORD = "FAIL"
+    
     def __init__(self):
         self._username = ""
         self._password = ""
-
-
-    def create(self, connection):
-        create_string = self._username + ServerConnection.CATG_DELIM + self._password + ServerConnection.CATG_DELIM
-        connection.open_connection()
-        connection.send_request(create_string)
+        self._logged_in = False
 
             
     def login(self, connection, game_choice):
         login_string = self._username + ServerConnection.CATG_DELIM + self._password + ServerConnection.CATG_DELIM + game_choice
-        connection.send_request(login_string)
+        connection.open_connection()
+        player_number = connection.get_response()  #message 1 <-        
+        connection.send_request(login_string)      #message 2 ->
+        status_message = connection.get_response() #message 3 <-
+        
+        return (player_number, status_message)
             
 
     def logout(self, connection):
@@ -38,3 +41,7 @@ class Account:
 
     def get_password(self):
         return self._password
+
+
+    def is_logged_in(self):
+        return self._logged_in

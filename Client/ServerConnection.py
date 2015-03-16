@@ -6,11 +6,12 @@ import Response
 class ServerConnection:
 
     DEFAULT_IP = "127.0.0.1"
-    DEFAULT_PORT = 54389
+    DEFAULT_PORT = 3445
     
     CREATE_SUCC  = "CREATESUCC"
-    LOGIN_FAIL   = "LOGINFAIL"
     CREATE_FAIL  = "CREATEFAIL"
+    LOGIN_SUCC   = "LOGINSUCCD"
+    LOGIN_FAIL   = "LOGINFAILD"
 
     WINNER = "WINNER"
 
@@ -18,6 +19,7 @@ class ServerConnection:
     MOVE_DELIM = "#"
     SCOR_DELIM = "$"
     VALU_DELIM = "%"
+
 
     def __init__(self):
         self._host_address = DEFAULT_IP
