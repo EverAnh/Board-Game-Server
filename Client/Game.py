@@ -1,12 +1,10 @@
-import GameBoard
-
-
 class Game:
     
     def __init__(self):
         self._my_player_number = 0
+        self._my_player_id = 0
         self._winner = False
-        self._turn_number = 0
+        self._turn_number = 1
         self._my_turn = False
         self._board_width = 3
         self._board_height = 6
@@ -66,3 +64,12 @@ class Game:
 
     def set_my_player_number(self, player_number):
         self._my_player_number = player_number
+
+
+    def get_my_player_id(self):
+        return self._my_player_id
+
+
+    def set_my_player_id(self, player_id):
+        self._my_player_id = player_id
+        

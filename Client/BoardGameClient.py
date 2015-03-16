@@ -29,46 +29,45 @@ class BoardGameClient:
 
 
     def start(self):
-        ##UNCOMMENT##self._display = MainDisplay.MainDisplay()
-
+        self._display = MainDisplay.MainDisplay()
+        self._message = "Howdy"
+        
         while not self._account.is_logged_in():
             try:
-                ##UNCOMMENT##
-                '''
-                session_info = self._display.retrieve_user_info()
+                session_info = self._display.retrieve_user_info(self._message)
                 self._account.set_username(session_info[0])
                 self._account.set_password(session_info[1])
                 game_choice = session_info[2]
-                '''
+                
+                
                 #################### DEBUG ##########################
-                ### hardcoded username, password, and game_choice ###
-                self._account.set_username("Lucas")
-                self._account.set_password("thecat")
                 game_choice = ("generic")
                 print 'user info entered'
                 #####################################################
                 
+                
                 response = self._account.login(self._connection, game_choice)
-                player = int(response[0])
+                player_id = int(response[0])
                 status = response[1]
                 print 'login response received'
                 
                 if Account.FAIL_KEYWORD not in status.upper():
                     self._account.set_logged_in(True)
-                    turn = int(self._connection.get_response())
-                    
-                ##UNCOMMENT##self._display.update(message)
+                    player_num = int(self._connection.get_response())
+                else: 
+                    self._message = status
             except:
-                print 'failed to start game!'
-                sys.exit(1)
+                print "connection failed!"
+                sys.exit()
             
         self._game_package = self._board_game_factory(game_choice)
-        self._game_package.game.set_my_player_number(player)
-        self._game_package.game.set_turn_number(turn)
+        self._game_package.game.set_my_player_number(player_num)
+        self._game_package.game.set_my_player_id(player_id)
 
-        ################### DEBUG ####################
+        ################### DEBUG ######################
+        #Until message 5 is implemented in standard way#
         self._game_package.game.set_my_turn(True)
-        ##############################################
+        ################################################
         
         self._game_manager = GameManager.GameManager(self._connection, self._game_package)
         self._run_game()

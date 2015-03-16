@@ -17,11 +17,12 @@ class Account:
         print 'opening connection'
         connection.open_connection()
         print 'connection opened'
-        player_number = connection.get_response()  #message 1 <-        
+        player_id = connection.get_response()      #message 1 <-        
         connection.send_request(login_string)      #message 2 ->
         status_message = connection.get_response() #message 3 <-
+        player_num = connection.get_response()     #message 4 <-
         
-        return (player_number, status_message)
+        return (player_id, status_message, player_num)
             
 
     def logout(self, connection):

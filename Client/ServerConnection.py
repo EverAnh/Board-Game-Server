@@ -1,4 +1,4 @@
-import socket
+import socket, time
 
 import Response
 
@@ -38,6 +38,7 @@ class ServerConnection:
 
 
     def get_response(self):
+        time.sleep(1)
         return self._socket.recv(4096)
 
         
