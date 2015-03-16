@@ -12,6 +12,7 @@ class GameManager:
         self._stored_move = []
 
     def manage_turn(self):
+        print 'managing turn'
         while self._game.is_my_turn():
             self._display.update()
         handle_opponent_move()

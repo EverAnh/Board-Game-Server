@@ -40,7 +40,8 @@ class Game:
 
 
     def is_over(self):
-        return self._winner is not None
+        print 'checking if game is over'
+        return self._winner
 
 
     def is_my_turn(self):

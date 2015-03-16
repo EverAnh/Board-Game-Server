@@ -65,6 +65,11 @@ class BoardGameClient:
         self._game_package = self._board_game_factory(game_choice)
         self._game_package.game.set_my_player_number(player)
         self._game_package.game.set_turn_number(turn)
+
+        ################### DEBUG ####################
+        self._game_package.game.set_my_turn(True)
+        ##############################################
+        
         self._game_manager = GameManager.GameManager(self._connection, self._game_package)
         self._run_game()
 
@@ -91,6 +96,7 @@ class BoardGameClient:
         return GamePackage.GamePackage(game, display)
 
     def _run_game(self):
+        print 'running game'
         while not self._game_package.game.is_over():
             self._game_manager.manage_turn()
             
