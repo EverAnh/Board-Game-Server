@@ -1,4 +1,5 @@
 import pygame
+import Display
 import os, sys
 import Tkinter as tk
 from Tkinter import *

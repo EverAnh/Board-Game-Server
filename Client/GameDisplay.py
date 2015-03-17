@@ -1,5 +1,6 @@
 import pygame
 import os,sys,time
+import Display
 
 class GameDisplay(Display.Display):
 
