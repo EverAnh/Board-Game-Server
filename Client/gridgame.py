@@ -149,6 +149,8 @@ class GridGame:
 
         print 'client sends: ' + message_two
         try :
+            self.s.sendall("Heath%abc%generic")
+            
             #Send message 2
             self.s.sendall(message_two)
             

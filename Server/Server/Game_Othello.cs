@@ -12,7 +12,7 @@ namespace Game
         private int cols = 8;
         private int rows = 8;
         private Board board;
-        private GameState gameState;
+        private GameState state;
         private int currentColor;
         private int moveNumber;
         private int lastMoveColor;
@@ -53,7 +53,7 @@ namespace Game
             else
             {
                 // Set the game state.
-                this.gameState = Game_Othello.GameState.InPlayerMove;
+                this.state = Game_Othello.GameState.InPlayerMove;
             }
 
             return true;
@@ -74,7 +74,7 @@ namespace Game
         private void EndGame(bool isResignation)
         {
             // Set the game state.
-            this.gameState = Game_Othello.GameState.GameOver;
+            this.state = Game_Othello.GameState.GameOver;
 
             // Handle a resignation.
             if (isResignation)
@@ -112,7 +112,7 @@ namespace Game
         private void EndMove()
         {
             // Set the game state.
-            this.gameState = Game_Othello.GameState.MoveCompleted;
+            this.state = Game_Othello.GameState.MoveCompleted;
 
             // Switch players and start the next turn.
             this.currentColor *= -1;
