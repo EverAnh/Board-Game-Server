@@ -11,11 +11,10 @@ class Account:
         self._username = ""
         self._password = ""
         self._logged_in = False
-            
+
+
     def login(self, connection, game_choice):
         login_string = self._username + ServerConnection.CATG_DELIM + self._password + ServerConnection.CATG_DELIM + game_choice
-        print 'opening connection'
-        connection.open_connection()
         print 'connection opened'
         player_id = connection.get_response()      #message 1 <-
         print 'received message 1'

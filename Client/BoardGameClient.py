@@ -31,6 +31,7 @@ class BoardGameClient:
     def start(self):
         self._display = MainDisplay.MainDisplay()
         self._message = "Howdy"
+        self._connection.open_connection()
         
         while not self._account.is_logged_in():
             try:

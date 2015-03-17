@@ -1,10 +1,9 @@
-import Display
 import pygame
 import os, sys
 import Tkinter as tk
 from Tkinter import *
 
-class MainDisplay(Display.Display):
+class MainDisplay:
 
     def __init__(self):
         self._username = "NONE"
