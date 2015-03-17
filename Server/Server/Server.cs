@@ -76,7 +76,7 @@ namespace Game
             int numberGames = games.Count;
             String playerGame = p.getGame();
 
-            Console.WriteLine("games capacity " + games.Count);
+            Console.WriteLine("games capacity " + games.Count.ToString() );
 
             // check each existing game for a game type match AND room for an available player 
             // counting by g
@@ -118,7 +118,7 @@ namespace Game
 
                     int playerNumber = activePlayers.IndexOf(p);
 
-                    Console.WriteLine("new player number " + playerNumber);
+                    Console.WriteLine("new player number " + playerNumber.ToString() );
                     // message 1
                     p.getPlayerWriter().WriteLine(playerNumber.ToString() );
 
@@ -168,6 +168,8 @@ namespace Game
 
                         // message 3
                         p.getPlayerWriter().WriteLine(loginMessage);
+
+                        System.Threading.Thread.Sleep(500);
                     }
 
                     Console.WriteLine("message 3 sent");

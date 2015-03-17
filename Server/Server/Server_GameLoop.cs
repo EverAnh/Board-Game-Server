@@ -41,7 +41,7 @@ namespace Game
                 // message 6
                 // game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
 
-                Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX() + " " + game.getPieces()[activePlayer].getY() );
+                Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX().ToString() + " " + game.getPieces()[activePlayer].getY().ToString() );
 
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
@@ -54,12 +54,17 @@ namespace Game
                     move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
                 }
 
-                Console.WriteLine("The number of players is " + numberPlayers);
+                Console.WriteLine("The number of players is " + numberPlayers.ToString() );
+
+                string currentX = game.getPieces()[activePlayer].getX().ToString();
+                string currentY = game.getPieces()[activePlayer].getY().ToString();
 
                 // increment the value of active player to the next player
                 activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
                 // players need to be told who the next active player is, along with the move of the current active player
+
+                game.generateMoveString(turn, activePlayer, currentX, currentY, move);
 
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
@@ -109,7 +114,7 @@ namespace Game
                 index = 0;
             }
 
-            Console.WriteLine("The next player to take a turn is " + index);
+            Console.WriteLine("The next player to take a turn is " + index.ToString() );
 
             return index;
         }

@@ -156,11 +156,32 @@ namespace Game
                 }
             }
 
-
-            
             return false;
         }
 
+        public virtual string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
+        {
+            string moveStatement = "";
 
+            // turn number, new player number
+            moveStatement += turnNumber.ToString() + "&";
+            moveStatement += playerNumber + "&";
+            
+            // score for Game_Generic is always -1
+            moveStatement += "-1&";
+            
+            // message is blank
+            moveStatement += "";
+
+            // position starting x and y
+            moveStatement += cur_x + "%";
+            moveStatement += cur_y + "%";
+
+            // player who went last
+            moveStatement += playerNumber.ToString() + "%";
+
+
+            return moveStatement;
+        }
     }
 }
