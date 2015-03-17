@@ -147,24 +147,28 @@ namespace Game
 
                     p.setUserName(data[0]);
 
-                    string loginMessage = "";
-                    if (db.attemptToLogin(data[0], data[1]) )
-                    {
-                        loginMessage = "Login was successful. Welcome back!";
-                    }
+                    string loginMessage = " ";
 
-                    else if (db.addNewPlayer(data[0], data[1]))
+                    while(loginMessage[0] != 'W')
                     {
-                        loginMessage = "New User created. We hope you enjoy our game!";
-                    }
+                        if (db.attemptToLogin(data[0], data[1]))
+                        {
+                            loginMessage = "Welcome back!";
+                        }
 
-                    else
-                    {
-                        loginMessage = "Login attempt failed. Try again.";
-                    }
+                        else if (db.addNewPlayer(data[0], data[1]))
+                        {
+                            loginMessage = "New User created. We hope you enjoy our game!";
+                        }
 
-                    // message 3
-                    p.getPlayerWriter().WriteLine(loginMessage);
+                        else
+                        {
+                            loginMessage = "Login attempt failed. Try again.";
+                        }
+
+                        // message 3
+                        p.getPlayerWriter().WriteLine(loginMessage);
+                    }
 
                     Console.WriteLine("message 3 sent");
 
