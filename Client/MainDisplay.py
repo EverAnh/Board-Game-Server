@@ -3,7 +3,7 @@ import os, sys
 import Tkinter as tk
 from Tkinter import *
 
-class MainDisplay:
+class MainDisplay(Display.Display):
 
     def __init__(self):
         self._username = "NONE"

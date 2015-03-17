@@ -1,7 +1,7 @@
 import pygame
 import os,sys,time
 
-class GameDisplay:
+class GameDisplay(Display.Display):
 
     WINDOW_LENGTH = 800
     GRID_LENGTH = 8
