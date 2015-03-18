@@ -135,6 +135,7 @@ namespace Game
         {
             Console.Write("[Not yet implemented] Terminating game...thanks for playing! Come back soon");
         }
+
         protected virtual bool checkWinCondition(int x, int y)
         {
             if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
@@ -146,6 +147,7 @@ namespace Game
             }
             return false;               // not a win
         }
+
         // returns true if the move is a valid move, otherwise returns false
         protected virtual bool checkGameState(int x, int y)
         {
@@ -159,6 +161,7 @@ namespace Game
                 {
                     gamePieces[loop.getActivePlayer()+2].setY(gamePieces[loop.getActivePlayer()].getY());
                     gamePieces[loop.getActivePlayer()].setY(y);
+                    
                     if (checkWinCondition(
                        gamePieces[loop.getActivePlayer()].getX(),
                         gamePieces[loop.getActivePlayer()].getY()))
@@ -178,7 +181,8 @@ namespace Game
                     // This will save the piece location so I can send a "delete" message to the client.
                     gamePieces[loop.getActivePlayer()+2].setX(gamePieces[loop.getActivePlayer()].getX());   
                     gamePieces[loop.getActivePlayer()].setX(x);
-                     if (checkWinCondition(
+                    
+                    if (checkWinCondition(
                         gamePieces[loop.getActivePlayer()].getX(),
                         gamePieces[loop.getActivePlayer()].getY()))
                     {
@@ -225,9 +229,9 @@ namespace Game
             moveStatement += gamePieces[loop.getActivePlayer()].getValue() + "&";
 
             // coordinates that have changed, use a "#" sign.
-            moveStatement += gamePieces[loop.getActivePlayer()+2].getX() + "#"
-                           + gamePieces[loop.getActivePlayer()+2].getY() + "#"
-                            + gamePieces[loop.getActivePlayer()+2].getValue();
+            moveStatement += gamePieces[loop.getActivePlayer()].getX() + "#"
+                           + gamePieces[loop.getActivePlayer()].getY() + "#"
+                            + gamePieces[loop.getActivePlayer()].getValue();
 
 
             Console.Write("Sending message to all clients: " + moveStatement);
