@@ -17,7 +17,7 @@ namespace Game
     {
         private static TcpListener listener;
         private static List<Player> activePlayers = new List<Player>();
-        private static List<Game_Generic> games = new List<Game_Generic>();
+        private static List<GameThread> games = new List<GameThread>();
 
         // private IPAddress local = IPAddress.Parse("127.0.0.1");
 
@@ -84,16 +84,15 @@ namespace Game
             for (int g = 0; g < numberGames; g++)
             {
 
-               String gameType = games[g].getGameType();
+               String gameType = games[g].getGame().getGameType();
 
-               int currentPlayers = games[g].getNumberPlayers();
-               int maxPlayers = games[g].getMaxPlayers();
+               int currentPlayers = games[g].getGame().getNumberPlayers();
+               int maxPlayers = games[g].getGame().getMaxPlayers();
 
                if ((playerGame == gameType) && (currentPlayers < maxPlayers))
                {
                    return g;
                }
-   
             }
 
             return -1;
@@ -203,22 +202,24 @@ namespace Game
                             newGame = new Game_Othello();
                         }
 
-                        games.Add(newGame);
+                        // games.Add(newGame);
                         newGame.addPlayer(p);
                         gameToPlay = p.getGame();
 
                         Console.WriteLine("starting a new game");
 
                         GameThread gt = new GameThread(newGame);
-                        Thread gameThread = new Thread(new ThreadStart(gt.playGame));
+                        Thread gameThread = new Thread(new ThreadStart(gt.playGame) );
                         gameThread.Start();
+                        gt.setThread(gameThread);
+                        games.Add(gt);
                     }
 
                     // found a matching game type that needs an additional player
                     else
                     {
-                        newPlayerNumber = games[gameToJoin].getNumberPlayers().ToString();
-                        games[gameToJoin].addPlayer(p);
+                        newPlayerNumber = games[gameToJoin].getGame().getNumberPlayers().ToString();
+                        games[gameToJoin].getGame().addPlayer(p);
                     }
 
                     startMessage = newPlayerNumber;
@@ -226,6 +227,16 @@ namespace Game
                     // the REAL message 4
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
+                
+                    // count by t
+                    for (int t = 0; t < games.Count; t++)
+                    {
+                        if (!games[t].getGame().getGameState() )
+                        {
+                            games[t].getThread().Abort();
+                        }
+                    }
+                
                 }
             }
         } // end thread for TCP listener
@@ -233,6 +244,7 @@ namespace Game
         private class GameThread
         { // start GameThread
             private Game_Generic currentGame;
+            private Thread thread;
 
             public GameThread(Game_Generic newGame)
             {
@@ -245,6 +257,21 @@ namespace Game
 
                 currentGame.getLoop().gameLoop(currentGame);
             }
-        }       // end GameThread
+
+            public Game_Generic getGame()
+            {
+                return currentGame;
+            }
+
+            public Thread getThread()
+            {
+                return thread;
+            }
+
+            public void setThread(Thread t)
+            {
+                thread = t;
+            }
+        } // end GameThread
     }
 }

@@ -201,8 +201,6 @@ namespace Game
             return false;
         }
 
-
-
         // Override as necessary
         // This method can be used to track a winner by simply setting gameState to false
         public virtual string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
