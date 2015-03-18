@@ -3,6 +3,7 @@ import socket, time
 import Response
 import GamePiece
 
+# DEFAULT_IP = "169.234.57.201"
 DEFAULT_IP = "127.0.0.1"
 DEFAULT_PORT = 3445
     
@@ -74,7 +75,8 @@ class ServerConnection:
             pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
         print 'pieces: ',pieces
         return Response.Response(turn_number, player_turn, scores, message, pieces)
-        
+        print 'pieces: ',pieces
 
     def close_connection(self):
-        self._socket.close()
+        pass
+        #self._socket.close()
