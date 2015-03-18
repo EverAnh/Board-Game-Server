@@ -33,18 +33,33 @@ namespace Game
             loop = new Server_GameLoop();
             gameType = "generic";
             maxPlayers = 1;
+
+            // Player 1
+
             gamePieces.Add(new Piece_Generic());
             gamePieces[0].setX(2);
             gamePieces[0].setY(2);
             gamePieces[0].setValue(1);
             gameState = true;                // set to true for running.
 
-            // Temporary code to allow me to track the piece
-;
+            // Player 2 (not needed)
+
+            gamePieces.Add(new Piece_Generic()); 
+            gamePieces[1].setX(4);
+            gamePieces[1].setY(4);
+            gamePieces[1].setValue(2);
+            
+            // Temporary code to allow me to track the pieces
+
             gamePieces.Add(new Piece_Generic());
             gamePieces[2].setX(2);
             gamePieces[2].setY(2);
             gamePieces[2].setValue(1);
+
+            gamePieces.Add(new Piece_Generic()); 
+            gamePieces[3].setX(4);
+            gamePieces[3].setY(4);
+            gamePieces[3].setValue(2);
 
         }
 
@@ -205,7 +220,7 @@ namespace Game
             moveStatement += cur_y + "%";
 
             // player who went last
-            moveStatement += gamePieces[0].getValue() + "&";
+            moveStatement += gamePieces[].getValue() + "&";
 
             // coordinates that have changed, use a "#" sign.
             moveStatement += gamePieces[loop.getActivePlayer()+2].getX() + "#"
