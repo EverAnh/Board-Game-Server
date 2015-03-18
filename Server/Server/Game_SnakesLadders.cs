@@ -4,68 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+// TODO: Change the game pieces to movable pieces.
+
 namespace Game
 {
     public class Game_SnakesLadders : Game_Generic
     {
-        // We'll use a 100 boardPiece array.
-        class boardPiece
-        {
-            int index;    // index value of this board Piece
-            int type;     // 0 for norm, does nothing || 1 for ladder || 2 for snake
-            int val;      // Value that the piece might lead [if 1 or 2]
-            String text = "";  // If you want to display text when you land on the piece
-
-            // Getter/setter methods
-
-            public String getText()
-            {
-                return text;
-            }
-
-            public void setText(String set)
-            {
-                test = set;
-            }
-            
-            public int getIndex()
-            {
-                return index;
-            }
-
-            public void setIndex(int i)
-            {
-                index = i;
-            }
-
-            public int getType()
-            {
-                return type;
-            }
-
-            public void setType(int t)
-            {
-                type = t;
-            }
-
-            public int getValue()
-            {
-                return value;
-            }
-
-            public int setValue(int v)
-            {
-                value = v;
-            }
-        }
-
-         protected boardPiece[] gameBoardSL;
-
+        protected Board_Piece[] gameBoardSL;            // different from gameBoard, note.
         
         public Game_SnakesLadders()
         {
             // gameBoard = new int[cols, rows];         // set the rows and columns into the gameboard we made earlier. 
-            gameBoardSL = new boardPiece[100];          // size 100 array of boardPieces
+            gameBoardSL = new Board_Piece[100];          // size 100 array of boardPieces
             gameType = "snakesLadders";                 // Server will know that we made a connectFour game
             gamePieces = new List<Piece_Generic>();     // May not need this for our implementation
             currentPlayers = new List<Player>();        // list of players
@@ -76,15 +27,17 @@ namespace Game
             // Add two player's info in here, we don't really need to track all the pieces as gameBoard handles a lot of that for us.
             // We'll use gamePieces to track the last known move of each respective player.
             
+            // Player 1
             gamePieces.Add(new Piece_Generic());
             gamePieces[0].setX(0);
             gamePieces[0].setY(0);
-            gamePieces[0].setValue(1);                  // Player 1
-            
+            gamePieces[0].setValue(1);    
+
+            // Player 2
             gamePieces.Add(new Piece_Generic());
             gamePieces[1].setX(0);
             gamePieces[1].setY(0);
-            gamePieces[1].setValue(2);                  // Player 2
+            gamePieces[1].setValue(2);                  
 
             initializeBoardState();                     // Initialize the board.
         }
@@ -98,17 +51,10 @@ namespace Game
 
         public override int getPiece(int getX, int getY)
         {
-            return gameBoard[getX, getY];
+            return gameBoardSL[getX, getY];
         }
 
          // Since we're using our own game board, overwrite this method from Generic.
-
-        public virtual int assignPiece(int getX, int getY, int value)
-        {
-            gameBoard[getX, getY] = value;
-
-            return 0;
-        }
 
         public virtual bool handlePlayerTurn(String s)
         {
@@ -117,31 +63,33 @@ namespace Game
                                    System.Convert.ToInt32(move[1]) );
         }
 
-        public virtual void endGame()
+        // Override this from generic
+
+        public override void endGame()
         {
             Console.Write("[Not yet implemented] Terminating game...thanks for playing! Come back soon");
         }
 
         protected virtual bool checkWinCondition(int x, int y)
         {
-            /*
-            if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
+            
+            if (gamePieces[loop.getActivePlayer()].getX() == 99)    // cell 99 is the win condition
             {
                 Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
                 gameState = false;      // set to false
                 endGame();              // attempt to end the game.
                 return true;            // quick termination, return back to the caller
             }
-            */
+            
             return false; // not a win
         }
+        
         // returns true if the move is a valid move, otherwise returns false
+        
         protected override bool checkGameState(int x, int y)
         {
-
             return true;
         }
-
 
         // Methods that our main game loop calls on
 
@@ -168,32 +116,27 @@ namespace Game
         private int calcDistToEnd(int l)
         {
             // takes in the player current location and returns the distance to the end
-            // run this every loop and store it as a player value?
-            return 100-l;
+            return 100-l; // or 99-l, could lead to indexing errors. (Jason C.)
         }
 
         private int boardAction(int index)
         {
-            // takes in player current location (via index)
-            // checks the board piece at his spot
+            // takes in player current location (via index) and checks the board piece at his spot
             // if 0, nothing happens
             // if 1, player is bumped up
             // if 2, player is bumped down
 
             if (gameBoardsSL[index].getType() == 0)
             {
-                // nothing happens, just return the index?
-                return index;
+                return index;   // nothing happens, just return the index?
             }
             else if (gameBoardsSL[index].getType() == 1)
             {
-                // fill out--for ladder, so player is bumped up
                 gamePieces[loop.getActivePlayer()].setX(gameBoardSL[index].getValue());
                 return gameBoardSL[index].getValue();
             }
             else if (gameBoardsSL[index].getType() == 2)
             {
-                // fill out--for snakes/slides, so player is bumped down
                 gamePieces[loop.getActivePlayer()].setX(gameBoardSL[index].getValue());
                 return gameBoardSL[index].getValue();
             }
@@ -203,11 +146,9 @@ namespace Game
 
         private bool movePiece(int newLocation)
         {
-            // moves a piece
-            gamePieces[loop.getActivePlayer()].setX(newLocation);
+
+            gamePieces[loop.getActivePlayer()].setX(newLocation);            // moves a piece
         }
-
-
 
 
         private void initializeBoardState()
@@ -251,10 +192,6 @@ namespace Game
             gameBoardSL[21].setValue = 42;
             gameBoardSL[9].setValue = 31;
             gameBoardSL[71].setValue = 91;
-
         }
-
-
-
     }
 }
