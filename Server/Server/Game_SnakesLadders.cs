@@ -14,7 +14,7 @@ namespace Game
             int index;    // index value of this board Piece
             int type;     // 0 for norm, does nothing || 1 for ladder || 2 for snake
             int val;      // Value that the piece might lead [if 1 or 2]
-            String text = '';  // If you want to display text when you land on the piece
+            String text = "";  // If you want to display text when you land on the piece
 
             // Getter/setter methods
 
@@ -55,7 +55,7 @@ namespace Game
 
             public int setValue(int v)
             {
-                value = v
+                value = v;
             }
         }
 
@@ -207,14 +207,16 @@ namespace Game
         {
             // Roll the die, returning a random number from 1-6.
             // If we roll 6, make sure to let user know they get another one!
-            return 1;
+            Random rnd = new Random();
+            int dice = rnd.Next(1, 7);
+            return dice;
         }
 
         private int calcDistToEnd(int l)
         {
             // takes in the player current location and returns the distance to the end
             // run this every loop and store it as a player value?
-            return 0;
+            return 100-l;
         }
 
         private int boardAction(int l)
@@ -230,11 +232,11 @@ namespace Game
             }
             else if (l == 1)
             {
-                // fill out
+                // fill out--for ladder
             }
             else if (l == 2)
             {
-                // fill out
+                // fill out--for snakes/slides
             }
 
             return -1; // invalid action
