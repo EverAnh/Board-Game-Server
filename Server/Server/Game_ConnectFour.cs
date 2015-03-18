@@ -44,6 +44,45 @@ namespace Game
             return gamePieces;                          
         }
 
+        // override the statement from Generic Game
+
+        public override string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
+        {
+            string moveStatement = "";                                          // Make a string that we are going to send.
+
+            // What information do we need to tell the Client (for this game, in particular)
+            /*
+             * We recieved a move request from the server, so for connectFour, we need to "echo" or validate the move that was sent. Perhaps send a [T] or something?
+             * We want to let the clients know what move number they are on. 
+             * We also want to let the clients know what player is next.
+             * There is no concept of a "score" here, only a winner or loser.
+             * We finally need to let the client know if the game is over.
+             * 
+             * Proposed message: 
+             * playerNumber(current &  
+             */
+
+            // turn number, new player number
+            moveStatement += turnNumber.ToString() + "&";
+            moveStatement += playerNumber + "&";
+
+            // score for Game_Generic is always -1
+            moveStatement += "-1&";
+
+            // message is blank
+            moveStatement += "";
+
+            // position starting x and y
+            moveStatement += cur_x + "%";
+            moveStatement += cur_y + "%";
+
+            // player who went last
+            moveStatement += playerNumber.ToString() + "%";
+
+
+            return moveStatement;                                               // return the statement to the calling gameLoop 
+        }
+
         // handlePlayerTurn METHOD THAT OVERRIDES THE ONE IN GENERIC GAME
         // Returns ....
         // TODO: How do we end the game?
