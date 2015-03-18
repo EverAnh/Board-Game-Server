@@ -129,7 +129,7 @@ namespace Game
                 return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
             }
 
-            Console.Write("String was null, can't split that bro.")
+            Console.Write("String was null, can't split that bro.");
             return true;        // chill, man!
 
         }

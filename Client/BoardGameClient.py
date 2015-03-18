@@ -16,9 +16,9 @@ import ServerConnection
 #
 # ------------------------------------------------------------------------------
 
-CONNECT_FOUR = "CONNECTFOUR"
-OTHELLO      = "OTHELLO"
-BATTLESHIP   = "BATTLESHIP"
+CONNECT_FOUR = "connectFour"
+OTHELLO      = "othello"
+SNAKESLADDERS = "snakesLadders"
 
 class BoardGameClient:
     
@@ -41,7 +41,7 @@ class BoardGameClient:
                 
                 
                 #################### DEBUG ##########################
-                game_choice = ("generic")
+                #game_choice = ("generic")
                 print 'user info entered'
                 #####################################################
                 
@@ -70,7 +70,7 @@ class BoardGameClient:
 
         ################### DEBUG ######################
         #Until message 5 is implemented in standard way#
-        self._game.set_my_turn(True)
+        #self._game.set_my_turn(True)
         ################################################
         
         self._run_game()
