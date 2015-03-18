@@ -9,6 +9,8 @@ namespace Game
     public class Server_GameLoop
     {
         private int activePlayer = 0;
+        private int turn = 0;               // I moved it outside so I could access it.        
+        private bool activeGame = true;     // redundant, but will help it work for now.
 
         public Server_GameLoop()
         {  }
@@ -20,10 +22,9 @@ namespace Game
             //      which includes stream reader/writer
             // 
             int numberPlayers = game.getPlayers().Count;
-            int turn = 0;
+            turn = 0;       
             
-
-            Console.WriteLine("about to start game loop");
+            Console.WriteLine("Starting game loop!");
 
             while (allPlayersConnected(game.getPlayers(), numberPlayers) )
             {
@@ -41,7 +42,7 @@ namespace Game
                 // message 6
                 // game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
 
-                Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX() + " " + game.getPieces()[activePlayer].getY() );
+                Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX().ToString() + " " + game.getPieces()[activePlayer].getY().ToString() );
 
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
@@ -49,24 +50,50 @@ namespace Game
                 // the condition of the while loop makes the move. 
                 while(! game.handlePlayerTurn(move) )
                 {
-                    String notValid = "Player " + activePlayer.ToString() + " attempted a move that was not valid.";
-                    sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
-                    move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
+                    //String notValid = "Player " + activePlayer.ToString() + " attempted a move that was not valid.";
+                    //sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
+                    String notValid = turn + "&0&0&INVALID&0%0%0%";
+                    // construct a string that contains the turn number and the "invalid" message.
+                   sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
+                   move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
                 }
 
-                Console.WriteLine("The number of players is " + numberPlayers);
+                Console.WriteLine("The number of players is " + numberPlayers.ToString() );
+
+                string currentX = game.getPieces()[activePlayer].getX().ToString();
+                string currentY = game.getPieces()[activePlayer].getY().ToString();
 
                 // increment the value of active player to the next player
                 activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
                 // players need to be told who the next active player is, along with the move of the current active player
+                // this is crude, but since the passbyref is confusing me.. (i mean, it works)
 
+                String toSend = game.generateMoveString(turn, activePlayer, currentX, currentY, move);
+
+                // toSend should now hold the string.
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
-                sendToAllPlayers(game.getPlayers(), numberPlayers, move);
+                sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
 
-                
+                // check the gameState after each loop so we know when to "end" the game.
+                activeGame = game.getGameState();       // gets the existing game state
+
+                if (!activeGame)        // if game is no longer active
+                {
+                    // This is Jason2 - I CLAIM CREDIT FOR THIS HORRIBLE SOLUTION
+                    break;              // break out of the game loop
+                }
+
             }
+
+
+        }
+
+        // Made a function that allows me to get the turn number.
+        public int getTurnNumber()
+        {
+            return turn;        
         }
 
         private bool allPlayersConnected(List<Player> currentPlayers, int players)
@@ -95,7 +122,7 @@ namespace Game
         // for a 2 player game, max will equal 2
         // player values will be either 0 or 1
         // increments from 0 to (max -1) for multi player games 
-        private int getNextPlayerIndex(int i, int max)
+        public int getNextPlayerIndex(int i, int max)
         {
             int index = 0;
 
@@ -109,7 +136,7 @@ namespace Game
                 index = 0;
             }
 
-            Console.WriteLine("The next player to take a turn is " + index);
+            Console.WriteLine("The next player to take a turn is " + index.ToString() );
 
             return index;
         }

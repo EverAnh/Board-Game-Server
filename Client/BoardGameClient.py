@@ -5,7 +5,6 @@ import Account
 import MainDisplay
 import Game
 import GameDisplay
-import GamePackage
 import GameManager
 import ServerConnection
 
@@ -64,47 +63,49 @@ class BoardGameClient:
             except Exception as e:
                 print e
                 sys.exit()
-          
-        self._game_package = self._board_game_factory(game_choice)
-        self._game_package.game.set_my_player_number(player_num)
-        self._game_package.game.set_my_player_id(player_id)
+
+        self._game, self._display = self._board_game_factory(game_choice)
+        self._game.set_my_player_number(player_num)
+        self._game.set_my_player_id(player_id)
 
         ################### DEBUG ######################
         #Until message 5 is implemented in standard way#
-        self._game_package.game.set_my_turn(True)
+        self._game.set_my_turn(True)
         ################################################
         
-        self._game_manager = GameManager.GameManager(self._connection, self._game_package)
         self._run_game()
 
   
     def _board_game_factory(self, choice):
         if choice == CONNECT_FOUR:
             game = ConnectFourGame.ConnectFourGame()
+            manager = GameManager.GameManager(self._connection, game)
             display = ConnectFourGameDisplay.ConnectFourGameDisplay(manager, game)
             
         elif choice == OTHELLO:
             game = OthelloGame.OthelloGame()
+            manager = GameManager.GameManager(self._connection, game)
             display = OthelloGameDisplay.OthelloGameDisplay(manager, game)
             
         elif choice == BATTLESHIP:
             game = BattleShipGame.BattleshipFourGame()
+            manager = GameManager.GameManager(self._connection, game)
             display = BattleshipGameDisplay.BattleshipGameDisplay(manager, game)
 
         ############### DEBUG ######################
         else:
             game = Game.Game()
-            display = GameDisplay.GameDisplay()
+            manager = GameManager.GameManager(self._connection, game)
+            display = GameDisplay.GameDisplay(manager, game)
         ############################################
             
-        return GamePackage.GamePackage(game, display)
+        return (game, display)
 
     def _run_game(self):
         print 'running game'
-        while not self._game_package.game.is_over():
+        while not self._game.is_over():
+            self._display.update()
             self._game_manager.manage_turn()
-            
-        self._game_manager.manage_endgame()
 
 # ------------------------------------------------------------------------------
 #if __name__ == 'main':

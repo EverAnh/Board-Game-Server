@@ -44,10 +44,75 @@ namespace Game
             return gamePieces;                          
         }
 
+        public override void endGame()
+        {
+            Console.Write("[Not yet implemented] Terminating game of connectFour!...thanks for playing!");
+        }
+
+        protected virtual bool checkWinCondition(int x, int y)
+        {
+            if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
+            {
+                Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
+                gameState = false;      // set to false
+                endGame();              // attempt to end the game.
+                return true;            // quick termination, return back to the caller
+            }
+            return false; // not a win
+        }
+
+        // override the statement from Generic Game
+        public override string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
+        {
+            string moveStatement = "";                                          // Make a string that we are going to send.
+            /*             
+             7& *
+             2& *
+             3$3& *
+             someStuff&
+             5%2%1%(1 for red, 2 for black)
+            ^ col, row, value
+             */
+
+            // turn number, new player number
+            // I prefer to use the values kept by this particular game instance rather than gameloop.
+
+            moveStatement += loop.getTurn() + "&";              // attach the current turn number
+            moveStatement += loop.getActivePlayer() + "&";      // attach the active player number
+
+            // score for this game is always -1, I'll jump ahead and state that we'll only ever have 2 players 
+            moveStatement += "-1&";                          // append score (which is empty, sadly)
+
+            // if the game is still running, indicating that no players made a "winning" move
+            if (!gameState)     //gameState is true while game is running 
+                moveStatement += "WINNER&";
+            // OTHERWISE, message is blank 
+            else
+                moveStatement += "&";
+            
+            // position starting x and y
+            moveStatement += cur_x + "%";                       // append the moveX
+            
+            // Note that the client didn't know where the Y value had to be. 
+            // We calculated this server side.
+            moveStatement += 
+            gamePieces[loop.getActivePlayer()].getY() + "%";    // put our updated Y value here.
+
+            // player who went last
+            // Note: if the game is over, we need to append the winning player.
+            if (!gameState) 
+                moveStatement += loop.getActivePlayer();    // the player who just moved is obviously the winner!
+            else // should give me either 0 or 1. beautiful.
+                moveStatement += loop.getNextPlayerIndex(loop.getActivePlayer(), maxPlayers);
+
+            moveStatement += "%";                           // place the delimiter.
+
+            return moveStatement;                           //return the statement to the calling gameLoop 
+        }
+
         // handlePlayerTurn METHOD THAT OVERRIDES THE ONE IN GENERIC GAME
-        // Returns ....
-        // TODO: How do we end the game?
-        // Do we change the send packet so that the second character after the delim is the player's assigned number?
+        // Returns true always.
+        // TODO: How do we end the game? Do we change the send packet so that the second character after the delim is the player's assigned number?
 
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
@@ -65,7 +130,14 @@ namespace Game
             placeY = assignPiece(placeX, placeY, color);                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
             // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
-            if (placeY != -1)                                           // if placeY is not the error code
+            
+            if (placeY == -1)
+            {
+                // invalid move, return early.
+                return false;
+            }
+
+            else if (placeY != -1)                                           // if placeY is not the error code
             {
                 // Set the "piece" of the player to be their last move so it is printed out. (Unecessary, but shows us something)
                 gamePieces[thePlayer].setX(placeX);
@@ -74,9 +146,10 @@ namespace Game
                 if (checkGameState(placeX, placeY))                     // using the recently placed piece, check if the state is a win condition. 
                 {
                     Console.Write("[CONNECT 4] Game is over! Player: " + (loop.getActivePlayer()+1) + " is the victor!" );                      
-                    return true;                                        // returns true for now
-                }
-            }  
+                    // mark gameState as false, which will in turn trigger a specific message that will be sent.
+                    gameState = false; 
+                }  
+            }
             return true; // the move was not valid
         }
 
@@ -103,7 +176,6 @@ namespace Game
         public override int assignPiece(int getX, int getY, int value)              // We don't care about getY
         {
             // This function will drop it in the appropriate position
-
             int newGetY = returnTopOfRow(getX);                                     // calls helper method to return top of the current row
 
             if (newGetY != 100)                                                     // if no error code, good to go.

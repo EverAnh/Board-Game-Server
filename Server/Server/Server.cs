@@ -21,8 +21,8 @@ namespace Game
 
         // private IPAddress local = IPAddress.Parse("127.0.0.1");
 
-        private int port = 3445;
-        private static LoginDatabase db;
+        private int port = 3445;                // Port is hard coded.
+        private static LoginDatabase db;        
         protected static char delim = '%';
     
 
@@ -45,8 +45,8 @@ namespace Game
             Console.WriteLine(db.attemptToLogin("Tom", "password"));*/
             db.printUsers();
 
-            startListener();
-            startServer();
+            startListener();            // Declare a new listener
+            startServer();              // Start the server! (doesn't actually do anything, haha.)
         }
 
         private void startListener()
@@ -67,8 +67,9 @@ namespace Game
 
         private void startServer()
         {
+            // DOesn't acually do anything....
             Console.Write("Press Enter to Start the server: ");
-            Console.ReadLine();
+            Console.ReadLine();             
         }
 
         private static int getIndexOfGameToJoin(Player p)
@@ -76,7 +77,7 @@ namespace Game
             int numberGames = games.Count;
             String playerGame = p.getGame();
 
-            Console.WriteLine("games capacity " + games.Count);
+            Console.WriteLine("games capacity " + games.Count.ToString() );
 
             // check each existing game for a game type match AND room for an available player 
             // counting by g
@@ -104,21 +105,21 @@ namespace Game
             {
                 while (true) // Only add players 
                 {
-                    Socket sock = listener.AcceptSocket();
+                    Socket sock = listener.AcceptSocket();          // accept the sock
 
                     Console.WriteLine("   player socket has accepted the socket ");
 
-                    NetworkStream nws = new NetworkStream(sock);
+                    NetworkStream nws = new NetworkStream(sock);    
                     StreamReader sr = new StreamReader(nws);
                     StreamWriter sw = new StreamWriter(nws);
                     sw.AutoFlush = true;
 
-                    Player p = new Player(nws, sock, sr, sw);
-                    activePlayers.Add(p);
+                    Player p = new Player(nws, sock, sr, sw);       // construct a player object   
+                    activePlayers.Add(p);                           // Add it to the list of active players
 
                     int playerNumber = activePlayers.IndexOf(p);
 
-                    Console.WriteLine("new player number " + playerNumber);
+                    Console.WriteLine("new player number " + playerNumber.ToString() );
                     // message 1
                     p.getPlayerWriter().WriteLine(playerNumber.ToString() );
 
@@ -168,6 +169,8 @@ namespace Game
 
                         // message 3
                         p.getPlayerWriter().WriteLine(loginMessage);
+
+                        System.Threading.Thread.Sleep(500);
                     }
 
                     Console.WriteLine("message 3 sent");
@@ -240,6 +243,6 @@ namespace Game
 
                 currentGame.getLoop().gameLoop(currentGame);
             }
-        } // end GameThread
+        }       // end GameThread
     }
 }

@@ -6,8 +6,8 @@ class Game:
         self._winner = False
         self._turn_number = 1
         self._my_turn = False
-        self._board_width = 3
-        self._board_height = 6
+        self._board_width = 8
+        self._board_height = 8
         self._gameboard = [[None for x in range(self._board_width)] for y in range(self._board_height)]
         self._move_type = 1
         
@@ -72,4 +72,18 @@ class Game:
 
     def set_my_player_id(self, player_id):
         self._my_player_id = player_id
+
+
+    def get_width(self):
+        return self._board_width
+
+
+    def get_height(self):
+        return self._board_height
+
+    def set_board_size(self, w, h):
+        self._board_width = w
+        self._board_height = h
         
+    def get_board(self):
+        return self._gameboard

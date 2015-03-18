@@ -113,7 +113,7 @@ namespace Game
                 endGame();              // attempt to end the game.
                 return true;            // quick termination, return back to the caller
             }
-            return false; // not a win
+            return false;               // not a win
         }
         // returns true if the move is a valid move, otherwise returns false
         protected virtual bool checkGameState(int x, int y)
@@ -132,7 +132,7 @@ namespace Game
                         gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
-                        Console.Write("Code this in, Jason 2!");
+                        // Console.Write("Code this in, Jason 2!");
                     }
                     return true;
                 }
@@ -149,18 +149,39 @@ namespace Game
                         gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
-                        Console.Write("Code this in, Jason 2!");
+                        // Console.Write("Code this in, Jason 2!");
                     }
 
                     return true;
                 }
             }
 
-
-            
             return false;
         }
 
+        public virtual string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
+        {
+            string moveStatement = "";
 
+            // turn number, new player number
+            moveStatement += turnNumber.ToString() + "&";
+            moveStatement += playerNumber + "&";
+            
+            // score for Game_Generic is always -1
+            moveStatement += "-1&";
+            
+            // message is blank
+            moveStatement += "";
+
+            // position starting x and y
+            moveStatement += cur_x + "%";
+            moveStatement += cur_y + "%";
+
+            // player who went last
+            moveStatement += playerNumber.ToString() + "%";
+
+
+            return moveStatement;
+        }
     }
 }
