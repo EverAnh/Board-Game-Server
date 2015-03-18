@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace Game
 {
     public class Game_Generic
-    {
-        protected bool gameWaiting;             
-        protected int[ , ] gameBoard;
-        protected List<Piece_Generic> gamePieces;
-        protected List<Player> currentPlayers;
-        protected int numberPlayers;
-        protected int maxPlayers;
-        protected Server_GameLoop loop;
-        protected String gameType;
+    {                         
+        protected int[ , ] gameBoard;                   // Default gameboard; feel free to use your own
+        protected List<Piece_Generic> gamePieces;       // List of current gamePieces - use to track various players
+        protected List<Player> currentPlayers;          // List of players currently in the game, should be max 2
+        protected int numberPlayers;                    // Current number of players in the game, should be 0 or 1
+        protected int maxPlayers;                       // The maximum amount of players allowed, shouldb e 2
+        protected Server_GameLoop loop;                 // We need a gameloop to tell the client which turn it is
+        protected String gameType;                      // gameType will be generic by default.
         protected bool gameState;                       // True for running / False for not
+        protected bool gameWaiting;                     // True once game has been created; false when game has started.
 
         public Game_Generic()
         {
@@ -178,6 +178,10 @@ namespace Game
             return false;
         }
 
+
+
+        // Override as necessary
+        // This method can be used to track a winner by simply setting gameState to false
         public virtual string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
         {
             string moveStatement = "";
@@ -196,7 +200,7 @@ namespace Game
             else
                 moveStatement += "THISISAMESSAGE&";
 
-            // position starting x and y
+            // position starting x and y    
             moveStatement += cur_x + "%";
             moveStatement += cur_y + "%";
 
@@ -205,9 +209,11 @@ namespace Game
 
             // coordinates that have changed, use a "#" sign.
             moveStatement += gamePieces[loop.getActivePlayer()+2].getX() += "#"
-                           += gamePieces[loop.getActivePlayer()+2].getY();
+                           += gamePieces[loop.getActivePlayer()+2].getY() += "#"
+                            += gamePieces[loop.getActivePlayer()+2].getValue();
 
 
+            Console.Write("Sending message to all clients: " + moveStatement);
 
             return moveStatement;
         }
