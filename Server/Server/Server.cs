@@ -104,6 +104,15 @@ namespace Game
             {
                 while (true) // Only add players 
                 {
+                    // count by t
+                    for (int t = 0; t < games.Count; t++)
+                    {
+                        if (!games[t].getGame().getGameState())
+                        {
+                            games[t].getThread().Abort();
+                        }
+                    }
+
                     Socket sock = listener.AcceptSocket();          // accept the sock
 
                     Console.WriteLine("   player socket has accepted the socket ");
@@ -168,6 +177,8 @@ namespace Game
 
                         // message 3
                         p.getPlayerWriter().WriteLine(loginMessage);
+
+                        System.Threading.Thread.Sleep(1500);
 
                         if (loginMessage[0] != 'W')
                         {
@@ -237,14 +248,7 @@ namespace Game
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
                 
-                    // count by t
-                    for (int t = 0; t < games.Count; t++)
-                    {
-                        if (!games[t].getGame().getGameState() )
-                        {
-                            games[t].getThread().Abort();
-                        }
-                    }
+                    
                 
                 }
             }
