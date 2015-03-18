@@ -100,7 +100,7 @@ namespace Game
         // for a 2 player game, max will equal 2
         // player values will be either 0 or 1
         // increments from 0 to (max -1) for multi player games 
-        private int getNextPlayerIndex(int i, int max)
+        public int getNextPlayerIndex(int i, int max)
         {
             int index = 0;
 

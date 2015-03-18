@@ -68,36 +68,20 @@ namespace Game
         public override string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
         {
             string moveStatement = "";                                          // Make a string that we are going to send.
-
-            // What information do we need to tell the Client (for this game, in particular)
-            /*
-             * We recieved a move request from the server, so for connectFour, we need to "echo" or validate the move that was sent. Perhaps send a [T] or something?
-             * We want to let the clients know what move number they are on. 
-             * We also want to let the clients know what player is next.
-             * There is no concept of a "score" here, only a winner or loser.
-             * We finally need to let the client know if the game is over.
-             * 
-             * Proposed message: 
-             * playerNumber(current) & turnNumber & score & piecePlacedX & piecePlacedY & nextPlayernumber + extra
-             * 
-             * extra would be denoted by either 1 for yes, game is over, or 0 for none (game still running)
-             * should there be a 1, we can then follow it up with the player number of the winner (which in this case should be the same, right?)
-             * 
-             * score in this case is blank.
-
-
+/*
 CATG_DELIM = & = delimiter between categories within the same message
 MOVE_DELIM = # = delimiter between pieces/locations
 SCOR_DELIM = $ = delimiter between player scores (accommodates n many players)
 VALU_DELIM = % = delimiter between values of a specific piece or location
 
-
-
-
 WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who won
              
-             7&2&3$3&talkSomeShit&5%2%1%(1 for red, 2 for black)
-
+             7& *
+             2& *
+             3$3& *
+             someStuff&
+             5%2%1%(1 for red, 2 for black)
+            ^ col, row, value
 
              */
 
@@ -105,12 +89,13 @@ WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who
             moveStatement += turnNumber.ToString() + "&";       // attach the current turn Number
             moveStatement += playerNumber + "&";                // attach the player number
 
-            // score for Game_Generic is always -1
-            moveStatement += "-1&";                             // append score (which is empty, sadly)
+            // score for this game is always -1
+            // I'll jump ahead and state that we'll only ever have 2 players 
+            moveStatement += "-1$-1&";                          // append score (which is empty, sadly)
 
             
             // if the game is still running, indicating that no players made a "winning" move
-            if (gameState) 
+            if (!gameState)     //gameState is true while game is running 
             {
                 moveStatement += "WINNER";
             }
@@ -122,16 +107,28 @@ WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who
             
             // position starting x and y
             moveStatement += cur_x + "%";                       // append the moveX
+            
             // Note that the client didn't know where the Y value had to be. 
             // We calculated this server side.
             moveStatement += 
             gamePieces[loop.getActivePlayer()].getY() + "%";    // put our updated Y value here.
 
             // player who went last
-            moveStatement += playerNumber.ToString() + "%";
+            // Note: if the game is over, we need to append the winning player.
+            if (!gameState) 
+            {
+                moveStatement += loop.getActivePlayer();    // the player who just moved is obviously the winner!
+            }
+            // OTHERWISE, message is blank 
+            else
+            {
+                // should give me either 0 or 1. beautiful.
+                moveStatement += loop.getNextPlayerIndex(loop.getActivePlayer(), maxPlayers);
+            }
+            
+            moveStatement += "%";                           // place the delimiter.
 
-
-            return moveStatement;                                               // return the statement to the calling gameLoop 
+            return moveStatement;                           // and return.                    // return the statement to the calling gameLoop 
         }
 
         // handlePlayerTurn METHOD THAT OVERRIDES THE ONE IN GENERIC GAME
