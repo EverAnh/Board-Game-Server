@@ -1,24 +1,14 @@
 class GameManager:
-
-    NEW_GAME = "NEWGAME"
-    RESTART = "RESTART"
-    QUIT = "QUIT"
-
-    
-    def __init__(self, connection, game_package):
+  
+    def __init__(self, connection, game):
         self._connection = connection
-        self._game = game_package.game
-        self._display = game_package.display
+        self._game = game
         self._stored_move = []
 
     def manage_turn(self):
         print 'managing turn'
-        while self._game.is_my_turn():
-            self._display.update()
-        self.handle_opponent_move()
-
-    def manage_endgame(self):
-        self._display.end_game()
+        if not self._game.is_my_turn():
+            self.handle_opponent_move()
 
     def handle_my_move(self, location):
         if self._game.is_my_turn():

@@ -1,7 +1,6 @@
 class GamePiece:
 
-    def __init__(self, row, col, player, value):
+    def __init__(self, row, col, value):
         self.row = row
         self.col = col
-        self.player = player
         self.value = value
