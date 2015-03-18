@@ -76,6 +76,7 @@ namespace Game
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
 
+                /*
                 // check the gameState after each loop so we know when to "end" the game.
                 activeGame = game.getGameState();       // gets the existing game state
 
@@ -84,10 +85,8 @@ namespace Game
                     // This is Jason2 - I CLAIM CREDIT FOR THIS HORRIBLE SOLUTION
                     break;              // break out of the game loop
                 }
-
+                 * */
             }
-
-
         }
 
         // Made a function that allows me to get the turn number.
@@ -98,6 +97,7 @@ namespace Game
 
         private bool allPlayersConnected(List<Player> currentPlayers, int players)
         {
+            /*
             // counting by p
             for (int p = 0; p < players; p++)
             {
@@ -106,6 +106,7 @@ namespace Game
                     return false;
                 }
             }
+             * */
 
             return true;
         }
