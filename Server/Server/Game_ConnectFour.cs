@@ -62,62 +62,57 @@ namespace Game
         }
 
         // override the statement from Generic Game
-        // this function is called once the move has been "accepted" by the server.
-        // we should send the client a message "confirming" the move, along with the next player.
-
         public override string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
         {
             string moveStatement = "";                                          // Make a string that we are going to send.
-
-            // What information do we need to tell the Client (for this game, in particular)
-            /*
-             * We recieved a move request from the server, so for connectFour, we need to "echo" or validate the move that was sent. Perhaps send a [T] or something?
-             * We want to let the clients know what move number they are on. 
-             * We also want to let the clients know what player is next.
-             * There is no concept of a "score" here, only a winner or loser.
-             * We finally need to let the client know if the game is over.
-             * 
-             * Proposed message: 
-             * playerNumber(current) & turnNumber & score & piecePlacedX & piecePlacedY & nextPlayernumber + extra
-             * 
-             * extra would be denoted by either 1 for yes, game is over, or 0 for none (game still running)
-             * should there be a 1, we can then follow it up with the player number of the winner (which in this case should be the same, right?)
-             * 
-             * score in this case is blank.
+            /*             
+             7& *
+             2& *
+             3$3& *
+             someStuff&
+             5%2%1%(1 for red, 2 for black)
+            ^ col, row, value
              */
 
-            // WIP 
-
-            if (gameState) // if the game is still running, indicating that no players made a "winning" move
-            {
-                moveStatement += "";
-            }
-
             // turn number, new player number
-            moveStatement += turnNumber.ToString() + "&";
-            moveStatement += playerNumber + "&";
+            // I prefer to use the values kept by this particular game instance rather than gameloop.
 
-            // score for Game_Generic is always -1
-            moveStatement += "-1&";
+            moveStatement += loop.getTurn() + "&";              // attach the current turn number
+            moveStatement += loop.getActivePlayer() + "&";      // attach the active player number
 
-            // message is blank
-            moveStatement += "";
+            // score for this game is always -1, I'll jump ahead and state that we'll only ever have 2 players 
+            moveStatement += "-1$-1&";                          // append score (which is empty, sadly)
 
+            // if the game is still running, indicating that no players made a "winning" move
+            if (!gameState)     //gameState is true while game is running 
+                moveStatement += "WINNER&";
+            // OTHERWISE, message is blank 
+            else
+                moveStatement += "&";
+            
             // position starting x and y
-            moveStatement += cur_x + "%";
-            moveStatement += cur_y + "%";
+            moveStatement += cur_x + "%";                       // append the moveX
+            
+            // Note that the client didn't know where the Y value had to be. 
+            // We calculated this server side.
+            moveStatement += 
+            gamePieces[loop.getActivePlayer()].getY() + "%";    // put our updated Y value here.
 
             // player who went last
-            moveStatement += playerNumber.ToString() + "%";
+            // Note: if the game is over, we need to append the winning player.
+            if (!gameState) 
+                moveStatement += loop.getActivePlayer();    // the player who just moved is obviously the winner!
+            else // should give me either 0 or 1. beautiful.
+                moveStatement += loop.getNextPlayerIndex(loop.getActivePlayer(), maxPlayers);
 
+            moveStatement += "%";                           // place the delimiter.
 
-            return moveStatement;                                               // return the statement to the calling gameLoop 
+            return moveStatement;                           //return the statement to the calling gameLoop 
         }
 
         // handlePlayerTurn METHOD THAT OVERRIDES THE ONE IN GENERIC GAME
-        // Returns ....
-        // TODO: How do we end the game?
-        // Do we change the send packet so that the second character after the delim is the player's assigned number?
+        // Returns true always.
+        // TODO: How do we end the game? Do we change the send packet so that the second character after the delim is the player's assigned number?
 
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
@@ -144,9 +139,9 @@ namespace Game
                 if (checkGameState(placeX, placeY))                     // using the recently placed piece, check if the state is a win condition. 
                 {
                     Console.Write("[CONNECT 4] Game is over! Player: " + (loop.getActivePlayer()+1) + " is the victor!" );                      
-                    return true;                                        // returns true for now
-                }
-            }  
+                    // mark gameState as false, which will in turn trigger a specific message that will be sent.
+                    gameState = false; 
+                }  
             return true; // the move was not valid
         }
 
@@ -173,7 +168,6 @@ namespace Game
         public override int assignPiece(int getX, int getY, int value)              // We don't care about getY
         {
             // This function will drop it in the appropriate position
-
             int newGetY = returnTopOfRow(getX);                                     // calls helper method to return top of the current row
 
             if (newGetY != 100)                                                     // if no error code, good to go.
