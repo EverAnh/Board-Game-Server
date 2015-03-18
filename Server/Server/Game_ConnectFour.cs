@@ -116,6 +116,9 @@ namespace Game
 
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
+            
+            Console.Write("Recieved: " + s + " from client. Handling message...");
+
             String[] move = s.Split('%');                               // Split the string by the delimiter.
 
             int placeX = System.Convert.ToInt32(move[0]);               // Convert Strings to int for the placeX
@@ -156,8 +159,11 @@ namespace Game
         protected override bool checkGameState(int x, int y) // x is the column, y is the row.
         {
             // this function will take a game piece placement, and check all rows/columns next to it for a win condition.
-            // TODO: If the game has not progressed past 4 turns, no need to even check.
-
+            // If the game has not progressed past 4 turns, no need to even check.
+            if (loop.getTurnNumber() < 4)   // there is no way you can end the game in less than 4 turns!
+            {
+                return false;
+            }
             // if any of the checks return true, this statement will evaluate to true.
             if (checkLeftRight(x, y) || 
                 checkUpDown(x, y) || 
