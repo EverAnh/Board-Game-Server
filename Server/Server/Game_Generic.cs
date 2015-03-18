@@ -113,7 +113,7 @@ namespace Game
                 endGame();              // attempt to end the game.
                 return true;            // quick termination, return back to the caller
             }
-            return false; // not a win
+            return false;               // not a win
         }
         // returns true if the move is a valid move, otherwise returns false
         protected virtual bool checkGameState(int x, int y)
@@ -132,7 +132,7 @@ namespace Game
                         gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
-                        Console.Write("Code this in, Jason 2!");
+                        // Console.Write("Code this in, Jason 2!");
                     }
                     return true;
                 }
@@ -149,7 +149,7 @@ namespace Game
                         gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
-                        Console.Write("Code this in, Jason 2!");
+                        // Console.Write("Code this in, Jason 2!");
                     }
 
                     return true;

@@ -9,6 +9,8 @@ namespace Game
     public class Server_GameLoop
     {
         private int activePlayer = 0;
+        private int turn = 0;               // I moved it outside so I could access it.        
+        private bool activeGame = true;     // redundant, but will help it work for now.
 
         public Server_GameLoop()
         {  }
@@ -20,10 +22,9 @@ namespace Game
             //      which includes stream reader/writer
             // 
             int numberPlayers = game.getPlayers().Count;
-            int turn = 0;
+            turn = 0;       
             
-
-            Console.WriteLine("about to start game loop");
+            Console.WriteLine("Starting game loop!");
 
             while (allPlayersConnected(game.getPlayers(), numberPlayers) )
             {
@@ -63,15 +64,32 @@ namespace Game
                 activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
                 // players need to be told who the next active player is, along with the move of the current active player
+                // this is crude, but since the passbyref is confusing me.. (i mean, it works)
 
-                game.generateMoveString(turn, activePlayer, currentX, currentY, move);
+                String toSend = game.generateMoveString(turn, activePlayer, currentX, currentY, move);
 
+                // toSend should now hold the string.
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
-                sendToAllPlayers(game.getPlayers(), numberPlayers, move);
+                sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
 
-                
+                activeGame = game.getGameState();       // gets the existing game state
+
+                if (!activeGame)        // if game is no longer active
+                {
+                    // This is Jason2 - I CLAIM CREDIT FOR THIS HORRIBLE SOLUTION
+                    break;              // break out of the game loop
+                }
+
             }
+
+
+        }
+
+        // Made a function that allows me to get the turn number.
+        public int getTurnNumber()
+        {
+            return turn;        
         }
 
         private bool allPlayersConnected(List<Player> currentPlayers, int players)
@@ -100,7 +118,7 @@ namespace Game
         // for a 2 player game, max will equal 2
         // player values will be either 0 or 1
         // increments from 0 to (max -1) for multi player games 
-        private int getNextPlayerIndex(int i, int max)
+        public int getNextPlayerIndex(int i, int max)
         {
             int index = 0;
 

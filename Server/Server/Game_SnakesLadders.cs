@@ -14,7 +14,7 @@ namespace Game
             int index;    // index value of this board Piece
             int type;     // 0 for norm, does nothing || 1 for ladder || 2 for snake
             int val;      // Value that the piece might lead [if 1 or 2]
-            String text = '';  // If you want to display text when you land on the piece
+            String text = "";  // If you want to display text when you land on the piece
 
             // Getter/setter methods
 
@@ -55,7 +55,7 @@ namespace Game
 
             public int setValue(int v)
             {
-                value = v
+                value = v;
             }
         }
 
@@ -130,6 +130,7 @@ namespace Game
 
         protected virtual bool checkWinCondition(int x, int y)
         {
+            /*
             if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
             {
                 Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
@@ -137,11 +138,14 @@ namespace Game
                 endGame();              // attempt to end the game.
                 return true;            // quick termination, return back to the caller
             }
+            */
             return false; // not a win
         }
         // returns true if the move is a valid move, otherwise returns false
         protected virtual bool checkGameState(int x, int y)
         {
+            
+            
             // setting up additional logic so once any player reaches 0,0
             // we'll pass a "game over" message.   
             // move up or down, not left/right
@@ -203,34 +207,41 @@ namespace Game
         {
             // Roll the die, returning a random number from 1-6.
             // If we roll 6, make sure to let user know they get another one!
-            return 1;
+            Random rnd = new Random();
+            int dice = rnd.Next(1, 7);
+            return dice;
         }
 
         private int calcDistToEnd(int l)
         {
             // takes in the player current location and returns the distance to the end
             // run this every loop and store it as a player value?
-            return 0;
+            return 100-l;
         }
 
-        private int boardAction(int l)
+        private int boardAction(int index)
         {
             // takes in player current location (via index)
             // checks the board piece at his spot
             // if 0, nothing happens
             // if 1, player is bumped up
             // if 2, player is bumped down
-            if (l == 0)
+            if (gameBoardsSL[index].getType() == 0)
             {
-                // fill out
+                // nothing happens, just return the index?
+                return index;
             }
-            else if (l == 1)
+            else if (gameBoardsSL[index].getType() == 1)
             {
-                // fill out
+                // fill out--for ladder, so player is bumped up
+                gamePieces[loop.getActivePlayer()].setX(gameBoardSL[index].getValue());
+                return gameBoardSL[index].getValue();
             }
-            else if (l == 2)
+            else if (gameBoardsSL[index].getType() == 2)
             {
-                // fill out
+                // fill out--for snakes/slides, so player is bumped down
+                gamePieces[loop.getActivePlayer()].setX(gameBoardSL[index].getValue());
+                return gameBoardSL[index].getValue();
             }
 
             return -1; // invalid action
@@ -253,35 +264,35 @@ namespace Game
 
             // Set snake type/positions here
 
-            gameBoardSL[10].setType = 2;
-            gameBoardSL[20].setType = 2;
-            gameBoardSL[30].setType = 2;
-            gameBoardSL[50].setType = 2;
-            gameBoardSL[70].setType = 2;
-            gameBoardSL[90].setType = 2;
+            gameBoardSL[62].setType = 2;
+            gameBoardSL[87].setType = 2;
+            gameBoardSL[49].setType = 2;
+            gameBoardSL[93].setType = 2;
+            gameBoardSL[65].setType = 2;
+            gameBoardSL[64].setType = 2;
 
-            gameBoardSL[10].setValue = 1;
-            gameBoardSL[20].setValue = 11;
-            gameBoardSL[30].setValue = 21;
-            gameBoardSL[50].setValue = 31;
-            gameBoardSL[70].setValue = 41;
-            gameBoardSL[90].setValue = 51;
+            gameBoardSL[62].setValue = 19;
+            gameBoardSL[87].setValue = 24;
+            gameBoardSL[49].setValue = 11;
+            gameBoardSL[93].setValue = 73;
+            gameBoardSL[65].setValue = 53;
+            gameBoardSL[64].setValue = 41;
 
             // Set ladder locations here
 
-            gameBoardSL[15].setType = 1;
-            gameBoardSL[25].setType = 1;
-            gameBoardSL[35].setType = 1;
-            gameBoardSL[55].setType = 1;
-            gameBoardSL[75].setType = 1;
-            gameBoardSL[85].setType = 1;
+            gameBoardSL[2].setType = 1;
+            gameBoardSL[4].setType = 1;
+            gameBoardSL[28].setType = 1;
+            gameBoardSL[21].setType = 1;
+            gameBoardSL[9].setType = 1;
+            gameBoardSL[71].setType = 1;
 
-            gameBoardSL[15].setValue = 22;
-            gameBoardSL[25].setValue = 32;
-            gameBoardSL[35].setValue = 42;
-            gameBoardSL[55].setValue = 72;
-            gameBoardSL[75].setValue = 82;
-            gameBoardSL[85].setValue = 92;
+            gameBoardSL[2].setValue = 38;
+            gameBoardSL[4].setValue = 14;
+            gameBoardSL[28].setValue = 84;
+            gameBoardSL[21].setValue = 42;
+            gameBoardSL[9].setValue = 31;
+            gameBoardSL[71].setValue = 91;
 
         }
 
