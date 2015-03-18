@@ -207,6 +207,8 @@ namespace Game
                         newPlayerNumber = "1";
                         Game_Generic newGame = null;
 
+                        Console.Write("THIS IS WHAT I'M GET: " + p.getGame());
+
                         if(p.getGame() == "generic")
                         {
                             newGame = new Game_Generic(8, 8);
@@ -218,6 +220,11 @@ namespace Game
                         }
 
                         else if (p.getGame() == "othello")
+                        {
+                            newGame = new Game_Othello();
+                        }
+
+                        else if (p.getGame() == "snakesLadders")
                         {
                             newGame = new Game_Othello();
                         }

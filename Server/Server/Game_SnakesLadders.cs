@@ -59,8 +59,7 @@ namespace Game
         public virtual bool handlePlayerTurn(String s)
         {
             String[] move = s.Split('%');           // Split the string
-            return checkGameState( System.Convert.ToInt32(move[0]),
-                                   System.Convert.ToInt32(move[1]) );
+            return checkGameState();
         }
 
         // Override this from generic
@@ -86,9 +85,20 @@ namespace Game
         
         // returns true if the move is a valid move, otherwise returns false
         
-        protected override bool checkGameState(int x, int y)
+        protected override bool checkGameState()
         {
-            return true;
+            while (true)
+            {
+                int diceRoll = returnDiceRoll();
+                int currentLocation = gamePieces[loop.getActivePlayer()].getX();
+                int newLocation = currentLocation + diceRoll;
+                movePiece(newLocation);
+                boardAction(newLocation);
+                if (diceRoll != 6) // if the diceRoll is 6, then the player gets to roll again
+                {
+                    return true;
+                }
+            }
         }
 
         // Methods that our main game loop calls on
@@ -109,14 +119,15 @@ namespace Game
             // Roll the die, returning a random number from 1-6.
             // If we roll 6, make sure to let user know they get another one!
             Random rnd = new Random();          // Find a random number
-            int dice = rnd.Next(1, 7);          // Between 1 and 6.
+            int dice = rnd.Next();
+            dice = (dice % 6) + 1;
             return dice;
         }
 
         private int calcDistToEnd(int l)
         {
             // takes in the player current location and returns the distance to the end
-            return 100-l; // or 99-l, could lead to indexing errors. (Jason C.)
+            return 99-l; // or 99-l, could lead to indexing errors. (Jason C.)
         }
 
         private int boardAction(int index)
