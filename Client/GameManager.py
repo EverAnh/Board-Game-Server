@@ -10,6 +10,7 @@ class GameManager:
 
     def manage_turn(self):
         if not self._game.is_my_turn():
+            print 'handling opponent move!"
             self.handle_opponent_move()
 
     def handle_my_move(self, location):

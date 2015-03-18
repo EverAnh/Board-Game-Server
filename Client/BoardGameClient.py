@@ -7,6 +7,7 @@ import Game
 import GameDisplay
 import GameManager
 import ServerConnection
+import ConnectFour, ConnectFourDisplay
 
 # ------------------------------------------------------------------------------
 #
@@ -78,19 +79,19 @@ class BoardGameClient:
   
     def _board_game_factory(self, choice):
         if choice == CONNECT_FOUR:
-            game = ConnectFourGame.ConnectFourGame()
+            game = ConnectFour.ConnectFour()
             self._game_manager = GameManager.GameManager(self._connection, game)
-            display = ConnectFourGameDisplay.ConnectFourGameDisplay(self._game_manager, game)
+            display = ConnectFourDisplay.ConnectFourDisplay(self._game_manager, game)
             
         elif choice == OTHELLO:
-            game = OthelloGame.OthelloGame()
+            game = Othello.Othello()
             self._game_manager = GameManager.GameManager(self._connection, game)
-            display = OthelloGameDisplay.OthelloGameDisplay(self._game_manager, game)
+            display = OthelloDisplay.OthelloDisplay(self._game_manager, game)
             
-        elif choice == BATTLESHIP:
-            game = BattleShipGame.BattleshipFourGame()
+        elif choice == SNAKESLADDERS:
+            game = SnakesLadders.SnakesLadders()
             self._game_manager = GameManager.GameManager(self._connection, game)
-            display = BattleshipGameDisplay.BattleshipGameDisplay(self._game_manager, game)
+            display = SnakesLaddersDisplay.SnakesLaddersDisplay(self._game_manager, game)
 
         ############### DEBUG ######################
         else:

@@ -30,11 +30,11 @@ class MainDisplay(Display.Display):
         self._choice.set("OTHELLO")
 
         ## radiobutton
-        self._R1 = Radiobutton(self._win, text="Othello", variable=self._choice, value="OTHELLO")
+        self._R1 = Radiobutton(self._win, text="Othello", variable=self._choice, value="othello")
         self._R1.grid(row=2, column=0)
-        self._R2 = Radiobutton(self._win, text="Chutes & Ladders", variable=self._choice, value="CHUTES_LADDERS")
+        self._R2 = Radiobutton(self._win, text="Chutes & Ladders", variable=self._choice, value="chutesLadders")
         self._R2.grid(row=2, column=1)
-        self._R3 = Radiobutton(self._win, text="Connect Four", variable=self._choice, value="CONNECT_FOUR")
+        self._R3 = Radiobutton(self._win, text="Connect Four", variable=self._choice, value="connectFour")
         self._R3.grid(row=2, column=2)
 
         self._L1 = Label(self._win, text=message, fg="red")
