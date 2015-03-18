@@ -1,8 +1,8 @@
-import Game
+from Game import Game
 
 class ConnectFour(Game):
-    NUM_COLS = 7
-    NUM_ROWS = 6
     
-    def __init__(self)
-        super().__init__()
+    def __init__(self):
+        Game.__init__(self)
+        self._board_width = 7
+        self._board_height = 6
