@@ -95,8 +95,9 @@ class GameDisplay(Display.Display):
                 #### DEBUG ######
                 self._game.set_my_turn(True)
                 #################
+                self._drawMessage(self._response)
+
                 
-        
         self._draw_board(self._game.get_board())
         self._draw_side_bar(self._response)
         pygame.display.flip()
@@ -137,11 +138,16 @@ class GameDisplay(Display.Display):
             self._screen.blit(self._piece1, (GameDisplay.CELL_WIDTH * pos[0], GameDisplay.CELL_HEIGHT * pos[1]))
             
 
-    def _drawMessage(self,message):
-        messageFontObject = pygame.font.Font(None,75)
-        MessegeRendered = ErrorFontObject.render(message,pygame.Color(0,0,0))
-        self._screen.blit(MessageRendered,(50,GameDisplay.WINDOW_HEIGHT/2))
+    def _drawMessage(self,response):
+        if(response == None):
+            pass
 
+        else:
+            messageFontObject = pygame.font.Font(None,30)
+            MessageRendered = messageFontObject.render(response.message,1,pygame.Color(0,0,0))
+            self._screen.blit(MessageRendered,(50,GameDisplay.WINDOW_HEIGHT/2))
+            pygame.display.flip()
+            pygame.time.wait(1500)
 
     def _draw_side_bar(self,response):
 
