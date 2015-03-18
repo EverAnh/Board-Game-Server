@@ -96,7 +96,13 @@ namespace Game
 
         public virtual bool handlePlayerTurn(String s)
         {
+            
+            Console.Write("Recieved: " + s + " from client. Handling message...");
+
+
             String[] move = s.Split('%');
+            
+
             return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
         }
 
