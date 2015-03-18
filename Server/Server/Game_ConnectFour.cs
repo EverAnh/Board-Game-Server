@@ -22,7 +22,7 @@ namespace Game
             currentPlayers = new List<Player>();        // list of players
             loop = new Server_GameLoop();               // Make a new server_gameloop (unecessary?)
             maxPlayers = 2;                             // 2 players max
-            
+
             // Add two player's info in here, we don't really need to track all the pieces as gameBoard handles a lot of that for us.
             // We'll use gamePieces to track the last known move of each respective player.
             
@@ -35,6 +35,9 @@ namespace Game
             gamePieces[1].setX(0);
             gamePieces[1].setY(0);
             gamePieces[1].setValue(2);                  // Player 2 value: Red
+
+            Console.Write("connectFour has been initialized");
+
         }
 
         // getPieces might need to be redefined here, for each specific player..?
@@ -117,6 +120,8 @@ namespace Game
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
             
+            Console.Write("It is currently this player's turn: " + loop.getActivePlayer());
+
             Console.Write("Recieved: " + s + " from client. Handling message...");
 
             String[] move = s.Split('%');                               // Split the string by the delimiter.
