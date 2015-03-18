@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,20 +32,28 @@ namespace Game
             gameBoard = new int[cols, rows];
             gameType = "othello";
             maxPlayers = 2;
+            currentColor = Game_Othello_Board.White; //STARTS with white
+            board = new Game_Othello_Board();
+            state = GameState.InPlayerMove;
         }
-        public virtual bool handlePlayerTurn(String s)
+        public override bool handlePlayerTurn(String s)
         {
 
             Console.Write("Recieved: " + s + " from client. Handling message...");
 
-
             String[] move = s.Split('%');
+            int x = System.Convert.ToInt32(move[0]);
+            int y = System.Convert.ToInt32(move[1]);
+            bool tryMove = board.IsValidMove(this.currentColor, x, y);
 
-            MakeMove(System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]));
+            if (tryMove)
+            {
+                EndMove(MakeMove(x, y));
+            }
 
-            return true;
+            return tryMove;
         }
-        public override bool StartTurn()
+        public bool StartNextTurn(List<ArrayList> flipped)
         {
             // If the current player cannot make a valid move, forfeit the turn.
             if (!this.board.HasAnyValidMove(this.currentColor))
@@ -64,7 +73,10 @@ namespace Game
             {
                 // Set the game state.
                 this.state = Game_Othello.GameState.InPlayerMove;
-
+                if (currentColor == 1)
+                    generateMoveString(1, moveNumber, flipped);
+                else
+                    generateMoveString(2, moveNumber, flipped);
             }
             return true;
         }
@@ -92,24 +104,27 @@ namespace Game
                 int resigningColor = this.currentColor;
 
             }
-
+            if (board.WhiteCount > board.BlackCount)
+                generateMoveString(1, moveNumber, false);
+            else
+                generateMoveString(2, moveNumber, false);
         }
 
-        private void MakeMove(int row, int col)
+        private List<ArrayList> MakeMove(int row, int col)
         {
 
             // Bump the move number.
             this.moveNumber++;
 
             // Make the move on the board.
-            this.board.MakeMove(this.currentColor, row, col);
+            return this.board.MakeMove(this.currentColor, row, col);
         }
 
         //
         // Called when a move has been completed (including any animation) to
         // start the next turn.
         //
-        private void EndMove()
+        private void EndMove(List<ArrayList> flipped)
         {
             // Set the game state.
             this.state = Game_Othello.GameState.MoveCompleted;
@@ -118,8 +133,52 @@ namespace Game
             this.currentColor *= -1;
 
             //needs a real input for the parameter
-            this.StartTurn();
+            this.StartNextTurn(flipped);
+
         }
+        public string generateMoveString(int playerNumber, int turnNumber, bool moreMoves)
+        {
+            string moveStatement = "";
+
+            // turn number, new player number
+            moveStatement += turnNumber.ToString() + "&"; //next turn
+            moveStatement += playerNumber + "&"; //winning player
+
+            // score for Game_Generic is always -1
+            moveStatement += "-1&"; //score
+            moveStatement += "WINNER&";
+            Console.Write("Sending message to all clients: " + moveStatement);
+            return moveStatement;
+        }
+        public string generateMoveString(int playerNumber, int turnNumber, List<ArrayList> flipped)
+        {
+            string moveStatement = "";
+
+            // turn number, new player number
+            moveStatement += turnNumber.ToString() + "&"; //next turn
+            moveStatement += playerNumber + "&"; //next player
+
+            // score for Game_Generic is always -1
+            moveStatement += "-1&"; //score
+
+            // message is "THISISAMESSAGE" if game is not over
+            moveStatement += "THISISAMESSAGE&";
+
+            // position starting x and y    
+
+            for (int i = 0; i < flipped[0].Count; i++)
+            {
+                moveStatement += flipped[0][i] + "%";
+                moveStatement += flipped[1][i] + "%";
+                moveStatement += playerNumber + "%";
+            }
+
+
+            Console.Write("Sending message to all clients: " + moveStatement);
+
+            return moveStatement;
+        }
+
 
     }
 
