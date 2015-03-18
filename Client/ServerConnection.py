@@ -45,7 +45,7 @@ class ServerConnection:
 
         
     def send_move(self, move):
-        print 'sending move'
+        print 'sending move: ', move
         send_string = ""
         for coord in move:
             send_string += str(coord[0]) + VALU_DELIM + str(coord[1])## + MOVE_DELIM

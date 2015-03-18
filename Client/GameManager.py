@@ -11,10 +11,14 @@ class GameManager:
     def manage_turn(self):
         print 'managing turn'
         if not self._game.is_my_turn():
+            print 'handling opponents move'
             self.handle_opponent_move()
 
     def handle_my_move(self, location):
         if self._game.is_my_turn():
+            ##### DEBUG #######
+            self._stored_move = []
+            ###################
          #   if len(self._stored_move) < self._game.get_move_type():
             self._store_move(location)
          #       return

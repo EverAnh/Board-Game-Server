@@ -74,8 +74,7 @@ class GameDisplay(Display.Display):
     def update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self._should_quit = True
-                break
+                pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 #on click update will call game manager and check wether move is valid or not
                 mousePosition = pygame.mouse.get_pos()
