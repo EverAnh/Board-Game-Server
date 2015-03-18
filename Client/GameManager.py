@@ -23,6 +23,7 @@ class GameManager:
                 self._game.set_my_turn(False)
             self._game.update_board(response.pieces)
             self._game.set_turn_number(response.turn_number)
+            self._game.set_player_turn(response.player_turn)
             check_for_winner(response)
             return response
 
@@ -32,6 +33,7 @@ class GameManager:
         if response.player_turn == self._game.get_my_player_number():
             self._game.set_my_turn(True)
         self._game.set_turn_number(response.turn_number)
+        self._game.set_player_turn(response.player_turn)
         check_for_winner(response)
 
     def check_for_winner(self, response):

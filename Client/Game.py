@@ -6,6 +6,7 @@ class Game:
         self._winner = False
         self._turn_number = 1
         self._my_turn = False
+        self._player_turn = 0
         self._board_width = 8
         self._board_height = 8
         self._gameboard = [[None for x in range(self._board_width)] for y in range(self._board_height)]
@@ -57,6 +58,12 @@ class Game:
     def set_turn_number(self, turn_number):
         self._turn = turn_number
 
+    def get_player_turn(self):
+        return self._player_turn
+
+
+    def set_player_turn(player_turn):
+        self._player_turn = player_turn
 
     def get_my_player_number(self):
         return self._my_player_number
