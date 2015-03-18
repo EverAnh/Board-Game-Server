@@ -88,11 +88,13 @@ class GameDisplay(Display.Display):
                 #asks GameManager for a response on wether the move is valid or not
                 self._response = self._GM.handle_my_move(self._coordinate)
 
-                #need to talk to heath about the messages
-                print 'checking for winner'
-                if(self._response=="WINNER"):
-                    self._end_game()
-                print 'checked for winner'
+
+                ######## DEBUG #####################
+                print 'message(gd): ', self._response.message
+                if (self._response=="INVALID"):
+                    print 'invalid move!'
+                    return
+                ####################################
 
                 #draws players turn on side bar
                 print 'drawing players'
@@ -106,14 +108,23 @@ class GameDisplay(Display.Display):
                     
                 #draw scores on side bar
                 print 'drawing scores'
-                self._DisplayScores = self._ScoresFont.render(self._response.scores,1,pygame.Color(0,0,0))
+                
+                ################################################################    V MUST DRAW ALL SCORES HERE ######
+                self._DisplayScores = self._ScoresFont.render(self._response.scores[0],1,pygame.Color(0,0,0))
+
                 self._screen.blit(self._DisplayScores,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)*3))
+
+                #if winner, end game
+                print 'checking for winner'
+                if(self._response=="WINNER"):
+                    self._end_game()
+
+                #### DEBUG ######
+                self._game.set_my_turn(True)
+                #################
                 
         self._draw_board(self._game.get_board())
         pygame.display.flip()
-        #### DEBUG ######
-        self._game.set_my_turn(True)
-        #################
 
 
     def end_game(self):

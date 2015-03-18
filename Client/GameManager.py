@@ -9,21 +9,21 @@ class GameManager:
         self._stored_move = []
 
     def manage_turn(self):
-        print 'managing turn'
         if not self._game.is_my_turn():
-            print 'handling opponents move'
             self.handle_opponent_move()
 
     def handle_my_move(self, location):
         if self._game.is_my_turn():
-            ##### DEBUG #######
-            self._stored_move = []
-            ###################
+            print 'my turn'
          #   if len(self._stored_move) < self._game.get_move_type():
             self._store_move(location)
          #       return
             self._connection.send_move(self._stored_move)
+            self._stored_move = []
             response = self._connection.get_move()
+
+            print 'message(gm): ', response.message
+            
             if self.check_for_invalid(response) == True:
                 return response
             if response.player_turn != self._game.get_my_player_number():
@@ -33,6 +33,9 @@ class GameManager:
             self._game.set_player_turn(response.player_turn)
             self.check_for_winner(response)
             return response
+        else:
+            print 'not my turn'
+            
 
     def _store_move(self, location):
         self._stored_move.append(location)

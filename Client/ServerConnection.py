@@ -53,15 +53,14 @@ class ServerConnection:
 
 
     def get_move(self):
-        print 'getting move'
         raw_response = self._socket.recv(4096)
-        print 'move received'
         print 'move: ' + raw_response
         category_tokens = raw_response.split(CATG_DELIM)
         turn_number = category_tokens[0]
         player_turn = category_tokens[1]
         raw_scores = category_tokens[2]
         message = category_tokens[3]
+        print 'message(sc): ',message
         raw_pieces = category_tokens[4].split(MOVE_DELIM)
 
         scores = [score for score in raw_scores.split(SCOR_DELIM)] #list comprehension ftw
@@ -70,7 +69,7 @@ class ServerConnection:
         for piece in raw_pieces:
             p = piece.split(VALU_DELIM)
             pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
-            return Response.Response(turn_number, player_turn, message, scores, pieces)
+            return Response.Response(turn_number, player_turn, scores, message, pieces)
         
 
     def close_connection(self):
