@@ -128,7 +128,7 @@ class GridGame:
 
 
     def connect_to_server(self):
-        host = '169.234.90.122'
+        host = '127.0.0.1'
         port = 3445
 
         ##s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -149,6 +149,8 @@ class GridGame:
 
         print 'client sends: ' + message_two
         try :
+            self.s.sendall("Heath%abc%generic")
+            
             #Send message 2
             self.s.sendall(message_two)
             

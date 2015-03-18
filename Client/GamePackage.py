@@ -1,5 +1,5 @@
-class GamePackage(game: Game, display: GameDisplay):
+class GamePackage:
 
-    def __init__(self):
-    self.game = game
-    self.display = display
+    def __init__(self, game, display):
+        self.game = game
+        self.display = display

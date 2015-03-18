@@ -2,8 +2,10 @@ import pygame
 import os, sys
 
 import Account
-import Display
-import BoardGamePackage
+import MainDisplay
+import Game
+import GameDisplay
+import GamePackage
 import GameManager
 import ServerConnection
 
@@ -15,74 +17,98 @@ import ServerConnection
 #
 # ------------------------------------------------------------------------------
 
+CONNECT_FOUR = "CONNECTFOUR"
+OTHELLO      = "OTHELLO"
+BATTLESHIP   = "BATTLESHIP"
+
 class BoardGameClient:
     
-    # class variables -------------------------------------------------
-
-    CONNECT_FOUR = "CONNECTFOUR"
-    OTHELLO      = "OTHELLO"
-    BATTLESHIP   = "BATTLESHIP"
-
-
-    # methods ------------------------------------------------------------------
-
-    def __init__(self, game_type):
-        self._connection = ServerConnection()
-        self._account = Account()
+    def __init__(self):
+        self._connection = ServerConnection.ServerConnection()
+        self._account = Account.Account()
 
 
     def start(self):
-        self._display = MainDisplay()
-        session_info = self._display.retrieve_user_info()
+        self._display = MainDisplay.MainDisplay()
+        self._message = "Howdy"
+        self._connection.open_connection()
         
-        ###### Some pseudocode below. Please Define #######
+        while not self._account.is_logged_in():
+            try:
+                session_info = self._display.retrieve_user_info(self._message)
+                self._account.set_username(session_info[0])
+                self._account.set_password(session_info[1])
+                game_choice = session_info[2]
+                
+                
+                #################### DEBUG ##########################
+                game_choice = ("generic")
+                print 'user info entered'
+                #####################################################
+                
+                
+                response = self._account.login(self._connection, game_choice)
+                player_id = int(response[0])
+                status = response[1]
+                print 'bgc received messages 1 and 3'
+                print 'player_id: ',player_id
+                print 'status: ',status
+                
+                if Account.FAIL_KEYWORD not in status.upper():
+                    self._account.set_logged_in(True)
+                    player_num = int(self._connection.get_response())
+                    print 'bgc received message 4'
+                    print 'player_num: ',player_num
+                else: 
+                    self._message = status
+            except Exception as e:
+                print e
+                sys.exit()
+          
+        self._game_package = self._board_game_factory(game_choice)
+        self._game_package.game.set_my_player_number(player_num)
+        self._game_package.game.set_my_player_id(player_id)
+
+        ################### DEBUG ######################
+        #Until message 5 is implemented in standard way#
+        self._game_package.game.set_my_turn(True)
+        ################################################
         
-        #run main display to receive game_choice, username, and password.
-        while not account.logged_in:
-            # if login, and success:
-                    self._connection.logged_in = True
-                    temp_player_number = 1 # number received from server
-            # elif create, and success:
-                    message = ServerConnection.CREATE_SUCC
-                    # clear maindisplay
-            # elif login, and fail:
-                    message = ServerConnection.LOGIN_FAIL
-            # elif create, and fail:
-                    message = ServerConnection.CREATE_FAIL
-            self._display.update(message)
-            
-        self._game_package = board_game_factory(game_choice)
-        self._game_package.game.set_my_player_number(temp_player_number)
-        self._game_manager = GameManager(self._connection, self._game_package.game)
-        run_game()
+        self._game_manager = GameManager.GameManager(self._connection, self._game_package)
+        self._run_game()
 
   
     def _board_game_factory(self, choice):
         if choice == CONNECT_FOUR:
-            game = ConnectFourGame()
-            display = ConnectFourGameDisplay(manager, game)
+            game = ConnectFourGame.ConnectFourGame()
+            display = ConnectFourGameDisplay.ConnectFourGameDisplay(manager, game)
             
         elif choice == OTHELLO:
-            game = OthelloFourGame()
-            display = OthelloGameDisplay(manager, game)
+            game = OthelloGame.OthelloGame()
+            display = OthelloGameDisplay.OthelloGameDisplay(manager, game)
             
         elif choice == BATTLESHIP:
-            game = BattleshipFourGame()
-            display = BattleshipGameDisplay(manager, game)
-            
-        return GamePackage(game, display)
+            game = BattleShipGame.BattleshipFourGame()
+            display = BattleshipGameDisplay.BattleshipGameDisplay(manager, game)
 
+        ############### DEBUG ######################
+        else:
+            game = Game.Game()
+            display = GameDisplay.GameDisplay()
+        ############################################
+            
+        return GamePackage.GamePackage(game, display)
 
     def _run_game(self):
+        print 'running game'
         while not self._game_package.game.is_over():
             self._game_manager.manage_turn()
             
         self._game_manager.manage_endgame()
-        # logic here to set 'replay' mode: NEWGAME, RESTART
 
 # ------------------------------------------------------------------------------
-if __name__ == 'main':
-    bgc = BoardGameClient()
-    ## logic here to wait until QUIT has been selected (X or button)
-    bgc.start()
+#if __name__ == 'main':
+bgc = BoardGameClient()
+print 'starting client'
+bgc.start()
     

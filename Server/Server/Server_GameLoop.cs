@@ -56,12 +56,16 @@ namespace Game
 
                 Console.WriteLine("The number of players is " + numberPlayers);
 
+                // increment the value of active player to the next player
+                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
+
+                // players need to be told who the next active player is, along with the move of the current active player
+
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, move);
 
-                // increment the value of active player to the next player
-                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers() );
+                
             }
         }
 

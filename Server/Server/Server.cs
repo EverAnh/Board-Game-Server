@@ -73,22 +73,26 @@ namespace Game
 
         private static int getIndexOfGameToJoin(Player p)
         {
-            int numberGames = games.Capacity;
+            int numberGames = games.Count;
             String playerGame = p.getGame();
+
+            Console.WriteLine("games capacity " + games.Count);
 
             // check each existing game for a game type match AND room for an available player 
             // counting by g
             for (int g = 0; g < numberGames; g++)
             {
-                String gameType = games[g].getGameType();
 
-                int currentPlayers = games[g].getNumberPlayers();
-                int maxPlayers = games[g].getMaxPlayers();
+               String gameType = games[g].getGameType();
 
-                if ( (playerGame == gameType ) && (currentPlayers < maxPlayers) )
-                {
-                    return g;
-                }
+               int currentPlayers = games[g].getNumberPlayers();
+               int maxPlayers = games[g].getMaxPlayers();
+
+               if ((playerGame == gameType) && (currentPlayers < maxPlayers))
+               {
+                   return g;
+               }
+   
             }
 
             return -1;
@@ -143,24 +147,28 @@ namespace Game
 
                     p.setUserName(data[0]);
 
-                    string loginMessage = "";
-                    if (db.attemptToLogin(data[0], data[1]) )
-                    {
-                        loginMessage = "Login was successful. Welcome back!";
-                    }
+                    string loginMessage = " ";
 
-                    else if (db.addNewPlayer(data[0], data[1]))
+                    while(loginMessage[0] != 'W')
                     {
-                        loginMessage = "New User created. We hope you enjoy our game!";
-                    }
+                        if (db.attemptToLogin(data[0], data[1]))
+                        {
+                            loginMessage = "Welcome back!";
+                        }
 
-                    else
-                    {
-                        loginMessage = "Login attempt failed. Try again.";
-                    }
+                        else if (db.addNewPlayer(data[0], data[1]))
+                        {
+                            loginMessage = "New User created. We hope you enjoy our game!";
+                        }
 
-                    // message 3
-                    p.getPlayerWriter().WriteLine(loginMessage);
+                        else
+                        {
+                            loginMessage = "Login attempt failed. Try again.";
+                        }
+
+                        // message 3
+                        p.getPlayerWriter().WriteLine(loginMessage);
+                    }
 
                     Console.WriteLine("message 3 sent");
 

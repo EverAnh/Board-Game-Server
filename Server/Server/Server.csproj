@@ -61,6 +61,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Server.cs" />
+	<Compile Include="Board.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
