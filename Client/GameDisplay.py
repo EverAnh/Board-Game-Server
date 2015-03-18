@@ -44,7 +44,7 @@ class GameDisplay(Display.Display):
         pygame.display.set_caption("Grid Game-2")
         
         #creates side bar
-        pygame.draw.rect(self._screen, pygame.Color(141,141,141), pygame.Rect(GameDisplay.BOARD_WIDTH,0,GameDisplay._SIDE_BAR_WIDTH,GameDisplay.WINDOW_HEIGHT) )
+        pygame.draw.rect(self._screen, pygame.Color(141,141,141), pygame.Rect(GameDisplay.BOARD_WIDTH,0,GameDisplay.SIDE_BAR_WIDTH,GameDisplay.WINDOW_HEIGHT) )
         
         # self._init_test_01() # place dummy pieces
         
@@ -55,6 +55,8 @@ class GameDisplay(Display.Display):
         
         self._load_images()
         self._draw_board(self._game.get_board())
+
+        self._response = None
 
 
     #will draw the board every time there is a change
@@ -82,7 +84,7 @@ class GameDisplay(Display.Display):
                     self._end_game()
 
         #draws players turn on side bar
-        self._DisplayPlayers = self._PlayerFont.render(self._reponse.player_turn,1,pygame.Color(0,0,0))
+        self._DisplayPlayers = self._PlayerFont.render(self._response.player_turn,1,pygame.Color(0,0,0))
         self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
                 
         #draws turns number on side bar
@@ -113,9 +115,9 @@ class GameDisplay(Display.Display):
     def _drawGrid(self):
         
         self._bgSize = self._background.get_rect()
-        self._background = pygame.transform.scale(self._background, (WINDOW_WIDTH, WINDOW_HEIGHT))
-        self._piece0 = pygame.transform.scale(self._piece0, (self._cell_size, self._cell_size))
-        self._piece1 = pygame.transform.scale(self._piece1, (self._cell_size, self._cell_size))
+        self._background = pygame.transform.scale(self._background, (GameDisplay.WINDOW_WIDTH, GameDisplay.WINDOW_HEIGHT))
+        self._piece0 = pygame.transform.scale(self._piece0, (GameDisplay.CELL_WIDTH, GameDisplay.CELL_HEIGHT))
+        self._piece1 = pygame.transform.scale(self._piece1, (GameDisplay.CELL_WIDTH, GameDisplay.CELL_HEIGHT))
         self._screen.blit(self._background, (0,0))
 
         self._temp_board = self._game.get_board()
@@ -127,9 +129,9 @@ class GameDisplay(Display.Display):
 
     def _drawGamePiece(self,pos,Player):
         if(Player == 1):
-            self._screen.blit(self._piece0, (self._cell_size * pos[0], self._cell_size * pos[1]))
+            self._screen.blit(self._piece0, (GameDisplay.CELL_WIDTH * pos[0], GameDisplay.CELL_HEIGHT * pos[1]))
         elif(Player == 2):
-            self._screen.blit(self._piece1, (self._cell_size * pos[0], self._cell_size * pos[1]))
+            self._screen.blit(self._piece1, (GameDisplay.CELL_WIDTH * pos[0], GameDisplay.CELL_HEIGHT * pos[1]))
             
 
     def _drawMessage(self,message):
