@@ -1,62 +1,116 @@
 import pygame
-import os,sys,time
+import os,sys
 import Display
+import Game
+import GameManager
 import GamePiece
 
-WINDOW_WIDTH = 640
-WINDOW_HEIGHT = 640
-BACKGROUND_COLOR = pygame.Color(160,160,160)
 
+#add Display.Display,game,gamemanager later
 class GameDisplay(Display.Display):
 
-    def __init__(self, gameObj):
+    WINDOW_WIDTH = 1000
+    WINDOW_HEIGHT = 1000
+    SIDE_BAR_WIDTH = 200
+    BOARD_WIDTH = WINDOW_WIDTH - SIDE_BAR_WIDTH
+    BOARD_HEIGHT = WINDOW_HEIGHT
+
+    GRID_WIDTH = 0
+    GRID_HEIGHT = 0
+    
+    CELL_WIDTH = 0
+    CELL_HEIGHT = 0
+
+    BACKGROUND_COLOR = pygame.Color(160,160,160)
         
+    #Needs gametype for future implementation of other games
+    def __init__(self,GM,Game):
+    
         pygame.init()
         pygame.font.init()
         
-        self._screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        self._game = gameObj
-        self._cell_size = WINDOW_WIDTH / self._game.get_width()
-        self._screen.fill(BACKGROUND_COLOR)
-        pygame.display.set_caption("Grid Game-2")
         self._should_quit = False
+        self._coordinate = (0,0)
+        self._game = Game
+        self._GM = GM
+
+        GameDisplay.GRID_WIDTH =  self._game.get_width()
+        GameDisplay.GRID_HEIGHT = self._game.get_height()
+        GameDisplay.CELL_WIDTH = GameDisplay.BOARD_WIDTH / GameDisplay.GRID_WIDTH
+        GameDisplay.CELL_HEIGHT = GameDisplay.WINDOW_HEIGHT / GameDisplay.GRID_HEIGHT
         
-        self._init_test_01() # place dummy pieces
+        self._screen = pygame.display.set_mode((GameDisplay.WINDOW_WIDTH, GameDisplay.WINDOW_HEIGHT))
+        self._screen.fill(GameDisplay.BACKGROUND_COLOR)
+        pygame.display.set_caption("Grid Game-2")
+        
+        #creates side bar
+        pygame.draw.rect(self._screen, pygame.Color(141,141,141), pygame.Rect(GameDisplay.BOARD_WIDTH,0,GameDisplay._SIDE_BAR_WIDTH,GameDisplay.WINDOW_HEIGHT) )
+        
+        # self._init_test_01() # place dummy pieces
+        
+        #creates font object for displaying players,turns and scores
+        self._PlayerFont = pygame.font.Font(None,35)
+        self._TurnsFont = pygame.font.Font(None,35)
+        self._ScoresFont = pygame.font.Font(None,35)
         
         self._load_images()
-        self._draw_grid()
+        self._draw_board(self._game.get_board())
 
 
+    #will draw the board every time there is a change
     def update(self):
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self._should_quit = True
                 break
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                #on click update will call game manager and check wether move is valid or not
                 mousePosition = pygame.mouse.get_pos()
-                print "mouse pressed down at ", mousePosition
-                column = mousePosition[0]/self._cell_size
-                row = mousePosition[1]/self._cell_size
-                print "row,column" ,(column,row)
-                #will display valid move,invalid move text, or error
-                if self.CheckValidMove() == 1:
-                    #this is where we add to game board
-                    self._drawGamePiece((column,row),1)
-                if self.CheckValidMove() == 2:
-                    self._drawError()
+                if(mousePosition[0]>GameDisplay.BOARD_WIDTH):
+                    print "you are clicking the sdie bar"
+                else:
+                    column = mousePosition[0]/self.CELL_WIDTH
+                    row = mousePosition[1]/self.CELL_HEIGHT
+                    print "row,column" ,(column,row)
+                    self._coordinate = (column,row)
+                #asks GameManager for a response on wether the move is valid or not
+                self._response = self._GM.handle_my_move(self._coordinate)
+
+                #need to talk to heath about the messages
+                if(self._response=="WINNER"):
+                    self._end_game()
+
+        #draws players turn on side bar
+        self._DisplayPlayers = self._PlayerFont.render(self._reponse.player_turn,1,pygame.Color(0,0,0))
+        self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
+                
+        #draws turns number on side bar
+        self._DisplayTurns = self._TurnsFont.render(str(self._response.turn_number),1,pygame.Color(0,0,0))
+        self._screen.blit(self._turnDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
+                    
+        #draw scores on side bar
+        self._DisplayScores = self._ScoresFont.render(self._response.scores,1,pygame.Color(0,0,0))
+        self._screen.blit(self._DisplayScores,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)*3))
+
         pygame.display.flip()
 
 
     def end_game(self):
-        time.sleep(3)
+        pygame.wait(5000)
         pygame.quit()
 
 
-    def CheckValidMove(coordinate):
-        return 1
+    def _draw_board(self,board):
+        self._drawGrid()
+        self._tempBoard = board
+        for i in range(GameDisplay.GRID_WIDTH):
+            for j in range(GameDisplay.GRID_HEIGHT):
+                if self._tempBoard[i][j] is not None:
+                    self._drawGamePiece((i,j).value)
 
 
-    def _draw_grid(self):
+    def _drawGrid(self):
         
         self._bgSize = self._background.get_rect()
         self._background = pygame.transform.scale(self._background, (WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -70,14 +124,18 @@ class GameDisplay(Display.Display):
                 if self._temp_board[i][j] != None:
                     self._drawGamePiece((i,j),1)
 
-    def _drawGamePiece(self,pos,Player):
-        self._screen.blit(self._piece0, (self._cell_size * pos[0], self._cell_size * pos[1]))
-        
 
-    def _drawError(self):
-        fontObject = pygame.font.Font(None,100)
-        ErrorMessage = fontObject.render("Error",1,(100,100,100))
-        self._screen.blit(ErrorMessage,(400,400))
+    def _drawGamePiece(self,pos,Player):
+        if(Player == 1):
+            self._screen.blit(self._piece0, (self._cell_size * pos[0], self._cell_size * pos[1]))
+        elif(Player == 2):
+            self._screen.blit(self._piece1, (self._cell_size * pos[0], self._cell_size * pos[1]))
+            
+
+    def _drawMessage(self,message):
+        messageFontObject = pygame.font.Font(None,75)
+        MessegeRendered = ErrorFontObject.render(message,pygame.Color(0,0,0))
+        self._screen.blit(MessageRendered,(50,GameDisplay.WINDOW_HEIGHT/2))
 
 
     def _init_test_01(self):
