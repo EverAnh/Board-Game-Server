@@ -17,10 +17,13 @@ class GameManager:
                 return
             self._connection.send_move(stored_move)
             response = self._connection.get_move()
+            if check_for_invalid() == True:
+                return
             if response.player_number != self._game.get_my_player_number():
                 self._game.set_my_turn(False)
             self._game.update_board(response.pieces)
             self._game.set_turn_number(response.turn_number)
+            check_for_winner(response)
             return response
 
     def handle_opponent_move(self):
@@ -35,6 +38,13 @@ class GameManager:
         if response.message == ServerConnection.WINNER:
             self._game.set_winner(response.player_turn) ##player_turn == winner in this message
             self._game.set_is_over(True)
+
+    def check_for_invalid(self, response):
+        if response.message == ServerConnection.INVALID:
+            return True
+        else:
+            return False
+            
 
 
 
