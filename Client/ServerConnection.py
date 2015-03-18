@@ -61,16 +61,19 @@ class ServerConnection:
         raw_scores = category_tokens[2]
         message = category_tokens[3]
         print 'message(sc): ',message
+        print 'raw_scores: ',raw_scores
         raw_pieces = category_tokens[4].split(MOVE_DELIM)
+        print 'raw pieces: ',raw_pieces
 
         scores = [score for score in raw_scores.split(SCOR_DELIM)] #list comprehension ftw
-
+        print 'scores: ', scores
+        
         pieces = []
         for piece in raw_pieces:
             p = piece.split(VALU_DELIM)
             pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
             return Response.Response(turn_number, player_turn, scores, message, pieces)
-        
+        print 'pieces: ',pieces
 
     def close_connection(self):
         self._socket.close()

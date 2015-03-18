@@ -23,6 +23,7 @@ class Game:
 
     def update_board(self, changed_pieces):
         for piece in changed_pieces:
+            print 'piece changed(g): ',piece
             if piece.value == 0:
                 self.remove_piece(piece)
             else:
