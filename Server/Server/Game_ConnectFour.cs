@@ -81,7 +81,7 @@ namespace Game
             moveStatement += loop.getActivePlayer() + "&";      // attach the active player number
 
             // score for this game is always -1, I'll jump ahead and state that we'll only ever have 2 players 
-            moveStatement += "-1$-1&";                          // append score (which is empty, sadly)
+            moveStatement += "-1&";                          // append score (which is empty, sadly)
 
             // if the game is still running, indicating that no players made a "winning" move
             if (!gameState)     //gameState is true while game is running 
@@ -130,7 +130,14 @@ namespace Game
             placeY = assignPiece(placeX, placeY, color);                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
             // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
-            if (placeY != -1)                                           // if placeY is not the error code
+            
+            if (placeY == -1)
+            {
+                // invalid move, return early.
+                return false;
+            }
+
+            else if (placeY != -1)                                           // if placeY is not the error code
             {
                 // Set the "piece" of the player to be their last move so it is printed out. (Unecessary, but shows us something)
                 gamePieces[thePlayer].setX(placeX);
@@ -142,6 +149,7 @@ namespace Game
                     // mark gameState as false, which will in turn trigger a specific message that will be sent.
                     gameState = false; 
                 }  
+            }
             return true; // the move was not valid
         }
 

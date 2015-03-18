@@ -50,9 +50,12 @@ namespace Game
                 // the condition of the while loop makes the move. 
                 while(! game.handlePlayerTurn(move) )
                 {
-                    String notValid = "Player " + activePlayer.ToString() + " attempted a move that was not valid.";
-                    sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
-                    move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
+                    //String notValid = "Player " + activePlayer.ToString() + " attempted a move that was not valid.";
+                    //sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
+                    String notValid = turn + "&0&0&INVALID&0%0%0%";
+                    // construct a string that contains the turn number and the "invalid" message.
+                   sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
+                   move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
                 }
 
                 Console.WriteLine("The number of players is " + numberPlayers.ToString() );
@@ -73,6 +76,7 @@ namespace Game
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
 
+                // check the gameState after each loop so we know when to "end" the game.
                 activeGame = game.getGameState();       // gets the existing game state
 
                 if (!activeGame)        // if game is no longer active
