@@ -15,7 +15,7 @@ class GameManager:
         print 'managing turn'
         while self._game.is_my_turn():
             self._display.update()
-        handle_opponent_move()
+        self.handle_opponent_move()
 
     def manage_endgame(self):
         self._display.end_game()
