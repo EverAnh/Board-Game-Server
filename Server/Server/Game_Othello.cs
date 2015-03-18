@@ -11,19 +11,18 @@ namespace Game
         //game parameters
         private int cols = 8;
         private int rows = 8;
-        private Board board;
+        private Game_Othello_Board board;
         private GameState state;
         private int currentColor;
         private int moveNumber;
-        private int lastMoveColor;
 
         //available gamestates
         private enum GameState
         {
             GameOver,			// The game is over (also used for the initial state).
-            InMoveAnimation,	// A move has been made and the animation is active.
+            InMoveAnimation,	// A move has been made and the animation is active. NEVER USED
             InPlayerMove,		// Waiting for the user to make a move.
-            InComputerMove,		// Waiting for the computer to make a move.
+            InComputerMove,		// Waiting for the computer to make a move. NEVER USED
             MoveCompleted		// A move has been completed (including the animation, if active).
         }
 
@@ -33,8 +32,19 @@ namespace Game
             gameType = "othello";
             maxPlayers = 2;
         }
+        public virtual bool handlePlayerTurn(String s)
+        {
 
-        public override bool handlePlayerTurn(String s)
+            Console.Write("Recieved: " + s + " from client. Handling message...");
+
+
+            String[] move = s.Split('%');
+
+            MakeMove(System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]));
+
+            return true;
+        }
+        public override bool StartTurn()
         {
             // If the current player cannot make a valid move, forfeit the turn.
             if (!this.board.HasAnyValidMove(this.currentColor))
@@ -54,12 +64,8 @@ namespace Game
             {
                 // Set the game state.
                 this.state = Game_Othello.GameState.InPlayerMove;
-            }
 
-            return true;
-        }
-        protected override bool checkGameState(int x, int y)
-        {
+            }
             return true;
         }
 
@@ -79,30 +85,24 @@ namespace Game
             // Handle a resignation.
             if (isResignation)
             {
-                    // Determine which player is resigning. In a computer vs.
-                    // user game, the computer will never resign so it must be
-                    // the user. In a user vs. user game we'll assume it is
-                    // the current player.
-                    int resigningColor = this.currentColor;
-                
+                // Determine which player is resigning. In a computer vs.
+                // user game, the computer will never resign so it must be
+                // the user. In a user vs. user game we'll assume it is
+                // the current player.
+                int resigningColor = this.currentColor;
+
             }
 
         }
 
         private void MakeMove(int row, int col)
         {
-            
+
             // Bump the move number.
             this.moveNumber++;
 
-            // Make a copy of the board (for doing move animation).
-            Board oldBoard = new Board(this.board);
-
             // Make the move on the board.
             this.board.MakeMove(this.currentColor, row, col);
-
-            // Save the player color.
-            this.lastMoveColor = this.currentColor;
         }
 
         //
@@ -118,7 +118,7 @@ namespace Game
             this.currentColor *= -1;
 
             //needs a real input for the parameter
-            this.handlePlayerTurn("x,y");
+            this.StartTurn();
         }
 
     }
