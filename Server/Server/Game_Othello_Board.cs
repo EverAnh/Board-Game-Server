@@ -5,7 +5,7 @@ namespace Game
 	/// <summary>
 	/// Summary description for Board.
 	/// </summary>
-	public class Board
+	public class Game_Othello_Board
 	{
 		// These constants represent the contents of a board square.
 		public static readonly int Black = -1;
@@ -61,7 +61,7 @@ namespace Game
 		//
 		// Creates a new, empty Board object.
 		//
-		public Board()
+		public Game_Othello_Board()
 		{
 			//
 			// TODO: Add constructor logic here
@@ -76,7 +76,7 @@ namespace Game
 			for (i = 0; i < 8; i++)
 				for (j = 0; j < 8; j++)
 				{
-					this.squares[i, j] = Board.Empty;
+					this.squares[i, j] = Game_Othello_Board.Empty;
 					this.safeDiscs[i, j] = false;
 				}
 
@@ -87,7 +87,7 @@ namespace Game
 		//
 		// Creates a new Board object by copying an existing one.
 		//
-		public Board(Board board)
+		public Game_Othello_Board(Game_Othello_Board board)
 		{
 			// Create the squares and map.
 			this.squares = new int[8, 8];
@@ -120,7 +120,7 @@ namespace Game
 			for (i = 0; i < 8; i++)
 				for (j = 0; j < 8; j++)
 				{
-					this.squares[i, j] = Board.Empty;
+					this.squares[i, j] = Game_Othello_Board.Empty;
 					this.safeDiscs[i, j] = false;
 				}
 
@@ -198,7 +198,7 @@ namespace Game
 		public bool IsValidMove(int color, int row, int col)
 		{
 			// The square must be empty.
-			if (this.squares[row, col] != Board.Empty)
+			if (this.squares[row, col] != Game_Othello_Board.Empty)
 				return false;
 
 			// Must be able to flip at least one opponent disc.
@@ -287,7 +287,7 @@ namespace Game
 				statusChanged = false;
 				for (i = 0; i < 8; i++)
 					for (j = 0; j < 8; j++)
-						if (this.squares[i, j] != Board.Empty && !this.safeDiscs[i, j] && !this.IsOutflankable(i, j))
+						if (this.squares[i, j] != Game_Othello_Board.Empty && !this.safeDiscs[i, j] && !this.IsOutflankable(i, j))
 						{
 							this.safeDiscs[i, j] = true;
 							statusChanged = true;
@@ -302,16 +302,16 @@ namespace Game
 					// If there is a disc at this position, determine if it is
 					// on the frontier (i.e., adjacent to an empty square).
 					bool isFrontier = false;
-					if (this.squares[i, j] != Board.Empty)
+					if (this.squares[i, j] != Game_Othello_Board.Empty)
 					{
 						for (dr = -1; dr <= 1; dr++)
 							for (dc = -1; dc <= 1; dc++)
-								if (!(dr == 0 && dc == 0) && i + dr >= 0 && i + dr < 8 && j + dc >= 0 && j + dc < 8 && this.squares[i + dr, j + dc] == Board.Empty)
+								if (!(dr == 0 && dc == 0) && i + dr >= 0 && i + dr < 8 && j + dc >= 0 && j + dc < 8 && this.squares[i + dr, j + dc] == Game_Othello_Board.Empty)
 									isFrontier = true;
 					}
 
 					// Update the counts.
-					if (this.squares[i, j] == Board.Black)
+					if (this.squares[i, j] == Game_Othello_Board.Black)
 					{
 						this.blackCount++;
 						if (isFrontier)
@@ -319,7 +319,7 @@ namespace Game
 						if (this.safeDiscs[i, j])
 							this.blackSafeCount++;
 					}
-					else if (this.squares[i, j] == Board.White)
+					else if (this.squares[i, j] == Game_Othello_Board.White)
 					{
 						this.whiteCount++;
 						if (isFrontier)
@@ -359,13 +359,13 @@ namespace Game
 			hasUnsafeSide2 = false;
 			// West side.
 			for (j = 0; j < col && !hasSpaceSide1; j++)
-				if (this.squares[row, j] == Board.Empty)
+				if (this.squares[row, j] == Game_Othello_Board.Empty)
 					hasSpaceSide1 = true;
 				else if (this.squares[row, j] != color || !this.safeDiscs[row, j])
 					hasUnsafeSide1 = true;
 			// East side.
 			for (j = col + 1; j < 8 && !hasSpaceSide2; j++)
-				if (this.squares[row, j] == Board.Empty)
+				if (this.squares[row, j] == Game_Othello_Board.Empty)
 					hasSpaceSide2 = true;
 				else if (this.squares[row, j] != color || !this.safeDiscs[row, j])
 					hasUnsafeSide2 = true;
@@ -381,13 +381,13 @@ namespace Game
 			hasUnsafeSide2 = false;
 			// North side.
 			for (i = 0; i < row && !hasSpaceSide1; i++)
-				if (this.squares[i, col] == Board.Empty)
+				if (this.squares[i, col] == Game_Othello_Board.Empty)
 					hasSpaceSide1 = true;
 				else if (this.squares[i, col] != color || !this.safeDiscs[i, col])
 					hasUnsafeSide1 = true;
 			// South side.
 			for (i = row + 1; i < 8 && !hasSpaceSide2; i++)
-				if (this.squares[i, col] == Board.Empty)
+				if (this.squares[i, col] == Game_Othello_Board.Empty)
 					hasSpaceSide2 = true;
 				else if (this.squares[i, col] != color || !this.safeDiscs[i, col])
 					hasUnsafeSide2 = true;
@@ -406,7 +406,7 @@ namespace Game
 			j = col - 1;
 			while (i >= 0 && j >= 0 && !hasSpaceSide1)
 			{
-				if (this.squares[i, j] == Board.Empty)
+				if (this.squares[i, j] == Game_Othello_Board.Empty)
 					hasSpaceSide1 = true;
 				else if (this.squares[i, j] != color || !this.safeDiscs[i, j])
 					hasUnsafeSide1 = true;
@@ -418,7 +418,7 @@ namespace Game
 			j = col + 1;
 			while (i < 8 && j < 8 && !hasSpaceSide2)
 			{
-				if (this.squares[i, j] == Board.Empty)
+				if (this.squares[i, j] == Game_Othello_Board.Empty)
 					hasSpaceSide2 = true;
 				else if (this.squares[i, j] != color || !this.safeDiscs[i, j])
 					hasUnsafeSide2 = true;
@@ -440,7 +440,7 @@ namespace Game
 			j = col + 1;
 			while (i >= 0 && j < 8 && !hasSpaceSide1)
 			{
-				if (this.squares[i, j] == Board.Empty)
+				if (this.squares[i, j] == Game_Othello_Board.Empty)
 					hasSpaceSide1 = true;
 				else if (this.squares[i, j] != color || !this.safeDiscs[i, j])
 					hasUnsafeSide1 = true;
@@ -452,7 +452,7 @@ namespace Game
 			j = col - 1;
 			while (i < 8 && j >= 0 && !hasSpaceSide2)
 			{
-				if (this.squares[i, j] == Board.Empty)
+				if (this.squares[i, j] == Game_Othello_Board.Empty)
 					hasSpaceSide2 = true;
 				else if (this.squares[i, j] != color || !this.safeDiscs[i, j])
 					hasUnsafeSide2 = true;

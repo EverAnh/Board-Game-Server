@@ -158,16 +158,15 @@ class GameDisplay(Display.Display):
 
     def _draw_side_bar(self):
 
-        #draws players turn on side bar
-        self._DisplayPlayers = self._PlayerFont.render(self._reponse.player_turn,1,pygame.Color(0,0,0))
-        self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
-                
+        self._DisplayPlayers = self._PlayerFont.render(self._game.get_player_turn(),1,pygame.Color(0,0,0))
+        self._screen.blit(self._DisplayPlayers,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
+                    
         #draws turns number on side bar
-        self._DisplayTurns = self._TurnsFont.render(str(self._response.turn_number),1,pygame.Color(0,0,0))
-        self._screen.blit(self._turnDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
+        self._DisplayTurns = self._TurnsFont.render(str(self._game.get_turn_number()),1,pygame.Color(0,0,0))
+        self._screen.blit(self._DisplayTurns,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
                     
         #draw scores on side bar
-        self._DisplayScores = self._ScoresFont.render(self._response.scores,1,pygame.Color(0,0,0))
+        self._DisplayScores = self._ScoresFont.render(str(0),1,pygame.Color(0,0,0))
         self._screen.blit(self._DisplayScores,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)*3))
 
 
