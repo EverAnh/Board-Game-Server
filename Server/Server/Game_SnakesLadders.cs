@@ -247,9 +247,10 @@ namespace Game
             return -1; // invalid action
         }
 
-        private bool movePiece(int l)
+        private bool movePiece(int newLocation)
         {
-            // attempts to move a piece
+            // moves a piece
+            gamePieces[loop.getActivePlayer()].setX(newLocation);
         }
 
         private void initializeBoardState()
