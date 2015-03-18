@@ -230,12 +230,12 @@ namespace Game
             Console.Write("Critical point here:" + moveStatement);
 
             // player who went last
-            moveStatement += gamePieces[loop.getActivePlayer()].getValue() + "&";
+            moveStatement += "1#";
 
             // coordinates that have changed, use a "#" sign.
-            moveStatement += ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getXPrev() ).ToString() + "#"
-                           + ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getYPrev() ).ToString() + "#"
-                            + gamePieces[loop.getActivePlayer()].getValue();
+            moveStatement += ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getXPrev() ).ToString() + "%"
+                           + ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getYPrev() ).ToString() + "%"
+                            + "0";
 
 
             Console.Write("Sending message to all clients: " + moveStatement);
