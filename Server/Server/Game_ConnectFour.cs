@@ -22,7 +22,7 @@ namespace Game
             currentPlayers = new List<Player>();        // list of players
             loop = new Server_GameLoop();               // Make a new server_gameloop (unecessary?)
             maxPlayers = 2;                             // 2 players max
-
+            
             // Add two player's info in here, we don't really need to track all the pieces as gameBoard handles a lot of that for us.
             // We'll use gamePieces to track the last known move of each respective player.
             

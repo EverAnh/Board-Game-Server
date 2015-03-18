@@ -119,19 +119,19 @@ namespace Game
             }
         }
 
+        // reverted check on this for now.
+
         public virtual bool handlePlayerTurn(String s)
         {
-            
             Console.Write("Recieved: " + s + " from client. Handling message...");
-            if (s != null && s != " " && s!= "" ) // if it not a null string or empty string or empty string with one little character AHH
+           // if (s != null && s != " " && s!= "" ) // if it not a null string or empty string or empty string with one little character AHH
             {
                 String[] move = s.Split('%'); 
                 return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
             }
 
-            Console.Write("String was null, can't split that bro.")
-            return true;        // chill, man!
-
+            //Console.Write("String was null, can't split that bro.")
+           // return true;        // chill, man!
         }
 
             
