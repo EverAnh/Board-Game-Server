@@ -191,14 +191,16 @@ namespace Game
                         if(p.getGame() == "generic")
                         {
                             newGame = new Game_Generic(8, 8);
-
                         }
 
                         else if (p.getGame() == "connectFour")
                         {
-                            
                             newGame = new Game_ConnectFour();
-                            
+                        }
+
+                        else if (p.getGame() == "othello")
+                        {
+                            newGame = new Game_Othello();
                         }
 
                         games.Add(newGame);
