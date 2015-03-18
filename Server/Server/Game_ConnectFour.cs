@@ -88,7 +88,7 @@ namespace Game
                 moveStatement += "WINNER&";
             // OTHERWISE, message is blank 
             else
-                moveStatement += "&";
+                moveStatement += "whatIsaMessage&";
             
             // position starting x and y
             moveStatement += cur_x + "%";                       // append the moveX

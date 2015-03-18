@@ -8,6 +8,7 @@ namespace Game
 {
     public class Game_Generic
     {
+        protected bool gameWaiting;             
         protected int[ , ] gameBoard;
         protected List<Piece_Generic> gamePieces;
         protected List<Player> currentPlayers;
@@ -15,7 +16,7 @@ namespace Game
         protected int maxPlayers;
         protected Server_GameLoop loop;
         protected String gameType;
-        protected bool gameState;         // True for running / False for not
+        protected bool gameState;                       // True for running / False for not
 
         public Game_Generic()
         {
@@ -35,7 +36,16 @@ namespace Game
             gamePieces.Add(new Piece_Generic());
             gamePieces[0].setX(2);
             gamePieces[0].setY(2);
+            gamePieces[0].setValue(1);
             gameState = true;                // set to true for running.
+
+            // Temporary code to allow me to track the piece
+;
+            gamePieces.Add(new Piece_Generic());
+            gamePieces[2].setX(2);
+            gamePieces[2].setY(2);
+            gamePieces[2].setValue(1);
+
         }
 
         public List<Player> getPlayers()
@@ -132,6 +142,7 @@ namespace Game
                 // check to see if moved exactly 1
                 if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
                 {
+                    gamePieces[loop.getActivePlayer()+2].setY(gamePieces[loop.getActivePlayer()].getY());
                     gamePieces[loop.getActivePlayer()].setY(y);
                     if (checkWinCondition(
                        gamePieces[loop.getActivePlayer()].getX(),
@@ -149,6 +160,8 @@ namespace Game
                 // check to see if moved exactly 1
                 if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
                 {
+                    // This will save the piece location so I can send a "delete" message to the client.
+                    gamePieces[loop.getActivePlayer()+2].setX(gamePieces[loop.getActivePlayer()].getX());   
                     gamePieces[loop.getActivePlayer()].setX(x);
                      if (checkWinCondition(
                         gamePieces[loop.getActivePlayer()].getX(),
@@ -176,15 +189,24 @@ namespace Game
             // score for Game_Generic is always -1
             moveStatement += "-1&";
             
-            // message is blank
-            moveStatement += "THISISAMESSAGE&";
+            // message is "THISISAMESSAGE" if game is not over
+            // if the game is still running, indicating that no players made a "winning" move
+            if (!gameState)     //gameState is true while game is running 
+                moveStatement += "WINNER&";
+            else
+                moveStatement += "THISISAMESSAGE&";
 
             // position starting x and y
             moveStatement += cur_x + "%";
             moveStatement += cur_y + "%";
 
             // player who went last
-            moveStatement += playerNumber.ToString() + "%";
+            moveStatement += gamePieces[0].getValue() + "&";
+
+            // coordinates that have changed, use a "#" sign.
+            moveStatement += gamePieces[loop.getActivePlayer()+2].getX() += "#"
+                           += gamePieces[loop.getActivePlayer()+2].getY();
+
 
 
             return moveStatement;
