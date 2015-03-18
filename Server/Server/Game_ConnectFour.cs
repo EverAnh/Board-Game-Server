@@ -49,7 +49,7 @@ namespace Game
             Console.Write("[Not yet implemented] Terminating game of connectFour!...thanks for playing!");
         }
 
-        protected virtual bool checkWinCondition(int x, int y)
+        protected override bool checkWinCondition(int x, int y)
         {
             if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
             {
@@ -77,7 +77,7 @@ namespace Game
             // turn number, new player number
             // I prefer to use the values kept by this particular game instance rather than gameloop.
 
-            moveStatement += loop.getTurn() + "&";              // attach the current turn number
+            moveStatement += loop.getTurnNumber() + "&";              // attach the current turn number
             moveStatement += loop.getActivePlayer() + "&";      // attach the active player number
 
             // score for this game is always -1, I'll jump ahead and state that we'll only ever have 2 players 

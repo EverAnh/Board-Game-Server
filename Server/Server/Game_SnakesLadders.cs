@@ -85,20 +85,13 @@ namespace Game
             gamePieces[1].setX(0);
             gamePieces[1].setY(0);
             gamePieces[1].setValue(2);                  // Player 2
+
+            initializeBoardState();                     // Initialize the board.
         }
 
         public override List<Piece_Generic> getPieces()
         {
             return gamePieces;                          
-        }
-        public virtual List<Piece_Generic> getPieces()
-        {
-            return gamePieces;
-        }
-
-        public bool getGameState()
-        {
-            return gameState;
         }
 
         // Since we're using our own game board, overwrite this method from Generic.
@@ -119,8 +112,9 @@ namespace Game
 
         public virtual bool handlePlayerTurn(String s)
         {
-            String[] move = s.Split('%');
-            return checkGameState( System.Convert.ToInt32(move[0]), System.Convert.ToInt32(move[1]) );
+            String[] move = s.Split('%');           // Split the string
+            return checkGameState( System.Convert.ToInt32(move[0]),
+                                   System.Convert.ToInt32(move[1]) );
         }
 
         public virtual void endGame()
@@ -142,51 +136,10 @@ namespace Game
             return false; // not a win
         }
         // returns true if the move is a valid move, otherwise returns false
-        protected virtual bool checkGameState(int x, int y)
+        protected override bool checkGameState(int x, int y)
         {
-            
-            
-            // setting up additional logic so once any player reaches 0,0
-            // we'll pass a "game over" message.   
-            // move up or down, not left/right
-            if (gamePieces[loop.getActivePlayer()].getX() == x)
-            {
-                // check to see if moved exactly 1
-                if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
-                {
-                    gamePieces[loop.getActivePlayer()].setY(y);
-                    if (checkWinCondition(
-                       gamePieces[loop.getActivePlayer()].getX(),
-                        gamePieces[loop.getActivePlayer()].getY()))
-                    {
-                        // Do something!
-                        Console.Write("Code this in, Jason 2!");
-                    }
-                    return true;
-                }
-            }
 
-            else if (gamePieces[loop.getActivePlayer()].getY() == y)
-            {
-                // check to see if moved exactly 1
-                if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
-                {
-                    gamePieces[loop.getActivePlayer()].setX(x);
-                     if (checkWinCondition(
-                        gamePieces[loop.getActivePlayer()].getX(),
-                        gamePieces[loop.getActivePlayer()].getY()))
-                    {
-                        // Do something!
-                        Console.Write("Code this in, Jason 2!");
-                    }
-
-                    return true;
-                }
-            }
-
-
-            
-            return false;
+            return true;
         }
 
 
@@ -207,8 +160,8 @@ namespace Game
         {
             // Roll the die, returning a random number from 1-6.
             // If we roll 6, make sure to let user know they get another one!
-            Random rnd = new Random();
-            int dice = rnd.Next(1, 7);
+            Random rnd = new Random();          // Find a random number
+            int dice = rnd.Next(1, 7);          // Between 1 and 6.
             return dice;
         }
 
@@ -226,6 +179,7 @@ namespace Game
             // if 0, nothing happens
             // if 1, player is bumped up
             // if 2, player is bumped down
+
             if (gameBoardsSL[index].getType() == 0)
             {
                 // nothing happens, just return the index?
@@ -252,6 +206,9 @@ namespace Game
             // moves a piece
             gamePieces[loop.getActivePlayer()].setX(newLocation);
         }
+
+
+
 
         private void initializeBoardState()
         {
