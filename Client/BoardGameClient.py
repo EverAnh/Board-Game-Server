@@ -108,6 +108,8 @@ class BoardGameClient:
             self._display.update()
             print 'managing turn'
             self._game_manager.manage_turn()
+        print 'Game over! Logging out...'
+        self._account.logout(self._connection)
 
 # ------------------------------------------------------------------------------
 #if __name__ == 'main':

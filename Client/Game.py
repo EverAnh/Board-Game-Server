@@ -5,7 +5,7 @@ class Game:
     def __init__(self):
         self._my_player_number = 0
         self._my_player_id = 0
-        self._winner = False
+        self._winner = -1
         self._turn_number = 1
         self._my_turn = False
         self._player_turn = 0
@@ -44,7 +44,7 @@ class Game:
 
     def is_over(self):
         print 'checking if game is over'
-        return self._winner
+        return self._winner != -1
 
 
     def is_my_turn(self):
@@ -105,5 +105,9 @@ class Game:
         return self._move_type
 
 
-    def set_move_type(move_type):
+    def set_move_type(self, move_type):
         self._move_type = move_type
+
+
+    def set_winner(self, player_num):
+        self._winner = player_num

@@ -72,8 +72,9 @@ class ServerConnection:
         for piece in raw_pieces:
             p = piece.split(VALU_DELIM)
             pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
-            return Response.Response(turn_number, player_turn, scores, message, pieces)
         print 'pieces: ',pieces
+        return Response.Response(turn_number, player_turn, scores, message, pieces)
+        
 
     def close_connection(self):
         self._socket.close()

@@ -53,7 +53,7 @@ class GameManager:
     def check_for_winner(self, response):
         if response.message == WINNER:
             self._game.set_winner(response.player_turn) ##player_turn == winner in this message
-            self._game.set_is_over(True)
+            #self._game.set_is_over(True)
 
     def check_for_invalid(self, response):
         if response.message == INVALID:
