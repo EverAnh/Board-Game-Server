@@ -16,6 +16,7 @@ namespace Game
         private GameState state;
         private int currentColor;
         private int moveNumber;
+        private string currentStringOutput;
 
         //available gamestates
         private enum GameState
@@ -35,6 +36,7 @@ namespace Game
             currentColor = Game_Othello_Board.White; //STARTS with white
             board = new Game_Othello_Board();
             state = GameState.InPlayerMove;
+            currentStringOutput = "";
         }
         public override bool handlePlayerTurn(String s)
         {
@@ -74,9 +76,9 @@ namespace Game
                 // Set the game state.
                 this.state = Game_Othello.GameState.InPlayerMove;
                 if (currentColor == 1)
-                    generateMoveString(1, moveNumber, flipped);
+                    currentStringOutput = generateMoveString(1, moveNumber, flipped);
                 else
-                    generateMoveString(2, moveNumber, flipped);
+                    currentStringOutput = generateMoveString(2, moveNumber, flipped);
             }
             return true;
         }
@@ -105,9 +107,9 @@ namespace Game
 
             }
             if (board.WhiteCount > board.BlackCount)
-                generateMoveString(1, moveNumber, false);
+                currentStringOutput = generateMoveString(1, moveNumber, false);
             else
-                generateMoveString(2, moveNumber, false);
+                currentStringOutput = generateMoveString(2, moveNumber, false);
         }
 
         private List<ArrayList> MakeMove(int row, int col)
@@ -134,9 +136,9 @@ namespace Game
 
             //needs a real input for the parameter
             this.StartNextTurn(flipped);
-
         }
-        public string generateMoveString(int playerNumber, int turnNumber, bool moreMoves)
+
+        private string generateMoveString(int playerNumber, int turnNumber, bool moreMoves)
         {
             string moveStatement = "";
 
@@ -150,7 +152,7 @@ namespace Game
             Console.Write("Sending message to all clients: " + moveStatement);
             return moveStatement;
         }
-        public string generateMoveString(int playerNumber, int turnNumber, List<ArrayList> flipped)
+        private string generateMoveString(int playerNumber, int turnNumber, List<ArrayList> flipped)
         {
             string moveStatement = "";
 
@@ -177,6 +179,9 @@ namespace Game
             Console.Write("Sending message to all clients: " + moveStatement);
 
             return moveStatement;
+        }
+        public string generateMoveString(int turn, int activePlayer,int currentX,int currentY,string move){
+            return currentStringOutput;
         }
 
 
