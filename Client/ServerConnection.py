@@ -78,4 +78,5 @@ class ServerConnection:
         print 'pieces: ',pieces
 
     def close_connection(self):
-        self._socket.close()
+        pass
+        #self._socket.close()
