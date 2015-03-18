@@ -75,6 +75,8 @@ namespace Game
              */
 
             // turn number, new player number
+            // I prefer to use the values kept by this particular game instance rather than gameloop.
+
             moveStatement += loop.getTurn() + "&";              // attach the current turn number
             moveStatement += loop.getActivePlayer() + "&";      // attach the active player number
 

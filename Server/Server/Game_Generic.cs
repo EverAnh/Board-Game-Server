@@ -132,7 +132,7 @@ namespace Game
                         gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
-                        Console.Write("Code this in, Jason 2!");
+                        // Console.Write("Code this in, Jason 2!");
                     }
                     return true;
                 }
@@ -149,7 +149,7 @@ namespace Game
                         gamePieces[loop.getActivePlayer()].getY()))
                     {
                         // Do something!
-                        Console.Write("Code this in, Jason 2!");
+                        // Console.Write("Code this in, Jason 2!");
                     }
 
                     return true;

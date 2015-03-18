@@ -77,6 +77,7 @@ namespace Game
 
                 if (!activeGame)        // if game is no longer active
                 {
+                    // This is Jason2 - I CLAIM CREDIT FOR THIS HORRIBLE SOLUTION
                     break;              // break out of the game loop
                 }
 
