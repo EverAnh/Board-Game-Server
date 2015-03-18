@@ -113,7 +113,7 @@ namespace Game
                 endGame();              // attempt to end the game.
                 return true;            // quick termination, return back to the caller
             }
-            return false; // not a win
+            return false;               // not a win
         }
         // returns true if the move is a valid move, otherwise returns false
         protected virtual bool checkGameState(int x, int y)
