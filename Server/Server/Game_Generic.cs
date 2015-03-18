@@ -219,8 +219,10 @@ namespace Game
             moveStatement += cur_x + "%";
             moveStatement += cur_y + "%";
 
+            Console.Write("Critical point here:" + moveStatement);
+
             // player who went last
-            moveStatement += gamePieces[].getValue() + "&";
+            moveStatement += gamePieces[loop.getActivePlayer()].getValue() + "&";
 
             // coordinates that have changed, use a "#" sign.
             moveStatement += gamePieces[loop.getActivePlayer()+2].getX() + "#"
