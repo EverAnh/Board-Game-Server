@@ -208,9 +208,9 @@ namespace Game
             moveStatement += gamePieces[0].getValue() + "&";
 
             // coordinates that have changed, use a "#" sign.
-            moveStatement += gamePieces[loop.getActivePlayer()+2].getX() += "#"
-                           += gamePieces[loop.getActivePlayer()+2].getY() += "#"
-                            += gamePieces[loop.getActivePlayer()+2].getValue();
+            moveStatement += gamePieces[loop.getActivePlayer()+2].getX() + "#"
+                           + gamePieces[loop.getActivePlayer()+2].getY() + "#"
+                            + gamePieces[loop.getActivePlayer()+2].getValue();
 
 
             Console.Write("Sending message to all clients: " + moveStatement);
