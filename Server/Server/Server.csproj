@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game_Othello.cs" />
+    <Compile Include="Game_Othello_Board.cs" />
+    <Compile Include="Piece_Movable.cs" />
     <Compile Include="Server_GameLoop.cs" />
     <Compile Include="Game_ConnectFour.cs" />
     <Compile Include="Game_Generic.cs" />
@@ -61,7 +63,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="Game_Othello_Board.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -93,7 +94,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
