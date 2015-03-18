@@ -182,4 +182,3 @@ class GameDisplay(Display.Display):
         
     def shouldQuit(self):
         return self._should_quit
-
