@@ -169,8 +169,14 @@ namespace Game
                         // message 3
                         p.getPlayerWriter().WriteLine(loginMessage);
 
-                        startMessage = p.getPlayerReader().ReadLine();
-                        data = startMessage.Split(delim);
+                        if (loginMessage[0] != 'W')
+                        {
+                            p.getPlayerWriter().WriteLine(playerNumber.ToString());
+
+                            startMessage = p.getPlayerReader().ReadLine();
+                            data = startMessage.Split(delim);
+                        }
+                        
 
                         System.Threading.Thread.Sleep(500);
                     }
