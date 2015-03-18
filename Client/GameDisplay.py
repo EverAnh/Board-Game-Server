@@ -9,7 +9,7 @@ import GamePiece
 class GameDisplay(Display.Display):
 
     WINDOW_WIDTH = 1000
-    WINDOW_HEIGHT = 1000
+    WINDOW_HEIGHT = 800
     SIDE_BAR_WIDTH = 200
     BOARD_WIDTH = WINDOW_WIDTH - SIDE_BAR_WIDTH
     BOARD_HEIGHT = WINDOW_HEIGHT
@@ -126,7 +126,7 @@ class GameDisplay(Display.Display):
     def _drawGrid(self):
         
         self._bgSize = self._background.get_rect()
-        self._background = pygame.transform.scale(self._background, (GameDisplay.WINDOW_WIDTH, GameDisplay.WINDOW_HEIGHT))
+        self._background = pygame.transform.scale(self._background, (GameDisplay.GRID_WIDTH, GameDisplay.WINDOW_HEIGHT))
         self._piece0 = pygame.transform.scale(self._piece0, (GameDisplay.CELL_WIDTH, GameDisplay.CELL_HEIGHT))
         self._piece1 = pygame.transform.scale(self._piece1, (GameDisplay.CELL_WIDTH, GameDisplay.CELL_HEIGHT))
         self._screen.blit(self._background, (0,0))
