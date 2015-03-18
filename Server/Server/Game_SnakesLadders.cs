@@ -219,24 +219,29 @@ namespace Game
             return 100-l;
         }
 
-        private int boardAction(int l)
+        private int boardAction(int index)
         {
             // takes in player current location (via index)
             // checks the board piece at his spot
             // if 0, nothing happens
             // if 1, player is bumped up
             // if 2, player is bumped down
-            if (l == 0)
+            if (gameBoardsSL[index].getType() == 0)
             {
-                // fill out
+                // nothing happens, just return the index?
+                return index;
             }
-            else if (l == 1)
+            else if (gameBoardsSL[index].getType() == 1)
             {
-                // fill out--for ladder
+                // fill out--for ladder, so player is bumped up
+                gamePieces[loop.getActivePlayer()].setX(gameBoardSL[index].getValue());
+                return gameBoardSL[index].getValue();
             }
-            else if (l == 2)
+            else if (gameBoardsSL[index].getType() == 2)
             {
-                // fill out--for snakes/slides
+                // fill out--for snakes/slides, so player is bumped down
+                gamePieces[loop.getActivePlayer()].setX(gameBoardSL[index].getValue());
+                return gameBoardSL[index].getValue();
             }
 
             return -1; // invalid action
