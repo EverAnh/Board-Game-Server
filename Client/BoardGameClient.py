@@ -79,24 +79,24 @@ class BoardGameClient:
     def _board_game_factory(self, choice):
         if choice == CONNECT_FOUR:
             game = ConnectFourGame.ConnectFourGame()
-            manager = GameManager.GameManager(self._connection, game)
-            display = ConnectFourGameDisplay.ConnectFourGameDisplay(manager, game)
+            self._game_manager = GameManager.GameManager(self._connection, game)
+            display = ConnectFourGameDisplay.ConnectFourGameDisplay(self._game_manager, game)
             
         elif choice == OTHELLO:
             game = OthelloGame.OthelloGame()
-            manager = GameManager.GameManager(self._connection, game)
-            display = OthelloGameDisplay.OthelloGameDisplay(manager, game)
+            self._game_manager = GameManager.GameManager(self._connection, game)
+            display = OthelloGameDisplay.OthelloGameDisplay(self._game_manager, game)
             
         elif choice == BATTLESHIP:
             game = BattleShipGame.BattleshipFourGame()
-            manager = GameManager.GameManager(self._connection, game)
-            display = BattleshipGameDisplay.BattleshipGameDisplay(manager, game)
+            self._game_manager = GameManager.GameManager(self._connection, game)
+            display = BattleshipGameDisplay.BattleshipGameDisplay(self._game_manager, game)
 
         ############### DEBUG ######################
         else:
             game = Game.Game()
-            manager = GameManager.GameManager(self._connection, game)
-            display = GameDisplay.GameDisplay(manager, game)
+            self._game_manager = GameManager.GameManager(self._connection, game)
+            display = GameDisplay.GameDisplay(self._game_manager, game)
         ############################################
             
         return (game, display)

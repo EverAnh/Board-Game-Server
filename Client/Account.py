@@ -14,7 +14,7 @@ class Account:
 
 
     def login(self, connection, game_choice):
-        login_string = self._username + ServerConnection.CATG_DELIM + self._password + ServerConnection.CATG_DELIM + game_choice
+        login_string = self._username + ServerConnection.VALU_DELIM + self._password + ServerConnection.VALU_DELIM + game_choice
         print 'connection opened'
         player_id = connection.get_response()      #message 1 <-
         print 'received message 1'

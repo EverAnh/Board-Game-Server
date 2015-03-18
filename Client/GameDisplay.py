@@ -56,11 +56,11 @@ class GameDisplay(Display.Display):
         self._draw_board(self._game.get_board())
 
         self._DisplayPlayers = self._PlayerFont.render(self._game.get_player_turn(),1,pygame.Color(0,0,0))
-        self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
+        self._screen.blit(self._DisplayPlayers,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
                     
         #draws turns number on side bar
-        self._DisplayTurns = self._TurnsFont.render(str(self._game.get_turn_number(),1,pygame.Color(0,0,0)))
-        self._screen.blit(self._turnDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
+        self._DisplayTurns = self._TurnsFont.render(str(self._game.get_turn_number()),1,pygame.Color(0,0,0))
+        self._screen.blit(self._DisplayTurns,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
                     
         #draw scores on side bar
         self._DisplayScores = self._ScoresFont.render(str(0),1,pygame.Color(0,0,0))
@@ -120,7 +120,7 @@ class GameDisplay(Display.Display):
         for i in range(GameDisplay.GRID_WIDTH):
             for j in range(GameDisplay.GRID_HEIGHT):
                 if self._tempBoard[i][j] is not None:
-                    self._drawGamePiece((i,j).value)
+                    self._drawGamePiece((i,j), self._tempBoard[i][j].value)
 
 
     def _drawGrid(self):
@@ -138,10 +138,10 @@ class GameDisplay(Display.Display):
                     self._drawGamePiece((i,j),1)
 
 
-    def _drawGamePiece(self,pos,Player):
-        if(Player == 1):
+    def _drawGamePiece(self,pos,value):
+        if(value == 1):
             self._screen.blit(self._piece0, (GameDisplay.CELL_WIDTH * pos[0], GameDisplay.CELL_HEIGHT * pos[1]))
-        elif(Player == 2):
+        elif(value == 2):
             self._screen.blit(self._piece1, (GameDisplay.CELL_WIDTH * pos[0], GameDisplay.CELL_HEIGHT * pos[1]))
             
 

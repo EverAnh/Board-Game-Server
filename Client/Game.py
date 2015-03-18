@@ -1,3 +1,5 @@
+import GamePiece
+
 class Game:
     
     def __init__(self):
@@ -15,15 +17,16 @@ class Game:
         self._init_board()
 
     def _init_board(self):
-        pass
-    
+        ###### DEBUG ######
+        self.add_piece(GamePiece.GamePiece(2,2,1))
+        ###################
 
     def update_board(self, changed_pieces):
         for piece in changed_pieces:
             if piece.value == 0:
-                remove_piece(piece)
+                self.remove_piece(piece)
             else:
-                add_piece(piece)
+                self.add_piece(piece)
 
 
     def reset_board(self):
@@ -94,3 +97,11 @@ class Game:
         
     def get_board(self):
         return self._gameboard
+
+
+    def get_move_type(self):
+        return self._move_type
+
+
+    def set_move_type(move_type):
+        self._move_type = move_type

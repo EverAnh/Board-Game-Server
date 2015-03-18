@@ -12,13 +12,13 @@ class GameManager:
 
     def handle_my_move(self, location):
         if self._game.is_my_turn():
-            if len(stored_move) < self._game.move_type:
-                store_move(location)
-                return
-            self._connection.send_move(stored_move)
+         #   if len(self._stored_move) < self._game.get_move_type():
+            self._store_move(location)
+         #       return
+            self._connection.send_move(self._stored_move)
             response = self._connection.get_move()
-            if check_for_invalid() == True:
-                return
+            if check_for_invalid(response) == True:
+                return response
             if response.player_number != self._game.get_my_player_number():
                 self._game.set_my_turn(False)
             self._game.update_board(response.pieces)
@@ -26,6 +26,9 @@ class GameManager:
             self._game.set_player_turn(response.player_turn)
             check_for_winner(response)
             return response
+
+    def _store_move(self, location):
+        self._stored_move.append(location)
 
     def handle_opponent_move(self):
         response = self._connection.get_move()

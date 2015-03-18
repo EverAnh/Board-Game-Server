@@ -1,6 +1,7 @@
 import socket, time
 
 import Response
+import GamePiece
 
 DEFAULT_IP = "127.0.0.1"
 DEFAULT_PORT = 3445
@@ -13,10 +14,10 @@ LOGIN_FAIL   = "LOGINFAILD"
 WINNER = "WINNER"
 INVALID = "INVALID"
 
-CATG_DELIM = "%"
+CATG_DELIM = "&"
 MOVE_DELIM = "#"
 SCOR_DELIM = "$"
-VALU_DELIM = "&"
+VALU_DELIM = "%"
     
 class ServerConnection:
 
@@ -45,14 +46,18 @@ class ServerConnection:
 
         
     def send_move(self, move):
+        print 'sending move'
         send_string = ""
         for coord in move:
-            send_string.append(coord[1] + VALU_DELIM + coord[2] + MOVE_DELIM)
-        self.send_request(send_string[:-1]) #cut off last move delimiter
+            send_string += str(coord[0]) + VALU_DELIM + str(coord[1])## + MOVE_DELIM
+        self.send_request(send_string) #cut off last move delimiter
 
 
     def get_move(self):
+        print 'getting move'
         raw_response = self._socket.recv(4096)
+        print 'move received'
+        print 'move: ' + raw_response
         category_tokens = raw_response.split(CATG_DELIM)
         turn_number = category_tokens[0]
         player_turn = category_tokens[1]
@@ -60,12 +65,12 @@ class ServerConnection:
         message = category_tokens[3]
         raw_pieces = category_tokens[4].split(MOVE_DELIM)
 
-        scores = [score for score in scores.split(SCORE_DELIM)] #list comprehension ftw
+        scores = [score for score in raw_scores.split(SCOR_DELIM)] #list comprehension ftw
 
         pieces = []
         for piece in raw_pieces:
             p = piece.split(VALU_DELIM)
-            pieces.add(GamePiece(p[0], p[1], p[2], p[3]))
+            pieces.append(GamePiece(p[0], p[1], p[2], p[3]))
             return Response(turn_number, player_turn, message, scores, pieces)
         
 
