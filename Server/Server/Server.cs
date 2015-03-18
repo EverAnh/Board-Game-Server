@@ -169,6 +169,9 @@ namespace Game
                         // message 3
                         p.getPlayerWriter().WriteLine(loginMessage);
 
+                        startMessage = p.getPlayerReader().ReadLine();
+                        data = startMessage.Split(delim);
+
                         System.Threading.Thread.Sleep(500);
                     }
 
