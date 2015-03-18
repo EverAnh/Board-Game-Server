@@ -257,35 +257,35 @@ namespace Game
 
             // Set snake type/positions here
 
-            gameBoardSL[10].setType = 2;
-            gameBoardSL[20].setType = 2;
-            gameBoardSL[30].setType = 2;
-            gameBoardSL[50].setType = 2;
-            gameBoardSL[70].setType = 2;
-            gameBoardSL[90].setType = 2;
+            gameBoardSL[62].setType = 2;
+            gameBoardSL[87].setType = 2;
+            gameBoardSL[49].setType = 2;
+            gameBoardSL[93].setType = 2;
+            gameBoardSL[65].setType = 2;
+            gameBoardSL[64].setType = 2;
 
-            gameBoardSL[10].setValue = 1;
-            gameBoardSL[20].setValue = 11;
-            gameBoardSL[30].setValue = 21;
-            gameBoardSL[50].setValue = 31;
-            gameBoardSL[70].setValue = 41;
-            gameBoardSL[90].setValue = 51;
+            gameBoardSL[62].setValue = 19;
+            gameBoardSL[87].setValue = 24;
+            gameBoardSL[49].setValue = 11;
+            gameBoardSL[93].setValue = 73;
+            gameBoardSL[65].setValue = 53;
+            gameBoardSL[64].setValue = 41;
 
             // Set ladder locations here
 
-            gameBoardSL[15].setType = 1;
-            gameBoardSL[25].setType = 1;
-            gameBoardSL[35].setType = 1;
-            gameBoardSL[55].setType = 1;
-            gameBoardSL[75].setType = 1;
-            gameBoardSL[85].setType = 1;
+            gameBoardSL[2].setType = 1;
+            gameBoardSL[4].setType = 1;
+            gameBoardSL[28].setType = 1;
+            gameBoardSL[21].setType = 1;
+            gameBoardSL[9].setType = 1;
+            gameBoardSL[71].setType = 1;
 
-            gameBoardSL[15].setValue = 22;
-            gameBoardSL[25].setValue = 32;
-            gameBoardSL[35].setValue = 42;
-            gameBoardSL[55].setValue = 72;
-            gameBoardSL[75].setValue = 82;
-            gameBoardSL[85].setValue = 92;
+            gameBoardSL[2].setValue = 38;
+            gameBoardSL[4].setValue = 14;
+            gameBoardSL[28].setValue = 84;
+            gameBoardSL[21].setValue = 42;
+            gameBoardSL[9].setValue = 31;
+            gameBoardSL[71].setValue = 91;
 
         }
 
