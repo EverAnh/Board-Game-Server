@@ -70,7 +70,7 @@ namespace Game
                 // this is crude, but since the passbyref is confusing me.. (i mean, it works)
 
                 String toSend = game.generateMoveString(turn, activePlayer, currentX, currentY, move);
-
+                Console.WriteLine("String sent: " + toSend);
                 // toSend should now hold the string.
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
