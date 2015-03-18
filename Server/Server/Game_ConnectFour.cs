@@ -44,7 +44,26 @@ namespace Game
             return gamePieces;                          
         }
 
+        public override void endGame()
+        {
+            Console.Write("[Not yet implemented] Terminating game of connectFour!...thanks for playing!");
+        }
+
+        protected virtual bool checkWinCondition(int x, int y)
+        {
+            if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
+            {
+                Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
+                gameState = false;      // set to false
+                endGame();              // attempt to end the game.
+                return true;            // quick termination, return back to the caller
+            }
+            return false; // not a win
+        }
+
         // override the statement from Generic Game
+        // this function is called once the move has been "accepted" by the server.
+        // we should send the client a message "confirming" the move, along with the next player.
 
         public override string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
         {
@@ -59,8 +78,20 @@ namespace Game
              * We finally need to let the client know if the game is over.
              * 
              * Proposed message: 
-             * playerNumber(current &  
+             * playerNumber(current) & turnNumber & score & piecePlacedX & piecePlacedY & nextPlayernumber + extra
+             * 
+             * extra would be denoted by either 1 for yes, game is over, or 0 for none (game still running)
+             * should there be a 1, we can then follow it up with the player number of the winner (which in this case should be the same, right?)
+             * 
+             * score in this case is blank.
              */
+
+            // WIP 
+
+            if (gameState) // if the game is still running, indicating that no players made a "winning" move
+            {
+                moveStatement += "";
+            }
 
             // turn number, new player number
             moveStatement += turnNumber.ToString() + "&";
