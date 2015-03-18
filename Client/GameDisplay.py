@@ -55,6 +55,18 @@ class GameDisplay(Display.Display):
         self._load_images()
         self._draw_board(self._game.get_board())
 
+        self._DisplayPlayers = self._PlayerFont.render(self._game.get_player_turn(),1,pygame.Color(0,0,0))
+        self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
+                    
+        #draws turns number on side bar
+        self._DisplayTurns = self._TurnsFont.render(str(self._game.get_turn_number(),1,pygame.Color(0,0,0)))
+        self._screen.blit(self._turnDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
+                    
+        #draw scores on side bar
+        self._DisplayScores = self._ScoresFont.render(str(0),1,pygame.Color(0,0,0))
+        self._screen.blit(self._DisplayScores,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)*3))
+
+
         self._response = None
 
 
@@ -71,8 +83,8 @@ class GameDisplay(Display.Display):
                 if(mousePosition[0]>GameDisplay.BOARD_WIDTH):
                     print "you are clicking the sdie bar"
                 else:
-                    column = mousePosition[0]/self.CELL_WIDTH
-                    row = mousePosition[1]/self.CELL_HEIGHT
+                    column = mousePosition[0]/GameDisplay.CELL_WIDTH
+                    row = mousePosition[1]/GameDisplay.CELL_HEIGHT
                     print "row,column" ,(column,row)
                     self._coordinate = (column,row)
                 #asks GameManager for a response on wether the move is valid or not
@@ -82,17 +94,17 @@ class GameDisplay(Display.Display):
                 if(self._response=="WINNER"):
                     self._end_game()
 
-        #draws players turn on side bar
-        self._DisplayPlayers = self._PlayerFont.render(self._response.player_turn,1,pygame.Color(0,0,0))
-        self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
-                
-        #draws turns number on side bar
-        self._DisplayTurns = self._TurnsFont.render(str(self._response.turn_number),1,pygame.Color(0,0,0))
-        self._screen.blit(self._turnDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
+                #draws players turn on side bar
+                self._DisplayPlayers = self._PlayerFont.render(self._response.player_turn,1,pygame.Color(0,0,0))
+                self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
                     
-        #draw scores on side bar
-        self._DisplayScores = self._ScoresFont.render(self._response.scores,1,pygame.Color(0,0,0))
-        self._screen.blit(self._DisplayScores,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)*3))
+                #draws turns number on side bar
+                self._DisplayTurns = self._TurnsFont.render(str(self._response.turn_number),1,pygame.Color(0,0,0))
+                self._screen.blit(self._turnDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
+                    
+                #draw scores on side bar
+                self._DisplayScores = self._ScoresFont.render(self._response.scores,1,pygame.Color(0,0,0))
+                self._screen.blit(self._DisplayScores,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)*3))
 
         pygame.display.flip()
 
