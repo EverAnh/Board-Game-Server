@@ -1,3 +1,6 @@
+WINNER = "WINNER"
+INVALID = "INVALID"
+
 class GameManager:
   
     def __init__(self, connection, game):
@@ -17,14 +20,14 @@ class GameManager:
          #       return
             self._connection.send_move(self._stored_move)
             response = self._connection.get_move()
-            if check_for_invalid(response) == True:
+            if self.check_for_invalid(response) == True:
                 return response
-            if response.player_number != self._game.get_my_player_number():
+            if response.player_turn != self._game.get_my_player_number():
                 self._game.set_my_turn(False)
             self._game.update_board(response.pieces)
             self._game.set_turn_number(response.turn_number)
             self._game.set_player_turn(response.player_turn)
-            check_for_winner(response)
+            self.check_for_winner(response)
             return response
 
     def _store_move(self, location):
@@ -40,12 +43,12 @@ class GameManager:
         check_for_winner(response)
 
     def check_for_winner(self, response):
-        if response.message == ServerConnection.WINNER:
+        if response.message == WINNER:
             self._game.set_winner(response.player_turn) ##player_turn == winner in this message
             self._game.set_is_over(True)
 
     def check_for_invalid(self, response):
-        if response.message == ServerConnection.INVALID:
+        if response.message == INVALID:
             return True
         else:
             return False

@@ -11,8 +11,7 @@ CREATE_FAIL  = "CREATEFAIL"
 LOGIN_SUCC   = "LOGINSUCCD"
 LOGIN_FAIL   = "LOGINFAILD"
 
-WINNER = "WINNER"
-INVALID = "INVALID"
+
 
 CATG_DELIM = "&"
 MOVE_DELIM = "#"
@@ -70,8 +69,8 @@ class ServerConnection:
         pieces = []
         for piece in raw_pieces:
             p = piece.split(VALU_DELIM)
-            pieces.append(GamePiece(p[0], p[1], p[2], p[3]))
-            return Response(turn_number, player_turn, message, scores, pieces)
+            pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
+            return Response.Response(turn_number, player_turn, message, scores, pieces)
         
 
     def close_connection(self):

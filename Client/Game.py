@@ -61,11 +61,12 @@ class Game:
     def set_turn_number(self, turn_number):
         self._turn = turn_number
 
+
     def get_player_turn(self):
         return self._player_turn
 
 
-    def set_player_turn(player_turn):
+    def set_player_turn(self, player_turn):
         self._player_turn = player_turn
 
     def get_my_player_number(self):
