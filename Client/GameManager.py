@@ -31,6 +31,7 @@ class GameManager:
             self._game.update_board(response.pieces)
             self._game.set_turn_number(response.turn_number)
             self._game.set_player_turn(response.player_turn)
+            print 'entire gameboard: ',self._game.get_board()
             self.check_for_winner(response)
             return response
         else:
