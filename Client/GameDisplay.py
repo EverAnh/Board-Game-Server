@@ -2,7 +2,8 @@ import pygame
 import os,sys,time
 import Display
 
-class GameDisplay(Display.Display):
+#PUT Display.Display in after everything is done
+class GameDisplay():
 
     WINDOW_LENGTH = 800
     GRID_LENGTH = 8
@@ -103,11 +104,11 @@ class GameDisplay(Display.Display):
 
 
 ##if __name__ == 'main':
-#game = GameDisplay("demo")
-#clock = pygame.time.Clock()
+game = GameDisplay()
+clock = pygame.time.Clock()
 #game.connect_to_server()
 
-#while not game._should_quit:
-  #  clock.tick(30)
-  #  game.update()
-#pygame.quit()
+while not game._should_quit:
+    clock.tick(30)
+    game.update()
+pygame.quit()
