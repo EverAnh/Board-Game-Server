@@ -104,7 +104,9 @@ class BoardGameClient:
     def _run_game(self):
         print 'running game'
         while not self._game.is_over():
+            print 'updating display'
             self._display.update()
+            print 'managing turn'
             self._game_manager.manage_turn()
 
 # ------------------------------------------------------------------------------

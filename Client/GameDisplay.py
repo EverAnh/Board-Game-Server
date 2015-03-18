@@ -72,7 +72,6 @@ class GameDisplay(Display.Display):
 
     #will draw the board every time there is a change
     def update(self):
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self._should_quit = True
@@ -91,22 +90,31 @@ class GameDisplay(Display.Display):
                 self._response = self._GM.handle_my_move(self._coordinate)
 
                 #need to talk to heath about the messages
+                print 'checking for winner'
                 if(self._response=="WINNER"):
                     self._end_game()
+                print 'checked for winner'
 
                 #draws players turn on side bar
+                print 'drawing players'
                 self._DisplayPlayers = self._PlayerFont.render(self._response.player_turn,1,pygame.Color(0,0,0))
-                self._screen.blit(self._PlayerDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
+                self._screen.blit(self._DisplayPlayers,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4))
                     
                 #draws turns number on side bar
+                print 'drawing turn number'
                 self._DisplayTurns = self._TurnsFont.render(str(self._response.turn_number),1,pygame.Color(0,0,0))
-                self._screen.blit(self._turnDisplayed,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
+                self._screen.blit(self._DisplayTurns,(GameDisplay.BOARD_WIDTH+25,GameDisplay.WINDOW_HEIGHT/4)*2)
                     
                 #draw scores on side bar
+                print 'drawing scores'
                 self._DisplayScores = self._ScoresFont.render(self._response.scores,1,pygame.Color(0,0,0))
                 self._screen.blit(self._DisplayScores,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)*3))
-
+                
+        self._draw_board(self._game.get_board())
         pygame.display.flip()
+        #### DEBUG ######
+        self._game.set_my_turn(True)
+        #################
 
 
     def end_game(self):
