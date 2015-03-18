@@ -177,7 +177,7 @@ namespace Game
             moveStatement += "-1&";
             
             // message is blank
-            moveStatement += "";
+            moveStatement += "THISISAMESSAGE&";
 
             // position starting x and y
             moveStatement += cur_x + "%";
