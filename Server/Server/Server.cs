@@ -241,7 +241,7 @@ namespace Game
                         gt.setThread(gameThread);
                         games.Add(gt);
 
-                        onsole.WriteLine("Finished adding player" );
+                        Console.WriteLine("Finished adding player" );
                     }
 
                     // found a matching game type that needs an additional player
