@@ -130,6 +130,7 @@ namespace Game
 
         protected virtual bool checkWinCondition(int x, int y)
         {
+            /*
             if (gamePieces[loop.getActivePlayer()].getX() == 0 && gamePieces[loop.getActivePlayer()].getY() == 0)
             {
                 Console.Write("Player " + loop.getActivePlayer() + " has won!"); // print
@@ -137,6 +138,7 @@ namespace Game
                 endGame();              // attempt to end the game.
                 return true;            // quick termination, return back to the caller
             }
+            */
             return false; // not a win
         }
         // returns true if the move is a valid move, otherwise returns false

@@ -84,28 +84,48 @@ namespace Game
              * should there be a 1, we can then follow it up with the player number of the winner (which in this case should be the same, right?)
              * 
              * score in this case is blank.
+
+
+CATG_DELIM = & = delimiter between categories within the same message
+MOVE_DELIM = # = delimiter between pieces/locations
+SCOR_DELIM = $ = delimiter between player scores (accommodates n many players)
+VALU_DELIM = % = delimiter between values of a specific piece or location
+
+
+
+
+WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who won
+             
+             7&2&3$3&talkSomeShit&5%2%1%(1 for red, 2 for black)
+
+
              */
 
-            // WIP 
+            // turn number, new player number
+            moveStatement += turnNumber.ToString() + "&";       // attach the current turn Number
+            moveStatement += playerNumber + "&";                // attach the player number
 
-            if (gameState) // if the game is still running, indicating that no players made a "winning" move
+            // score for Game_Generic is always -1
+            moveStatement += "-1&";                             // append score (which is empty, sadly)
+
+            
+            // if the game is still running, indicating that no players made a "winning" move
+            if (gameState) 
+            {
+                moveStatement += "WINNER";
+            }
+            // OTHERWISE, message is blank 
+            else
             {
                 moveStatement += "";
             }
-
-            // turn number, new player number
-            moveStatement += turnNumber.ToString() + "&";
-            moveStatement += playerNumber + "&";
-
-            // score for Game_Generic is always -1
-            moveStatement += "-1&";
-
-            // message is blank
-            moveStatement += "";
-
+            
             // position starting x and y
-            moveStatement += cur_x + "%";
-            moveStatement += cur_y + "%";
+            moveStatement += cur_x + "%";                       // append the moveX
+            // Note that the client didn't know where the Y value had to be. 
+            // We calculated this server side.
+            moveStatement += 
+            gamePieces[loop.getActivePlayer()].getY() + "%";    // put our updated Y value here.
 
             // player who went last
             moveStatement += playerNumber.ToString() + "%";
