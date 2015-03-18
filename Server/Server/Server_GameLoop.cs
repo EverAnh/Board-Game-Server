@@ -9,6 +9,7 @@ namespace Game
     public class Server_GameLoop
     {
         private int activePlayer = 0;
+        private int turn = 0;               // I moved it outside so I could access it.        
 
         public Server_GameLoop()
         {  }
@@ -20,7 +21,7 @@ namespace Game
             //      which includes stream reader/writer
             // 
             int numberPlayers = game.getPlayers().Count;
-            int turn = 0;
+            turn = 0;       
             
 
             Console.WriteLine("about to start game loop");
@@ -72,6 +73,13 @@ namespace Game
 
                 
             }
+        }
+
+
+        // Made a function that allows me to get the turn number.
+        public int getTurnNumber()
+        {
+            return turn;        
         }
 
         private bool allPlayersConnected(List<Player> currentPlayers, int players)

@@ -62,48 +62,31 @@ namespace Game
         }
 
         // override the statement from Generic Game
-        // this function is called once the move has been "accepted" by the server.
-        // we should send the client a message "confirming" the move, along with the next player.
-
         public override string generateMoveString(int playerNumber, int turnNumber, string cur_x, string cur_y, string m)
         {
             string moveStatement = "";                                          // Make a string that we are going to send.
-/*
-CATG_DELIM = & = delimiter between categories within the same message
-MOVE_DELIM = # = delimiter between pieces/locations
-SCOR_DELIM = $ = delimiter between player scores (accommodates n many players)
-VALU_DELIM = % = delimiter between values of a specific piece or location
-
-WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who won
-             
+            /*             
              7& *
              2& *
              3$3& *
              someStuff&
              5%2%1%(1 for red, 2 for black)
             ^ col, row, value
-
              */
 
             // turn number, new player number
-            moveStatement += turnNumber.ToString() + "&";       // attach the current turn Number
-            moveStatement += playerNumber + "&";                // attach the player number
+            moveStatement += loop.getTurn() + "&";              // attach the current turn number
+            moveStatement += loop.getActivePlayer() + "&";      // attach the active player number
 
-            // score for this game is always -1
-            // I'll jump ahead and state that we'll only ever have 2 players 
+            // score for this game is always -1, I'll jump ahead and state that we'll only ever have 2 players 
             moveStatement += "-1$-1&";                          // append score (which is empty, sadly)
 
-            
             // if the game is still running, indicating that no players made a "winning" move
             if (!gameState)     //gameState is true while game is running 
-            {
-                moveStatement += "WINNER";
-            }
+                moveStatement += "WINNER&";
             // OTHERWISE, message is blank 
             else
-            {
-                moveStatement += "";
-            }
+                moveStatement += "&";
             
             // position starting x and y
             moveStatement += cur_x + "%";                       // append the moveX
@@ -116,25 +99,18 @@ WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who
             // player who went last
             // Note: if the game is over, we need to append the winning player.
             if (!gameState) 
-            {
                 moveStatement += loop.getActivePlayer();    // the player who just moved is obviously the winner!
-            }
-            // OTHERWISE, message is blank 
-            else
-            {
-                // should give me either 0 or 1. beautiful.
+            else // should give me either 0 or 1. beautiful.
                 moveStatement += loop.getNextPlayerIndex(loop.getActivePlayer(), maxPlayers);
-            }
-            
+
             moveStatement += "%";                           // place the delimiter.
 
-            return moveStatement;                           // and return.                    // return the statement to the calling gameLoop 
+            return moveStatement;                           //return the statement to the calling gameLoop 
         }
 
         // handlePlayerTurn METHOD THAT OVERRIDES THE ONE IN GENERIC GAME
-        // Returns ....
-        // TODO: How do we end the game?
-        // Do we change the send packet so that the second character after the delim is the player's assigned number?
+        // Returns true always.
+        // TODO: How do we end the game? Do we change the send packet so that the second character after the delim is the player's assigned number?
 
         public override bool handlePlayerTurn(String s) // each player will call this function with their input.
         {
@@ -161,9 +137,9 @@ WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who
                 if (checkGameState(placeX, placeY))                     // using the recently placed piece, check if the state is a win condition. 
                 {
                     Console.Write("[CONNECT 4] Game is over! Player: " + (loop.getActivePlayer()+1) + " is the victor!" );                      
-                    return true;                                        // returns true for now
-                }
-            }  
+                    // mark gameState as false, which will in turn trigger a specific message that will be sent.
+                    gameState = false; 
+                }  
             return true; // the move was not valid
         }
 
@@ -190,7 +166,6 @@ WINNER = “WINNER”  ## in this case, player_turn (see below) would denote who
         public override int assignPiece(int getX, int getY, int value)              // We don't care about getY
         {
             // This function will drop it in the appropriate position
-
             int newGetY = returnTopOfRow(getX);                                     // calls helper method to return top of the current row
 
             if (newGetY != 100)                                                     // if no error code, good to go.
