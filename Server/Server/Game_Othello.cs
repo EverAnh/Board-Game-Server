@@ -32,7 +32,7 @@ namespace Game
             gameType = "othello";
             maxPlayers = 2;
         }
-        public virtual bool handlePlayerTurn(String s)
+        public override bool handlePlayerTurn(String s)
         {
 
             Console.Write("Recieved: " + s + " from client. Handling message...");
@@ -44,7 +44,7 @@ namespace Game
 
             return true;
         }
-        public override bool StartTurn()
+        public bool StartTurn()
         {
             // If the current player cannot make a valid move, forfeit the turn.
             if (!this.board.HasAnyValidMove(this.currentColor))

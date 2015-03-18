@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game_Othello.cs" />
+    <Compile Include="Game_Othello_Board.cs" />
     <Compile Include="Piece_Movable.cs" />
     <Compile Include="Server_GameLoop.cs" />
     <Compile Include="Game_ConnectFour.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="Board.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

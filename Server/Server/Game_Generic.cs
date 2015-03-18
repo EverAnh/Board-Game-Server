@@ -36,7 +36,7 @@ namespace Game
 
             // Player 1
 
-            gamePieces.Add(new Piece_Generic());
+            gamePieces.Add(new Piece_Movable());
             gamePieces[0].setX(2);
             gamePieces[0].setY(2);
             gamePieces[0].setValue(1);
@@ -44,19 +44,19 @@ namespace Game
 
             // Player 2 (not needed)
 
-            gamePieces.Add(new Piece_Generic()); 
+            gamePieces.Add(new Piece_Movable()); 
             gamePieces[1].setX(4);
             gamePieces[1].setY(4);
             gamePieces[1].setValue(2);
             
             // Temporary code to allow me to track the pieces
 
-            gamePieces.Add(new Piece_Generic());
+            gamePieces.Add(new Piece_Movable());
             gamePieces[2].setX(2);
             gamePieces[2].setY(2);
             gamePieces[2].setValue(1);
 
-            gamePieces.Add(new Piece_Generic()); 
+            gamePieces.Add(new Piece_Movable()); 
             gamePieces[3].setX(4);
             gamePieces[3].setY(4);
             gamePieces[3].setValue(2);
@@ -154,6 +154,10 @@ namespace Game
             // setting up additional logic so once any player reaches 0,0
             // we'll pass a "game over" message.   
             // move up or down, not left/right
+
+            ( (Piece_Movable) gamePieces[loop.getActivePlayer()] ).setXPrev(gamePieces[loop.getActivePlayer()].getX() );
+            ( (Piece_Movable) gamePieces[loop.getActivePlayer()] ).setYPrev(gamePieces[loop.getActivePlayer()].getY() );
+
             if (gamePieces[loop.getActivePlayer()].getX() == x)
             {
                 // check to see if moved exactly 1
@@ -229,8 +233,8 @@ namespace Game
             moveStatement += gamePieces[loop.getActivePlayer()].getValue() + "&";
 
             // coordinates that have changed, use a "#" sign.
-            moveStatement += gamePieces[loop.getActivePlayer()].getX() + "#"
-                           + gamePieces[loop.getActivePlayer()].getY() + "#"
+            moveStatement += ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getXPrev() ).ToString() + "#"
+                           + ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getYPrev() ).ToString() + "#"
                             + gamePieces[loop.getActivePlayer()].getValue();
 
 
