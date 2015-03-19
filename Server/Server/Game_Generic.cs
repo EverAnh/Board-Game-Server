@@ -32,7 +32,7 @@ namespace Game
             currentPlayers = new List<Player>();
             loop = new Server_GameLoop();
             gameType = "generic";
-            maxPlayers = 2;
+            maxPlayers = 1;
 
             // Player 1
 
@@ -42,6 +42,7 @@ namespace Game
             gamePieces[0].setValue(1);
             gameState = true;                // set to true for running.
 
+            /*
             // Player 2 (not needed)
 
             gamePieces.Add(new Piece_Movable()); 
@@ -60,6 +61,7 @@ namespace Game
             gamePieces[3].setX(4);
             gamePieces[3].setY(4);
             gamePieces[3].setValue(2);
+             * */
 
         }
 
@@ -75,7 +77,7 @@ namespace Game
 
         public int getNumberPlayers()
         {
-            return numberPlayers;
+            return currentPlayers.Count;
         }
 
         public int getMaxPlayers()
