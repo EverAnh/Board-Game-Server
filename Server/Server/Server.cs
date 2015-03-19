@@ -236,10 +236,12 @@ namespace Game
                         Console.WriteLine("starting a new game");
 
                         GameThread gt = new GameThread(newGame);
-                        Thread gameThread = new Thread(new ThreadStart(gt.playGame) );
+                        Thread gameThread = new Thread(new ThreadStart(gt.playGame));
                         gameThread.Start();
                         gt.setThread(gameThread);
                         games.Add(gt);
+
+                        Console.WriteLine("Finished adding player" );
                     }
 
                     // found a matching game type that needs an additional player
