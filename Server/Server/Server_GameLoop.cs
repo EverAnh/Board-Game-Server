@@ -29,16 +29,16 @@ namespace Game
             
             Console.WriteLine("Starting game loop!");
 
+            // should be message 5
+            sendToAllPlayers(game.getPlayers(), numberPlayers, turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn");
+
             while (allPlayersConnected(game.getPlayers(), numberPlayers) )
             {
                 
                 turn++;
-                String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn&";
+                String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn";
 
                 Console.WriteLine(turnMessage);
-
-                // should be message 5
-                sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
                 System.Threading.Thread.Sleep(500);
 
