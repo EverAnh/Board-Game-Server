@@ -202,10 +202,11 @@ namespace Game
 
                     // there is no existing game of the type that the player wants to play 
                     // that also has room for an additional player
+
+                    Game_Generic newGame = null;
                     if (gameToJoin == -1)
                     {
                         newPlayerNumber = "1";
-                        Game_Generic newGame = null;
 
                         Console.Write("THIS IS WHAT I'M GET: " + p.getGame());
 
@@ -233,18 +234,6 @@ namespace Game
                         newGame.addPlayer(p);
                         gameToPlay = p.getGame();
 
-                        Console.WriteLine("Starting a new game.");
-
-                        GameThread gt = new GameThread(newGame);
-                        Thread gameThread = new Thread(new ThreadStart(gt.playGame));
-                        Console.WriteLine("Attempting to run gameThread." );
-                        gameThread.Start();
-                        gt.setThread(gameThread);
-                        games.Add(gt);
-
-
-
-
                         Console.WriteLine("Finished adding player." );
                     }
 
@@ -253,6 +242,17 @@ namespace Game
                     {
                         newPlayerNumber = games[gameToJoin].getGame().getNumberPlayers().ToString();
                         games[gameToJoin].getGame().addPlayer(p);
+                    }
+
+                    if(games[gameToJoin].getGame().getNumberPlayers() == games[gameToJoin].getGame().getMaxPlayers() )
+                    {
+                        Console.WriteLine("Starting a new game.");
+                        GameThread gt = new GameThread(newGame);
+                        Thread gameThread = new Thread(new ThreadStart(gt.playGame) );
+                        Console.WriteLine("Attempting to run gameThread." );
+                        gameThread.Start();
+                        gt.setThread(gameThread);
+                        games.Add(gt);
                     }
 
                     startMessage = newPlayerNumber;

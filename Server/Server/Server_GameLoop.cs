@@ -100,7 +100,7 @@ namespace Game
 
         private bool allPlayersConnected(List<Player> currentPlayers, int players)
         {
-
+            /*
             // counting by p
             for (int p = 0; p < players; p++)
             {
@@ -110,7 +110,7 @@ namespace Game
                     return false;
                 }
             }
-    
+            */
 
             return true;
         }

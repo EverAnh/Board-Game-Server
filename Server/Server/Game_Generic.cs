@@ -20,9 +20,9 @@ namespace Game
 
         public Game_Generic()
         {
-            gamePieces = new List<Piece_Generic>();
-            currentPlayers = new List<Player>();
-            loop = new Server_GameLoop();
+            // gamePieces = new List<Piece_Generic>();
+            // currentPlayers = new List<Player>();
+            // loop = new Server_GameLoop();
         }
 
         public Game_Generic(int x_size, int y_size)
@@ -133,8 +133,6 @@ namespace Game
             return true;        // chill, man!
 
         }
-
-            
 
         public virtual void endGame()
         {

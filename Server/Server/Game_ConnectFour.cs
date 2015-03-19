@@ -37,7 +37,6 @@ namespace Game
             gamePieces[1].setValue(2);                  // Player 2 value: Red
 
             Console.Write("connectFour has been initialized");
-
         }
 
         // getPieces might need to be redefined here, for each specific player..?
