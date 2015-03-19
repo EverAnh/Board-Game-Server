@@ -21,7 +21,7 @@ namespace Game
             gamePieces = new List<Piece_Generic>();     // May not need this for our implementation
             currentPlayers = new List<Player>();        // list of players
             loop = new Server_GameLoop();               // Make a new server_gameloop (unecessary?)
-            maxPlayers = 2;                             // 2 players max
+            maxPlayers = 1;                             // 2 players max
 
             // Add two player's info in here, we don't really need to track all the pieces as gameBoard handles a lot of that for us.
             // We'll use gamePieces to track the last known move of each respective player.
@@ -37,7 +37,6 @@ namespace Game
             gamePieces[1].setValue(2);                  // Player 2 value: Red
 
             Console.Write("connectFour has been initialized");
-
         }
 
         // getPieces might need to be redefined here, for each specific player..?

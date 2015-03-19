@@ -13,7 +13,10 @@ namespace Game
         private bool activeGame = true;     // redundant, but will help it work for now.
 
         public Server_GameLoop()
-        {  }
+        { 
+            Console.WriteLine("Game loop has been created!");
+
+        }
 
         public void gameLoop(Game_Generic game)
         {
@@ -26,16 +29,16 @@ namespace Game
             
             Console.WriteLine("Starting game loop!");
 
+            // should be message 5
+            sendToAllPlayers(game.getPlayers(), numberPlayers, turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn");
+
             while (allPlayersConnected(game.getPlayers(), numberPlayers) )
             {
                 
                 turn++;
-                String turnMessage = "Starting Turn " + turn.ToString() + ".";
+                String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn";
 
                 Console.WriteLine(turnMessage);
-
-                // should be message 5
-                // sendToAllPlayers(game.getPlayers(), numberPlayers, turnMessage);
 
                 System.Threading.Thread.Sleep(500);
 
@@ -63,9 +66,6 @@ namespace Game
                 string currentX = game.getPieces()[activePlayer].getX().ToString();
                 string currentY = game.getPieces()[activePlayer].getY().ToString();
 
-                // increment the value of active player to the next player
-                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
-
                 // players need to be told who the next active player is, along with the move of the current active player
                 // this is crude, but since the passbyref is confusing me.. (i mean, it works)
 
@@ -75,6 +75,9 @@ namespace Game
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
+
+                // increment the value of active player to the next player
+                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
                 /*
                 // check the gameState after each loop so we know when to "end" the game.
@@ -103,10 +106,11 @@ namespace Game
             {
                 if (!currentPlayers[p].getSocketConnected() )
                 {
+                    Console.WriteLine("Not all players are connected.");
                     return false;
                 }
             }
-             * */
+            */
 
             return true;
         }

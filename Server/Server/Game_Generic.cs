@@ -20,9 +20,9 @@ namespace Game
 
         public Game_Generic()
         {
-            gamePieces = new List<Piece_Generic>();
-            currentPlayers = new List<Player>();
-            loop = new Server_GameLoop();
+            // gamePieces = new List<Piece_Generic>();
+            // currentPlayers = new List<Player>();
+            // loop = new Server_GameLoop();
         }
 
         public Game_Generic(int x_size, int y_size)
@@ -32,7 +32,7 @@ namespace Game
             currentPlayers = new List<Player>();
             loop = new Server_GameLoop();
             gameType = "generic";
-            maxPlayers = 2;
+            maxPlayers = 1;
 
             // Player 1
 
@@ -42,6 +42,7 @@ namespace Game
             gamePieces[0].setValue(1);
             gameState = true;                // set to true for running.
 
+            /*
             // Player 2 (not needed)
 
             gamePieces.Add(new Piece_Movable()); 
@@ -60,6 +61,7 @@ namespace Game
             gamePieces[3].setX(4);
             gamePieces[3].setY(4);
             gamePieces[3].setValue(2);
+             * */
 
         }
 
@@ -75,7 +77,7 @@ namespace Game
 
         public int getNumberPlayers()
         {
-            return numberPlayers;
+            return currentPlayers.Count;
         }
 
         public int getMaxPlayers()
@@ -134,8 +136,6 @@ namespace Game
 
         }
 
-            
-
         public virtual void endGame()
         {
             Console.Write("[Not yet implemented] Terminating game...thanks for playing! Come back soon");
@@ -168,7 +168,7 @@ namespace Game
                 // check to see if moved exactly 1
                 if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
                 {
-                    gamePieces[loop.getActivePlayer()+2].setY(gamePieces[loop.getActivePlayer()].getY());
+                    //gamePieces[loop.getActivePlayer()+2].setY(gamePieces[loop.getActivePlayer()].getY());
                     gamePieces[loop.getActivePlayer()].setY(y);
                     
                     if (checkWinCondition(
@@ -188,7 +188,7 @@ namespace Game
                 if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
                 {
                     // This will save the piece location so I can send a "delete" message to the client.
-                    gamePieces[loop.getActivePlayer()+2].setX(gamePieces[loop.getActivePlayer()].getX());   
+                    //gamePieces[loop.getActivePlayer()].setX(gamePieces[loop.getActivePlayer()].getX());   
                     gamePieces[loop.getActivePlayer()].setX(x);
                     
                     if (checkWinCondition(

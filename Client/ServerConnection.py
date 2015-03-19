@@ -54,28 +54,28 @@ class ServerConnection:
 
 
     def get_move(self):
+        print 'getting raw_response(sc)'
         raw_response = self._socket.recv(4096)
         print 'move: ' + raw_response
         category_tokens = raw_response.split(CATG_DELIM)
-        turn_number = category_tokens[0]
-        player_turn = category_tokens[1]
+        turn_number = int(category_tokens[0])
+        player_turn = int(category_tokens[1])
         raw_scores = category_tokens[2]
         message = category_tokens[3]
-        print 'message(sc): ',message
+        print 'message(sc):',message        
         print 'raw_scores: ',raw_scores
-        raw_pieces = category_tokens[4].split(MOVE_DELIM)
-        print 'raw pieces: ',raw_pieces
-
         scores = [score for score in raw_scores.split(SCOR_DELIM)] #list comprehension ftw
         print 'scores: ', scores
-        
         pieces = []
-        for piece in raw_pieces:
-            p = piece.split(VALU_DELIM)
-            pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
+        
+        if message.strip() != 'Starting Turn':
+            raw_pieces = category_tokens[4].split(MOVE_DELIM)
+            print 'raw pieces: ',raw_pieces
+            for piece in raw_pieces:
+                p = piece.split(VALU_DELIM)
+                pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
         print 'pieces: ',pieces
         return Response.Response(turn_number, player_turn, scores, message, pieces)
-        print 'pieces: ',pieces
 
     def close_connection(self):
         pass

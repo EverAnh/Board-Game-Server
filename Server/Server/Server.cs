@@ -202,12 +202,13 @@ namespace Game
 
                     // there is no existing game of the type that the player wants to play 
                     // that also has room for an additional player
+
+                    Game_Generic newGame = null;
                     if (gameToJoin == -1)
                     {
-                        newPlayerNumber = "1";
-                        Game_Generic newGame = null;
+                        // newPlayerNumber = "1";
 
-                        Console.Write("THIS IS WHAT I'M GET: " + p.getGame());
+                        Console.WriteLine("THIS IS WHAT I'M GET: " + p.getGame());
 
                         if(p.getGame() == "generic")
                         {
@@ -233,15 +234,7 @@ namespace Game
                         newGame.addPlayer(p);
                         gameToPlay = p.getGame();
 
-                        Console.WriteLine("starting a new game");
-
-                        GameThread gt = new GameThread(newGame);
-                        Thread gameThread = new Thread(new ThreadStart(gt.playGame));
-                        gameThread.Start();
-                        gt.setThread(gameThread);
-                        games.Add(gt);
-
-                        Console.WriteLine("Finished adding player" );
+                        Console.WriteLine("Finished adding player." );
                     }
 
                     // found a matching game type that needs an additional player
@@ -251,14 +244,26 @@ namespace Game
                         games[gameToJoin].getGame().addPlayer(p);
                     }
 
+                    Console.WriteLine("Number of players check " + newGame.getNumberPlayers().ToString() + " ?? " + newGame.getMaxPlayers().ToString() );
+
+                    if(newGame.getNumberPlayers() == newGame.getMaxPlayers() )
+                    {
+                        Console.WriteLine("Starting a new game.");
+                        GameThread gt = new GameThread(newGame);
+                        Thread gameThread = new Thread(new ThreadStart(gt.playGame) );
+                        Console.WriteLine("Attempting to run gameThread." );
+                        gameThread.Start();
+                        gt.setThread(gameThread);
+                        games.Add(gt);
+                    }
+
                     startMessage = newPlayerNumber;
 
                     // the REAL message 4
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
-                
-                    
-                
+
+                    Console.WriteLine("Writing this message to client." + startMessage);
                 }
             }
         } // end thread for TCP listener
@@ -270,13 +275,13 @@ namespace Game
 
             public GameThread(Game_Generic newGame)
             {
-                currentGame = newGame;
+                Console.WriteLine("CurrentGame has been set to: " + newGame.getGameType() );
+                currentGame = newGame;                  
             }
 
             public void playGame()
             {
-                Console.WriteLine("starting game loop on a thread " + currentGame.getGameType() );
-
+                Console.WriteLine("Starting game loop on a thread " + currentGame.getGameType() );
                 currentGame.getLoop().gameLoop(currentGame);
             }
 
