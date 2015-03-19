@@ -129,7 +129,23 @@ namespace Game
             int placeY = System.Convert.ToInt32(move[1]);               // Technically we don't need this... TODO: is there something we can do?
 
             int thePlayer = loop.getActivePlayer();                     // should return either 0 or 1 provided server checked to make sure there are 2 players.
+
+            Piece_Generic piece = new Piece_Generic();
+            piece.setX(placeX);
+
+            if(thePlayer == 0)
+            {
+                piece.setValue(1);
+            }
+
+            else
+            {
+                piece.setValue(2);
+            }
+            
             int color = gamePieces[thePlayer].getValue();               // color: [1] for black, [2] for red. 
+
+            gamePieces.Add(piece);
 
             // assignPiece to the place; if it is valid, the method will go ahead and place it.
             // On a not successful attempt, placeY will instead be null.
