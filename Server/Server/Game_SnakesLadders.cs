@@ -20,6 +20,9 @@ namespace Game
         {
 			gameBoard = new Board_Piece[cols, rows];         // set the rows and columns into the gameboard we made earlier. 
 //            gameBoardSL = new Board_Piece[100];          // size 100 array of boardPieces
+            // specific to S&L's logic
+            Board_Piece[,] gameBoardSLlogic = new Board_Piece[cols, rows];
+            
             gameType = "snakesLadders";                 // Server will know that we made a connectFour game
             gamePieces = new List<Piece_Generic>();     // May not need this for our implementation
             currentPlayers = new List<Player>();        // list of players
@@ -64,7 +67,7 @@ namespace Game
 
 		public virtual bool handlePlayerTurn(String s)
 		{
-
+            // we don't care client's move, we made our move by server rolling the dice
 			Console.Write("Recieved: " + s + " from client. Handling message...");
 			if (s != null && s != " " && s!= "" ) // if it not a null string or empty string or empty string with one little character AHH
 			{
@@ -97,9 +100,7 @@ namespace Game
 		// returns true if the move is a valid move, otherwise returns false
 		protected override bool checkGameState(int x, int y)
 		{
-			// setting up additional logic so once any player reaches 0,0
-			// we'll pass a "game over" message.   
-			// move up or down, not left/right
+			
 
 			( (Piece_Movable) gamePieces[loop.getActivePlayer()] ).setXPrev(gamePieces[loop.getActivePlayer()].getX() );
 			( (Piece_Movable) gamePieces[loop.getActivePlayer()] ).setYPrev(gamePieces[loop.getActivePlayer()].getY() );
@@ -119,7 +120,7 @@ namespace Game
 				gamePieces[loop.getActivePlayer()].getY()))
 			{
 				// Do something!
-				// Console.Write("Code this in, Jason 2!");
+				Console.Write("We got a winner!");
 			}
 
 			return true;
@@ -206,7 +207,7 @@ namespace Game
 			int newLocationx = x;
 			int newLocationy = y;
 
-			if (gameBoard[x, y].getType() == 0)
+            if (gameBoardSLlogic[y, x].getType() == 0)
             {
 				gamePieces[loop.getActivePlayer()].setX(newLocationx);
 				gamePieces[loop.getActivePlayer()].setY(newLocationy);
@@ -228,7 +229,7 @@ namespace Game
             // moves a piece
 			if (currentLocationy % 2 == 0) {
 				if (currentLocationx - diceRoll < 0) {
-					newLocationy -= 1;
+                    newLocationy = currentLocationy - 1;
 					newLocationx = (Math.Abs (currentLocationx - diceRoll) - 1);
 				} else {
 					newLocationy = currentLocationy;
@@ -236,7 +237,7 @@ namespace Game
 				}
 			} else {
 				if (currentLocationx + diceRoll > cols) {
-					newLocationy -= 1;
+                    newLocationy = currentLocationy - 1;
 					newLocationx = cols - (Math.Abs (currentLocationx + diceRoll) % cols - 1);
 				} else {
 					newLocationy = currentLocationy;
@@ -254,46 +255,73 @@ namespace Game
             // Set up the board with appropriate values.
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < cols; c++) {
-					gameBoard[r,c].setIndex = v;    // set the index of each piece
-					gameBoard[r,c].setValue = 0;    // We'll set this seperately
-					gameBoard[r,c].setType = 0;     // Same as above
+             //       gameBoardSLlogic[r, c].setIndex(v);    // set the index of each piece
+                    gameBoardSLlogic[c, r].setValuex(r);    // We'll set this seperately
+                    gameBoardSLlogic[c, r].setValuey(c);    // We'll set this seperately
+                    gameBoardSLlogic[c, r].setType(0);     // Same as above
 				}
 			}
 
-			gameBoard[2, 3].setType = 1;
-			gameBoard[2, 3].setValuex (4);
-			gameBoard[2, 3].setValuey (6);
+            
+            // format : [y_coordinate, x_coordinate]
+            // [0,0] is top left
+
+            // ladders
+            gameBoardSLlogic[1, 6].setType(1);
+            gameBoardSLlogic[1, 6].setValuex(3);
+            gameBoardSLlogic[1, 6].setValuey(0);
 
 
-			gameBoard[0, 1].setType = 1;
-			gameBoard[0, 1].setValuex (4);
-			gameBoard[0, 1].setValuey (2);
-
-
-
-			gameBoard[6, 5].setType = 1;
-			gameBoard[6, 5].setValuex (9);
-			gameBoard[6, 5].setValuey (3);
-
-
-
-			gameBoard[4, 0].setType = 1;
-			gameBoard[4, 0].setValuex (2);
-			gameBoard[4, 0].setValuey (8);
+            gameBoardSLlogic[4, 0].setType(1);
+            gameBoardSLlogic[4, 0].setValuex(1);
+            gameBoardSLlogic[4, 0].setValuey(2);
 
 
 
-			gameBoard[7, 6].setType = 1;
-			gameBoard[7, 6].setValuex (5);
-			gameBoard[7, 6].setValuey (9);
+            gameBoardSLlogic[8, 2].setType(1);
+            gameBoardSLlogic[8, 2].setValuex(0);
+            gameBoardSLlogic[8, 2].setValuey(6);
 
 
 
-			gameBoard[3, 8].setType = 1;
-			gameBoard[3, 8].setValuex (2);
-			gameBoard[3, 8].setValuey (1);
+            gameBoardSLlogic[7, 4].setType(1);
+            gameBoardSLlogic[7, 4].setValuex(6);
+            gameBoardSLlogic[7, 4].setValuey(3);
 
 
+
+            gameBoardSLlogic[8, 9].setType(1);
+            gameBoardSLlogic[8, 9].setValuex(7);
+            gameBoardSLlogic[8, 9].setValuey(6);
+
+
+            // snakes
+            gameBoardSLlogic[5, 2].setType(1);
+            gameBoardSLlogic[5, 2].setValuex(1);
+            gameBoardSLlogic[5, 2].setValuey(7);
+
+
+            gameBoardSLlogic[1, 2].setType(1);
+            gameBoardSLlogic[1, 2].setValuex(4);
+            gameBoardSLlogic[1, 2].setValuey(3);
+
+
+
+            gameBoardSLlogic[3, 7].setType(1);
+            gameBoardSLlogic[3, 7].setValuex(4);
+            gameBoardSLlogic[3, 7].setValuey(5);
+
+
+
+            gameBoardSLlogic[0, 6].setType(1);
+            gameBoardSLlogic[0, 6].setValuex(6);
+            gameBoardSLlogic[0, 6].setValuey(2);
+
+
+
+            gameBoard[6, 5].setType(1);
+            gameBoard[6, 5].setValuex(7);
+            gameBoard[6, 5].setValuey(8);
 //            // Set snake type/positions here
 //
 //            gameBoardSL[62].setValue = 19;
