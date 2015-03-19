@@ -208,7 +208,7 @@ namespace Game
                     {
                         // newPlayerNumber = "1";
 
-                        Console.Write("THIS IS WHAT I'M GET: " + p.getGame());
+                        Console.WriteLine("THIS IS WHAT I'M GET: " + p.getGame());
 
                         if(p.getGame() == "generic")
                         {
@@ -244,6 +244,8 @@ namespace Game
                         games[gameToJoin].getGame().addPlayer(p);
                     }
 
+                    Console.WriteLine("Number of players check " + newGame.getNumberPlayers().ToString() + " ?? " + newGame.getMaxPlayers().ToString() );
+
                     if(newGame.getNumberPlayers() == newGame.getMaxPlayers() )
                     {
                         Console.WriteLine("Starting a new game.");
@@ -262,7 +264,6 @@ namespace Game
                     p.getPlayerWriter().WriteLine(startMessage);
 
                     Console.WriteLine("Writing this message to client." + startMessage);
-                
                 }
             }
         } // end thread for TCP listener
@@ -274,7 +275,7 @@ namespace Game
 
             public GameThread(Game_Generic newGame)
             {
-                Console.WriteLine("CurrentGame has been set to: " + newGame.getGameType());
+                Console.WriteLine("CurrentGame has been set to: " + newGame.getGameType() );
                 currentGame = newGame;                  
             }
 

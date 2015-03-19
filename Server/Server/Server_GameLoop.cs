@@ -16,7 +16,7 @@ namespace Game
         { 
             Console.WriteLine("Game loop has been created!");
 
-         }
+        }
 
         public void gameLoop(Game_Generic game)
         {
@@ -65,8 +65,6 @@ namespace Game
 
                 string currentX = game.getPieces()[activePlayer].getX().ToString();
                 string currentY = game.getPieces()[activePlayer].getY().ToString();
-
-                
 
                 // players need to be told who the next active player is, along with the move of the current active player
                 // this is crude, but since the passbyref is confusing me.. (i mean, it works)
