@@ -8,7 +8,6 @@ import GameDisplay
 import GameManager
 import ServerConnection
 import ConnectFour, ConnectFourDisplay
-import Othello, OthelloDisplay
 
 # ------------------------------------------------------------------------------
 #
@@ -43,7 +42,7 @@ class BoardGameClient:
                 
                 
                 #################### DEBUG ##########################
-                ##game_choice = ("generic")
+                game_choice = ("generic")
                 print 'user info entered'
                 #####################################################
                 
@@ -60,7 +59,7 @@ class BoardGameClient:
                     player_num = int(self._connection.get_response())
                     print 'bgc received message 4'
                     print 'player_num: ',player_num
-                else:
+                else: 
                     self._message = status
             except Exception as e:
                 print e
@@ -68,6 +67,7 @@ class BoardGameClient:
 
         self._game, self._display = self._board_game_factory(game_choice)
         self._game.set_my_player_number(player_num)
+        print 'my player number is(bgc): ', self._game.get_my_player_number()
         self._game.set_my_player_id(player_id)
 
         ################### DEBUG ######################
