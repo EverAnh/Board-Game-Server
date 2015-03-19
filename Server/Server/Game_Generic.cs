@@ -239,7 +239,7 @@ namespace Game
             // coordinates that have changed, use a "#" sign.
             moveStatement += ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getXPrev() ).ToString() + "%"
                            + ( ( (Piece_Movable) gamePieces[loop.getActivePlayer()]).getYPrev() ).ToString() + "%"
-                            + "0";
+                            + "0" + "*";
 
 
             Console.Write("Sending message to all clients: " + moveStatement);

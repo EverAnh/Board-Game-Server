@@ -3,8 +3,8 @@ import socket, time
 import Response
 import GamePiece
 
-DEFAULT_IP = "169.234.206.158"
-# DEFAULT_IP = "127.0.0.1"
+#DEFAULT_IP = "169.234.206.158"
+DEFAULT_IP = "127.0.0.1"
 DEFAULT_PORT = 3445
     
 CREATE_SUCC  = "CREATESUCC"
@@ -13,7 +13,7 @@ LOGIN_SUCC   = "LOGINSUCCD"
 LOGIN_FAIL   = "LOGINFAILD"
 
 
-
+MAIN_DELIM = "*"
 CATG_DELIM = "&"
 MOVE_DELIM = "#"
 SCOR_DELIM = "$"
@@ -57,11 +57,23 @@ class ServerConnection:
         print 'getting raw_response(sc)'
         raw_response = self._socket.recv(4096)
         print 'move: ' + raw_response
-        category_tokens = raw_response.split(CATG_DELIM)
-        turn_number = int(category_tokens[0])
-        player_turn = int(category_tokens[1])
-        raw_scores = category_tokens[2]
-        message = category_tokens[3]
+        main_token = raw_response.split(MAIN_DELIM)
+        category_tokens = main_token[0].split(CATG_DELIM)
+
+        if len(category_tokens) == 5:
+            turn_number = 1
+            player_turn = int(category_tokens[0])
+            raw_scores = category_tokens[1]
+            message = category_tokens[2]
+            raw_pieces = category_tokens[3].split(MOVE_DELIM)
+        else:
+            turn_number = int(category_tokens[0])
+            player_turn = int(category_tokens[1])
+            raw_scores = category_tokens[2]
+            message = category_tokens[3]
+            raw_pieces = category_tokens[4].split(MOVE_DELIM)
+            
+        print 'player turn: ',player_turn
         print 'message(sc):',message        
         print 'raw_scores: ',raw_scores
         scores = [score for score in raw_scores.split(SCOR_DELIM)] #list comprehension ftw
@@ -69,7 +81,6 @@ class ServerConnection:
         pieces = []
         
         #if message.strip() != 'Starting Turn':
-        raw_pieces = category_tokens[4].split(MOVE_DELIM)
         print 'raw pieces: ',raw_pieces
         for piece in raw_pieces:
             p = piece.split(VALU_DELIM)

@@ -13,7 +13,6 @@ class GameManager:
             print 'handling opponent move!'
             self.handle_opponent_move()
         else:
-            self
             print 'it is my turn!'
 
     def handle_my_move(self, location):
@@ -30,6 +29,9 @@ class GameManager:
             
             if self.check_for_invalid(response) == True:
                 return response
+            print 'from handle my move!'
+            print 'my player number(gm): ',self._game.get_my_player_number()
+            print 'player turn(gm): ',response.player_turn
             if response.player_turn != self._game.get_my_player_number():
                 self._game.set_my_turn(False)
             self._game.update_board(response.pieces)
@@ -39,7 +41,7 @@ class GameManager:
             self.check_for_winner(response)
             return response
         else:
-            print 'not my turn'
+            return None
             
 
     def _store_move(self, location):
@@ -49,6 +51,9 @@ class GameManager:
         response = self._connection.get_move()
         print 'got response(gm)'
         self._game.update_board(response.pieces)
+        print 'from handle opponent move'
+        print 'my player number(gm): ',self._game.get_my_player_number()
+        print 'player turn(gm): ',response.player_turn
         if response.player_turn == self._game.get_my_player_number():
             self._game.set_my_turn(True)
         self._game.set_turn_number(response.turn_number)

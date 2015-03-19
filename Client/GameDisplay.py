@@ -84,7 +84,8 @@ class GameDisplay(Display.Display):
                     self._coordinate = (column,row)
                 #asks GameManager for a response on wether the move is valid or not
                 self._response = self._GM.handle_my_move(self._coordinate)
-
+                if self._response == None:
+                    continue
 
                 ######## DEBUG #####################
                 print 'message(gd): ', self._response.message
@@ -99,7 +100,7 @@ class GameDisplay(Display.Display):
                     self._end_game()
 
                 #### DEBUG ######
-                self._game.set_my_turn(True)
+                #self._game.set_my_turn(True)
                 #################
                 self._drawMessage(self._response)
 
