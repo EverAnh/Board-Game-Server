@@ -35,11 +35,14 @@ namespace Game
             while (game.getGameState() )
             {
                 turn++;
-                String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn";
 
-                Console.WriteLine(turnMessage);
+                // increment the value of active player to the next player
+                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
-                System.Threading.Thread.Sleep(1500);
+                // String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn";
+                // Console.WriteLine(turnMessage);
+
+                // System.Threading.Thread.Sleep(1500);
 
                 // message 6
                 // game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
@@ -48,10 +51,12 @@ namespace Game
 
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
+                /*
                 if (move == "")
                 {
 
                 }
+                */
 
                 // player tried to make an invalid move. Force them to try again until they send a valid move
                 // the condition of the while loop makes the move. 
@@ -84,8 +89,7 @@ namespace Game
                 sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
                 System.Threading.Thread.Sleep(1500);
 
-                // increment the value of active player to the next player
-                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
+                
 
                 /*
                 // check the gameState after each loop so we know when to "end" the game.
