@@ -208,7 +208,7 @@ namespace Game
                     // that also has room for an additional player
 
                     Game_Generic newGame = null;
-                    GameThread gt;
+                    GameThread gt = null;
 
                     if (gameToJoin == -1)
                     {
@@ -240,7 +240,8 @@ namespace Game
                         newGame.addPlayer(p);
                         gameToPlay = p.getGame();
 
-                        Console.WriteLine("Finished adding player." );
+                        gt = new GameThread(newGame);
+                        games.Add(gt);
                     }
 
                     // found a matching game type that needs an additional player
@@ -251,8 +252,7 @@ namespace Game
                         newGame.addPlayer(p);
                     }
 
-                    gt = new GameThread(newGame);
-                    games.Add(gt);
+                    Console.WriteLine("Finished adding player.");
 
                     p.setPlayerNumber(Convert.ToInt32(newPlayerNumber) );
 
