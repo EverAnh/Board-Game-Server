@@ -83,16 +83,17 @@ namespace Game
             // counting by g
             for (int g = 0; g < numberGames; g++)
             {
+                String gameType = games[g].getGame().getGameType();
 
-               String gameType = games[g].getGame().getGameType();
+                int currentPlayers = games[g].getGame().getNumberPlayers();
+                int maxPlayers = games[g].getGame().getMaxPlayers();
 
-               int currentPlayers = games[g].getGame().getNumberPlayers();
-               int maxPlayers = games[g].getGame().getMaxPlayers();
+                Console.WriteLine("index of game to join check " + games[g].getGame().getGameType() + " // " + currentPlayers.ToString() + " // " + maxPlayers.ToString() );
 
-               if ((playerGame == gameType) && (currentPlayers < maxPlayers))
-               {
-                   return g;
-               }
+                if ((playerGame == gameType) && (currentPlayers < maxPlayers))
+                {
+                    return g;
+                }
             }
 
             return -1;
