@@ -198,6 +198,9 @@ namespace Game
                     p.setGame(data[2]);
 
                     int gameToJoin = getIndexOfGameToJoin(p);
+
+                    Console.WriteLine("game to join " + gameToJoin);
+
                     String newPlayerNumber = "0";
                     String gameToPlay = "";
 
@@ -245,13 +248,19 @@ namespace Game
                     {
                         newGame = games[gameToJoin].getGame();
                         newPlayerNumber = games[gameToJoin].getGame().getNumberPlayers().ToString();
-                        games[gameToJoin].getGame().addPlayer(p);
+                        newGame.addPlayer(p);
                     }
 
                     gt = new GameThread(newGame);
                     games.Add(gt);
 
-                    Console.WriteLine("Number of players check " + newGame.getNumberPlayers().ToString() + " ?? " + newGame.getMaxPlayers().ToString() );
+                    p.setPlayerNumber(Convert.ToInt32(newPlayerNumber) );
+
+                    if (gameToJoin >= 0)
+                    {
+                        Console.WriteLine("Number of players check " + games[gameToJoin].getGame().getNumberPlayers().ToString() + " ?? " + games[gameToJoin].getGame().getMaxPlayers().ToString());
+                    }
+                    
 
                     if(newGame.getNumberPlayers() == newGame.getMaxPlayers() )
                     {
