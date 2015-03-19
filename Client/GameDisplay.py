@@ -76,7 +76,7 @@ class GameDisplay(Display.Display):
                 #on click update will call game manager and check wether move is valid or not
                 mousePosition = pygame.mouse.get_pos()
                 if(mousePosition[0]>GameDisplay.BOARD_WIDTH):
-                    print "you are clicking the sdie bar"
+                    print "you are clicking the side bar"
                 else:
                     column = mousePosition[0]/GameDisplay.CELL_WIDTH
                     row = mousePosition[1]/GameDisplay.CELL_HEIGHT
@@ -145,8 +145,8 @@ class GameDisplay(Display.Display):
             
 
     def _drawMessage(self,response):
-        print 'response message:"' + response + '"'
-        if(response == None):
+        ##print 'response message:"' + response + '"'
+        if(response.message == ""):
             pass
 
         else:
