@@ -31,6 +31,25 @@ namespace Game
             gameType = "generic";
             maxPlayers = 2;
 
+            // Player 1 - temp -
+
+            Piece_Generic piece = new Piece_Generic();
+            piece.setX(2);
+            piece.setY(2);
+            piece.setValue(0)
+
+
+            // Player 2 - temp -
+
+            Piece_Generic piece2 = new Piece_Generic();
+            piece2.setX(3);
+            piece2.setY(3);
+            piece2.setValue(1)
+
+            // Add to board 
+            gamePieces.Add(piece1);
+            gamePieces.Add(piece2);
+
         }
 
         public List<Player> getPlayers()
