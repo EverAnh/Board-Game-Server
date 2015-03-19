@@ -10,8 +10,9 @@ namespace Game
         {
             int index;    // index value of this board Piece
             int type;     // 0 for norm, does nothing || 1 for ladder || 2 for snake
-            int val;      // Value that the piece might lead [if 1 or 2]
-            String text = "";  // If you want to display text when you land on the piece
+            int valx;      // Value that the piece might lead [if 1 or 2]
+			int valy; 
+			String text = "";  // If you want to display text when you land on the piece
 
             public Board_Piece()
             {   }
@@ -36,10 +37,16 @@ namespace Game
             public void setType(int t)
             {   type = t;       }
 
-            public int getValue()
-            {   return value;   }
+            public int getValuex()
+            {   return valx;   }
 
-            public int setValue(int v)
-            {   value = v;      }
+            public int setValuex(int v)
+            {   valx = v;      }
+
+			public int getValuey()
+			{   return valy;   }
+
+			public int setValuey(int v)
+			{   valy = v;      }
         }
 }
