@@ -44,7 +44,7 @@ class GameDisplay(Display.Display):
         GameDisplay.CELL_HEIGHT = GameDisplay.WINDOW_HEIGHT / GameDisplay.GRID_HEIGHT
         
         self._screen = pygame.display.set_mode((GameDisplay.WINDOW_WIDTH, GameDisplay.WINDOW_HEIGHT))
-        pygame.display.set_caption("Grid Game-2")     
+        pygame.display.set_caption("Game Board Client")     
 
         #creates font object for displaying players,turns and scores
         self._PlayerFont = pygame.font.Font(None,35)
@@ -62,12 +62,7 @@ class GameDisplay(Display.Display):
     #will draw the board every time there is a change
     def update(self):
         self._screen.fill(GameDisplay.BACKGROUND_COLOR)
-        ##########################________________________________________
-        #add this line so that board is drawn before the message is drawn
-        #if the game runs too slow try deleting the draw_board at the bottom 
-        #after the for loop ends
         self._draw_board(self._game.get_board())
-        ########################_-----------------------------------------
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
                 pygame.quit()
@@ -76,7 +71,7 @@ class GameDisplay(Display.Display):
                 #on click update will call game manager and check wether move is valid or not
                 mousePosition = pygame.mouse.get_pos()
                 if(mousePosition[0]>GameDisplay.BOARD_WIDTH):
-                    print "you are clicking the sdie bar"
+                    print "you are clicking the side bar"
                 else:
                     column = mousePosition[0]/GameDisplay.CELL_WIDTH
                     row = mousePosition[1]/GameDisplay.CELL_HEIGHT
@@ -145,8 +140,7 @@ class GameDisplay(Display.Display):
             
 
     def _drawMessage(self,response):
-        print 'response message:"' + response + '"'
-        if(response == None):
+        if(response == ""):
             pass
 
         else:
@@ -160,10 +154,7 @@ class GameDisplay(Display.Display):
 
         if(response == None):
             #draws players turn on side bar before a player has moved
-            #=========================================================
-            #add the string "player : to the render method like i showed here
             self._DisplayPlayers = self._PlayerFont.render(("Player " + str(self._game.get_player_turn())),1,pygame.Color(0,0,0))
-            #===========================================================
             self._screen.blit(self._DisplayPlayers,(GameDisplay.BOARD_WIDTH+25,(GameDisplay.WINDOW_HEIGHT/4)))
                     
             #draws turns number on side bar before a player has moved
@@ -203,3 +194,4 @@ class GameDisplay(Display.Display):
 
     def shouldQuit(self):
         return self._should_quit
+
