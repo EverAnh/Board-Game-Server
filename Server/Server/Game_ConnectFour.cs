@@ -22,24 +22,9 @@ namespace Game
             currentPlayers = new List<Player>();        // list of players
             loop = new Server_GameLoop();               // Make a new server_gameloop (unecessary?)
             maxPlayers = 2;                             // 2 players max
-
-            // Add two player's info in here, we don't really need to track all the pieces as gameBoard handles a lot of that for us.
-            // We'll use gamePieces to track the last known move of each respective player.
-            /*
-            gamePieces.Add(new Piece_Generic());
-            gamePieces[0].setX(0);
-            gamePieces[0].setY(0);
-            gamePieces[0].setValue(1);                  // Player 1 value: Black
             
-            gamePieces.Add(new Piece_Generic());
-            gamePieces[1].setX(0);
-            gamePieces[1].setY(0);
-            gamePieces[1].setValue(2);                  // Player 2 value: Red
-	    */
             Console.Write("connectFour has been initialized");
         }
-
-        // getPieces might need to be redefined here, for each specific player..?
 
         public override List<Piece_Generic> getPieces()
         {
@@ -126,6 +111,7 @@ namespace Game
             String[] move = s.Split('%');                               // Split the string by the delimiter.
 
             int placeX = System.Convert.ToInt32(move[0]);               // Convert Strings to int for the placeX
+            
             int placeY = System.Convert.ToInt32(move[1]);               // Technically we don't need this... TODO: is there something we can do?
 
             int thePlayer = loop.getActivePlayer();                     // should return either 0 or 1 provided server checked to make sure there are 2 players.
@@ -135,22 +121,22 @@ namespace Game
 
             if(thePlayer == 0)
             {
-                piece.setValue(1);
+                piece.setValue(1);      // value of piece is 1, indicating player 1
             }
 
             else
             {
-                piece.setValue(2);
+                piece.setValue(2);      // value of piece is 2, indicating player 2
             }
             
-            // int color = gamePieces[thePlayer].getValue();               // color: [1] for black, [2] for red. 
+           // add the piece 
 
             gamePieces.Add(piece);
 
             // assignPiece to the place; if it is valid, the method will go ahead and place it.
             // On a not successful attempt, placeY will instead be null.
             
-            placeY = assignPiece(placeX, placeY, piece.getValue() );                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
+            placeY = assignPiece(placeX, placeY, piece.getValue());                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
             // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
             
@@ -164,7 +150,7 @@ namespace Game
             {
                 // Set the "piece" of the player to be their last move so it is printed out. (Unecessary, but shows us something)
                 gamePieces[thePlayer].setX(placeX);
-                gamePieces[thePlayer].setY(placeX);              
+                gamePieces[thePlayer].setY(placeY);              
 
                 if (checkGameState(placeX, placeY))                     // using the recently placed piece, check if the state is a win condition. 
                 {

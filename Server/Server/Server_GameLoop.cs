@@ -8,7 +8,7 @@ namespace Game
 {
     public class Server_GameLoop
     {
-        private int activePlayer = 0;
+        private int activePlayer = 0;       
         private int turn = 1;               // I moved it outside so I could access it.        
         private bool activeGame = true;     // redundant, but will help it work for now.
 
@@ -88,16 +88,9 @@ namespace Game
 
                 Console.WriteLine(" New Current player turn " + activePlayer);
 
-                /*
-                // check the gameState after each loop so we know when to "end" the game.
-                activeGame = game.getGameState();       // gets the existing game state
-
-                if (!activeGame)        // if game is no longer active
-                {
                     // This is Jason2 - I CLAIM CREDIT FOR THIS HORRIBLE SOLUTION
-                    break;              // break out of the game loop
-                }
-                 * */
+                    //break;   
+  
             }
         }
 
@@ -139,6 +132,13 @@ namespace Game
         // increments from 0 to (max -1) for multi player games 
         public int getNextPlayerIndex(int i, int max)
         {
+            if (max == 0)
+                return 1;
+            else
+                return 0;
+
+            /*
+
             int index = 0;
 
             if ( (i +1) < max)
@@ -154,6 +154,7 @@ namespace Game
             Console.WriteLine("The next player to take a turn is " + index.ToString() );
 
             return index;
+            */
         }
 
         public int getActivePlayer()
