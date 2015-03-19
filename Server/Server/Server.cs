@@ -270,7 +270,7 @@ namespace Game
                         Thread gameThread = new Thread(new ThreadStart(games[gameToJoin].playGame) );
                         Console.WriteLine("Attempting to run gameThread." );
                         gameThread.Start();
-                        gt.setThread(gameThread);
+                        games[gameToJoin].setThread(gameThread);
                     }
 
                     startMessage = newPlayerNumber;
