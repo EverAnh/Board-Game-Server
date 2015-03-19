@@ -34,6 +34,8 @@ namespace Game
 
             while (game.getGameState() )
             {
+                System.Threading.Thread.Sleep(1500);
+
                 turn++;
 
                 // String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn";
@@ -81,8 +83,6 @@ namespace Game
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
                 System.Threading.Thread.Sleep(1500);
-
-                
 
                 /*
                 // check the gameState after each loop so we know when to "end" the game.
