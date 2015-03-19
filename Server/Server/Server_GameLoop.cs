@@ -50,8 +50,6 @@ namespace Game
 
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
-                
-
                 // player tried to make an invalid move. Force them to try again until they send a valid move
                 // the condition of the while loop makes the move. 
                 while(! game.handlePlayerTurn(move) )
@@ -67,8 +65,7 @@ namespace Game
                    move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
                 }
 
-                // increment the value of active player to the next player
-                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
+                
 
                 Console.WriteLine("The number of players is " + numberPlayers.ToString() );
 
@@ -85,6 +82,9 @@ namespace Game
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
                 System.Threading.Thread.Sleep(6500);
+
+                // increment the value of active player to the next player
+                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
                 /*
                 // check the gameState after each loop so we know when to "end" the game.
