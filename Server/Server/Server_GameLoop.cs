@@ -9,7 +9,7 @@ namespace Game
     public class Server_GameLoop
     {
         private int activePlayer = 0;
-        private int turn = 0;               // I moved it outside so I could access it.        
+        private int turn = 1;               // I moved it outside so I could access it.        
         private bool activeGame = true;     // redundant, but will help it work for now.
 
         public Server_GameLoop()
@@ -25,7 +25,7 @@ namespace Game
             //      which includes stream reader/writer
             // 
             int numberPlayers = game.getPlayers().Count;
-            turn = 0;       
+            // turn = 0;       
             
             Console.WriteLine("Starting game loop!");
 
@@ -34,7 +34,6 @@ namespace Game
 
             while (game.getGameState() )
             {
-                
                 turn++;
                 String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn";
 
