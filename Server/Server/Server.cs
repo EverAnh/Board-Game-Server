@@ -267,7 +267,7 @@ namespace Game
                     {
                         Console.WriteLine("Starting a new game.");
                         
-                        Thread gameThread = new Thread(new ThreadStart(gt.playGame) );
+                        Thread gameThread = new Thread(new ThreadStart(games[gameToJoin].playGame) );
                         Console.WriteLine("Attempting to run gameThread." );
                         gameThread.Start();
                         gt.setThread(gameThread);
