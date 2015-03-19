@@ -75,7 +75,7 @@ namespace Game
                 // players need to be told who the next active player is, along with the move of the current active player
                 // this is crude, but since the passbyref is confusing me.. (i mean, it works)
 
-                String toSend = game.generateMoveString(turn, activePlayer, currentX, currentY, move);
+                String toSend = game.generateMoveString(turn, getNextPlayerIndex(activePlayer, game.getMaxPlayers()), currentX, currentY, move);
                 Console.WriteLine("String sent: " + toSend);
                 // toSend should now hold the string.
                 // if the move was valid, then it was made when handlePlayerTurn is called 
