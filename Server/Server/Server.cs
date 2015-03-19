@@ -233,15 +233,19 @@ namespace Game
                         newGame.addPlayer(p);
                         gameToPlay = p.getGame();
 
-                        Console.WriteLine("starting a new game");
+                        Console.WriteLine("Starting a new game.");
 
                         GameThread gt = new GameThread(newGame);
                         Thread gameThread = new Thread(new ThreadStart(gt.playGame));
+                        Console.WriteLine("Attempting to run gameThread." );
                         gameThread.Start();
                         gt.setThread(gameThread);
                         games.Add(gt);
 
-                        Console.WriteLine("Finished adding player" );
+
+
+
+                        Console.WriteLine("Finished adding player." );
                     }
 
                     // found a matching game type that needs an additional player
@@ -250,8 +254,6 @@ namespace Game
                         newPlayerNumber = games[gameToJoin].getGame().getNumberPlayers().ToString();
                         games[gameToJoin].getGame().addPlayer(p);
                     }
-
-
 
                     startMessage = newPlayerNumber;
 
@@ -272,13 +274,13 @@ namespace Game
 
             public GameThread(Game_Generic newGame)
             {
-                Console.WriteLine("currentGame has been set to: " + newGame.getGameType());
+                Console.WriteLine("CurrentGame has been set to: " + newGame.getGameType());
                 currentGame = newGame;                  
             }
 
             public void playGame()
             {
-                Console.WriteLine("starting game loop on a thread " + currentGame.getGameType() );
+                Console.WriteLine("Starting game loop on a thread " + currentGame.getGameType() );
                 currentGame.getLoop().gameLoop(currentGame);
             }
 

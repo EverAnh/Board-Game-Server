@@ -13,7 +13,10 @@ namespace Game
         private bool activeGame = true;     // redundant, but will help it work for now.
 
         public Server_GameLoop()
-        {  }
+        { 
+            Console.WriteLine("Game loop has been created!");
+
+         }
 
         public void gameLoop(Game_Generic game)
         {
@@ -97,16 +100,17 @@ namespace Game
 
         private bool allPlayersConnected(List<Player> currentPlayers, int players)
         {
-            /*
+
             // counting by p
             for (int p = 0; p < players; p++)
             {
                 if (!currentPlayers[p].getSocketConnected() )
                 {
+                    Console.WriteLine("Not all players are connected.");
                     return false;
                 }
             }
-             * */
+    
 
             return true;
         }
