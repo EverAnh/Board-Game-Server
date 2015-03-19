@@ -33,7 +33,7 @@ namespace Game
             {
                 
                 turn++;
-                String turnMessage = "Starting Turn " + turn.ToString() + ".";
+                String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn&";
 
                 Console.WriteLine(turnMessage);
 
