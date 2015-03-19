@@ -1,6 +1,6 @@
 from GameDisplay import GameDisplay
 
-class ConnectFourDisplay(GameDisplay):
+class ChutesAndLaddersDisplay(GameDisplay):
     
     def __init__(self):
         GameDisplay.__init__(self)
@@ -10,14 +10,14 @@ class ConnectFourDisplay(GameDisplay):
         self._load_images()
 
     def _set_dimensions():
-        ConnectFourDisplay.BOARD_WIDTH = 1280
-        ConnectFourDisplay.WINDOW_WIDTH = ConnectFourDisplay.BOARD_WIDTH + ConnectFourDisplay.SIDE_BAR_WIDTH
-        ConnectFourDisplay.WINDOW_HEIGHT = 1280
-        ConnectFourDisplay.BOARD_HEIGHT = WINDOW_HEIGHT
-        ConnectFourDisplay.GRID_WIDTH =  self._game.get_width()
-        ConnectFourDisplay.GRID_HEIGHT = self._game.get_height()
-        ConnectFourDisplay.CELL_WIDTH = ConnectFourDisplay.BOARD_WIDTH / ConnectFourDisplay.GRID_WIDTH
-        ConnectFourDisplay.CELL_HEIGHT = ConnectFourDisplay.WINDOW_HEIGHT / ConnectFourDisplay.GRID_HEIGHT
+        ChutesAndLaddersDisplay.BOARD_WIDTH = 1280
+        ChutesAndLaddersDisplay.WINDOW_WIDTH = ConnectFourDisplay.BOARD_WIDTH + ConnectFourDisplay.SIDE_BAR_WIDTH
+        ChutesAndLaddersDisplay.WINDOW_HEIGHT = 1280
+        ChutesAndLaddersDisplay.BOARD_HEIGHT = WINDOW_HEIGHT
+        ChutesAndLaddersDisplay.GRID_WIDTH =  self._game.get_width()
+        ChutesAndLaddersDisplay.GRID_HEIGHT = self._game.get_height()
+        ChutesAndLaddersDisplay.CELL_WIDTH = ChutesAndLaddersDisplay.BOARD_WIDTH / ChutesAndLaddersDisplay.GRID_WIDTH
+        ChutesAndLaddersDisplay.CELL_HEIGHT = ChutesAndLaddersDisplay.WINDOW_HEIGHT / ChutesAndLaddersDisplay.GRID_HEIGHT
 
     def _load_images(self):
         self._background = pygame.image.load('images/grid_snakes_ladders.png')
