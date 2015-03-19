@@ -15,7 +15,7 @@ namespace Game
         protected int maxPlayers;                       // The maximum amount of players allowed, shouldb e 2
         protected Server_GameLoop loop;                 // We need a gameloop to tell the client which turn it is
         protected String gameType;                      // gameType will be generic by default.
-        protected bool gameState;                       // True for running / False for not
+        protected bool gameState = true;                       // True for running / False for not
         protected bool gameWaiting;                     // True once game has been created; false when game has started.
 
         public Game_Generic()

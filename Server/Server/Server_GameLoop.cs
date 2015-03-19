@@ -46,7 +46,7 @@ namespace Game
                 // message 6
                 // game.getPlayers()[activePlayer].getPlayerWriter().WriteLine("It is your turn. Make a move.");
 
-                Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX().ToString() + " " + game.getPieces()[activePlayer].getY().ToString() );
+                //Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX().ToString() + " " + game.getPieces()[activePlayer].getY().ToString() );
 
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
