@@ -30,7 +30,7 @@ namespace Game
             Console.WriteLine("Starting game loop!");
 
             // should be message 5
-            sendToAllPlayers(game.getPlayers(), numberPlayers, turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn");
+            sendToAllPlayers(game.getPlayers(), numberPlayers, turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn&1%2%1#2%1%2");
 
             while (game.getGameState() )
             {
@@ -103,6 +103,7 @@ namespace Game
             return turn;        
         }
 
+        /*
         private bool allPlayersConnected(List<Player> currentPlayers, int players)
         {
             /*
@@ -115,10 +116,11 @@ namespace Game
                     return false;
                 }
             }
-            */
+            
 
             return true;
         }
+        */
 
         private void sendToAllPlayers(List<Player> players, int count, String message)
         {

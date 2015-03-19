@@ -32,24 +32,25 @@ namespace Game
             currentPlayers = new List<Player>();
             loop = new Server_GameLoop();
             gameType = "generic";
-            maxPlayers = 1;
+            maxPlayers = 2;
 
             // Player 1
 
             gamePieces.Add(new Piece_Movable());
-            gamePieces[0].setX(2);
+            gamePieces[0].setX(1);
             gamePieces[0].setY(2);
             gamePieces[0].setValue(1);
             gameState = true;                // set to true for running.
 
-            /*
+            
             // Player 2 (not needed)
 
             gamePieces.Add(new Piece_Movable()); 
-            gamePieces[1].setX(4);
-            gamePieces[1].setY(4);
+            gamePieces[1].setX(2);
+            gamePieces[1].setY(1);
             gamePieces[1].setValue(2);
             
+            /*
             // Temporary code to allow me to track the pieces
 
             gamePieces.Add(new Piece_Movable());
@@ -224,7 +225,7 @@ namespace Game
             if (!gameState)     //gameState is true while game is running 
                 moveStatement += "WINNER&";
             else
-                moveStatement += "THISISAMESSAGE&";
+                moveStatement += "&";
 
             // position starting x and y    
             moveStatement += cur_x + "%";
