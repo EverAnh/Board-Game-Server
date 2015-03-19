@@ -168,7 +168,7 @@ namespace Game
                 // check to see if moved exactly 1
                 if ((gamePieces[loop.getActivePlayer()].getY() - 1 == y) || (gamePieces[loop.getActivePlayer()].getY() + 1 == y))
                 {
-                    gamePieces[loop.getActivePlayer()+2].setY(gamePieces[loop.getActivePlayer()].getY());
+                    //gamePieces[loop.getActivePlayer()+2].setY(gamePieces[loop.getActivePlayer()].getY());
                     gamePieces[loop.getActivePlayer()].setY(y);
                     
                     if (checkWinCondition(
@@ -188,7 +188,7 @@ namespace Game
                 if ((gamePieces[loop.getActivePlayer()].getX() - 1 == x) || (gamePieces[loop.getActivePlayer()].getX() + 1 == x))
                 {
                     // This will save the piece location so I can send a "delete" message to the client.
-                    gamePieces[loop.getActivePlayer()+2].setX(gamePieces[loop.getActivePlayer()].getX());   
+                    //gamePieces[loop.getActivePlayer()].setX(gamePieces[loop.getActivePlayer()].getX());   
                     gamePieces[loop.getActivePlayer()].setX(x);
                     
                     if (checkWinCondition(

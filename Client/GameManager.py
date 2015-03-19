@@ -53,7 +53,7 @@ class GameManager:
             self._game.set_my_turn(True)
         self._game.set_turn_number(response.turn_number)
         self._game.set_player_turn(response.player_turn)
-        check_for_winner(response)
+        self.check_for_winner(response)
 
     def check_for_winner(self, response):
         if response.message == WINNER:
