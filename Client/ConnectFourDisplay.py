@@ -14,14 +14,14 @@ class ConnectFourDisplay(GameDisplay):
         self._piece1 = pygame.image.load('images/pieceBlack.png')
 
     def _set_dimensions(self):
-        ConnectFourDisplay.BOARD_WIDTH = 896
-        ConnectFourDisplay.WINDOW_WIDTH = ConnectFourDisplay.BOARD_WIDTH + ConnectFourDisplay.SIDE_BAR_WIDTH
-        ConnectFourDisplay.WINDOW_HEIGHT = 768
-        ConnectFourDisplay.BOARD_HEIGHT = ConnectFourDisplay.WINDOW_HEIGHT
-        ConnectFourDisplay.GRID_WIDTH =  self._game.get_width()
-        ConnectFourDisplay.GRID_HEIGHT = self._game.get_height()
-        ConnectFourDisplay.CELL_WIDTH = ConnectFourDisplay.BOARD_WIDTH / ConnectFourDisplay.GRID_WIDTH
-        ConnectFourDisplay.CELL_HEIGHT = ConnectFourDisplay.WINDOW_HEIGHT / ConnectFourDisplay.GRID_HEIGHT
+        GameDisplay.BOARD_WIDTH = 747
+        GameDisplay.WINDOW_WIDTH = GameDisplay.BOARD_WIDTH + GameDisplay.SIDE_BAR_WIDTH
+        GameDisplay.WINDOW_HEIGHT = 640
+        GameDisplay.BOARD_HEIGHT = GameDisplay.WINDOW_HEIGHT
+        GameDisplay.GRID_WIDTH =  self._game.get_width()
+        GameDisplay.GRID_HEIGHT = self._game.get_height()
+        GameDisplay.CELL_WIDTH = GameDisplay.BOARD_WIDTH / GameDisplay.GRID_WIDTH
+        GameDisplay.CELL_HEIGHT = GameDisplay.WINDOW_HEIGHT / GameDisplay.GRID_HEIGHT
 
     def _load_images(self):
         self._background = pygame.image.load('images/grid_connect_four.png')
