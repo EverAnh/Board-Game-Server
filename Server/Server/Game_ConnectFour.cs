@@ -107,7 +107,7 @@ namespace Game
             else // should give me either 0 or 1. beautiful.
                 moveStatement += loop.getNextPlayerIndex(loop.getActivePlayer(), maxPlayers);
 
-            moveStatement += "%";                           // place the delimiter.
+            moveStatement += "*";                           // place the delimiter.
 
             return moveStatement;                           //return the statement to the calling gameLoop 
         }
@@ -221,7 +221,7 @@ namespace Game
 
         private int returnTopOfRow(int getX) // a helper method to get the "top" of each row.
         {
-            for (int i = rows; i >= 0; i--) // searches from the bottom, going up
+            for (int i = rows-1; i >= 0; i--) // searches from the bottom, going up
             {
                 if (gameBoard[getX, i] == 0) // accesses the element. if it is 1 or 2, we keep looping.
                     return i;

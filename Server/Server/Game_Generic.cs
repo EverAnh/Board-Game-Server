@@ -35,7 +35,7 @@ namespace Game
             maxPlayers = 2;
 
             // Player 1
-            /*
+            
             gamePieces.Add(new Piece_Movable());
             gamePieces[0].setX(1);
             gamePieces[0].setY(2);
@@ -49,7 +49,7 @@ namespace Game
             gamePieces[1].setX(2);
             gamePieces[1].setY(1);
             gamePieces[1].setValue(2);
-            */
+            
 
             /*
             // Temporary code to allow me to track the pieces
