@@ -23,7 +23,7 @@ namespace Game
             {   return text;    }
 
             public void setText(String set)
-            {   test = set;     }
+            {   text = set;     }
             
             public int getIndex()
             {   return index;   }
@@ -40,13 +40,13 @@ namespace Game
             public int getValuex()
             {   return valx;   }
 
-            public int setValuex(int v)
+            public void setValuex(int v)
             {   valx = v;      }
 
 			public int getValuey()
 			{   return valy;   }
 
-			public int setValuey(int v)
+			public void setValuey(int v)
 			{   valy = v;      }
         }
 }

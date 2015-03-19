@@ -233,7 +233,7 @@ namespace Game
 
                         else if (p.getGame() == "snakesLadders")
                         {
-                            newGame = new Game_Othello();
+                            // newGame = new Game_SnakesLadders();
                         }
 
                         // games.Add(newGame);

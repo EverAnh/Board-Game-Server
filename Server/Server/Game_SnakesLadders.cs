@@ -14,14 +14,16 @@ namespace Game
 		private int cols = 10;
 		private int rows = 10;
 
+        Board_Piece[,] gameBoardSLlogic;
+
 //        protected Board_Piece[] gameBoardSL;            // different from gameBoard, note.
         
         public Game_SnakesLadders()
         {
-			gameBoard = new Board_Piece[cols, rows];         // set the rows and columns into the gameboard we made earlier. 
+			// gameBoard = new Board_Piece[cols, rows];         // set the rows and columns into the gameboard we made earlier. 
 //            gameBoardSL = new Board_Piece[100];          // size 100 array of boardPieces
             // specific to S&L's logic
-            Board_Piece[,] gameBoardSLlogic = new Board_Piece[cols, rows];
+            gameBoardSLlogic = new Board_Piece[cols, rows];
             
             gameType = "snakesLadders";                 // Server will know that we made a connectFour game
             gamePieces = new List<Piece_Generic>();     // May not need this for our implementation
@@ -65,7 +67,7 @@ namespace Game
 
 
 
-		public virtual bool handlePlayerTurn(String s)
+		public override bool handlePlayerTurn(String s)
 		{
             // we don't care client's move, we made our move by server rolling the dice
 			Console.Write("Recieved: " + s + " from client. Handling message...");
@@ -214,8 +216,8 @@ namespace Game
             }
             else 
             {
-				gamePieces[loop.getActivePlayer()].setX(gameBoard[x, y].getValuex());
-				gamePieces[loop.getActivePlayer()].setY(gameBoard[x, y].getValuey());
+				gamePieces[loop.getActivePlayer()].setX(gameBoard[x, y].getValuex() );
+				gamePieces[loop.getActivePlayer()].setY(gameBoard[x, y].getValuey() );
             }
            
 

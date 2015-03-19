@@ -50,6 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Board_Piece.cs" />
     <Compile Include="Game_Othello.cs" />
     <Compile Include="Game_Othello_Board.cs" />
     <Compile Include="Piece_Movable.cs" />
