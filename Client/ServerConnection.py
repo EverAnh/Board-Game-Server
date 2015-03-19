@@ -3,7 +3,7 @@ import socket, time
 import Response
 import GamePiece
 
-DEFAULT_IP = "169.234.57.201"
+DEFAULT_IP = "169.234.206.158"
 # DEFAULT_IP = "127.0.0.1"
 DEFAULT_PORT = 3445
     

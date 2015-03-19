@@ -32,7 +32,7 @@ namespace Game
             // should be message 5
             sendToAllPlayers(game.getPlayers(), numberPlayers, turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn");
 
-            while (allPlayersConnected(game.getPlayers(), numberPlayers) )
+            while (game.getGameState() )
             {
                 
                 turn++;
@@ -48,6 +48,11 @@ namespace Game
                 Console.WriteLine("You are located at " + game.getPieces()[activePlayer].getX().ToString() + " " + game.getPieces()[activePlayer].getY().ToString() );
 
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
+
+                if (move == "")
+                {
+
+                }
 
                 // player tried to make an invalid move. Force them to try again until they send a valid move
                 // the condition of the while loop makes the move. 
