@@ -204,7 +204,7 @@ namespace Game
                     // that also has room for an additional player
                     if (gameToJoin == -1)
                     {
-                        newPlayerNumber = "0";
+                        newPlayerNumber = "1";
                         Game_Generic newGame = null;
 
                         Console.Write("THIS IS WHAT I'M GET: " + p.getGame());
@@ -236,7 +236,7 @@ namespace Game
                         Console.WriteLine("Starting a new game.");
 
                         GameThread gt = new GameThread(newGame);
-                        Thread gameThread = new Thread(new ThreadStart(gt.playGame));
+                        Thread gameThread = new Thread(new ThreadStart(gt.playGame);
                         Console.WriteLine("Attempting to run gameThread." );
                         gameThread.Start();
                         gt.setThread(gameThread);

@@ -20,8 +20,8 @@ namespace Game
             gameType = "connectFour";                   // Server will know that we made a connectFour game
             gamePieces = new List<Piece_Generic>();     // May not need this for our implementation
             currentPlayers = new List<Player>();        // list of players
-            // loop = new Server_GameLoop();               // Make a new server_gameloop (unecessary?)
-            maxPlayers = 2;                             // 2 players max
+            loop = new Server_GameLoop();               // Make a new server_gameloop (unecessary?)
+            maxPlayers = 1;                             // 2 players max
 
             // Add two player's info in here, we don't really need to track all the pieces as gameBoard handles a lot of that for us.
             // We'll use gamePieces to track the last known move of each respective player.
