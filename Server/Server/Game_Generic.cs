@@ -20,9 +20,6 @@ namespace Game
 
         public Game_Generic()
         {
-            // gamePieces = new List<Piece_Generic>();
-            // currentPlayers = new List<Player>();
-            // loop = new Server_GameLoop();
         }
 
         public Game_Generic(int x_size, int y_size)
@@ -33,37 +30,6 @@ namespace Game
             loop = new Server_GameLoop();
             gameType = "generic";
             maxPlayers = 2;
-
-            // Player 1
-            /*
-            gamePieces.Add(new Piece_Movable());
-            gamePieces[0].setX(1);
-            gamePieces[0].setY(2);
-            gamePieces[0].setValue(1);
-            gameState = true;                // set to true for running.
-
-            
-            // Player 2 (not needed)
-
-            gamePieces.Add(new Piece_Movable()); 
-            gamePieces[1].setX(2);
-            gamePieces[1].setY(1);
-            gamePieces[1].setValue(2);
-            */
-
-            /*
-            // Temporary code to allow me to track the pieces
-
-            gamePieces.Add(new Piece_Movable());
-            gamePieces[2].setX(2);
-            gamePieces[2].setY(2);
-            gamePieces[2].setValue(1);
-
-            gamePieces.Add(new Piece_Movable()); 
-            gamePieces[3].setX(4);
-            gamePieces[3].setY(4);
-            gamePieces[3].setValue(2);
-             * */
 
         }
 
