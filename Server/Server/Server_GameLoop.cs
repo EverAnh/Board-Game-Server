@@ -36,9 +36,6 @@ namespace Game
             {
                 turn++;
 
-                // increment the value of active player to the next player
-                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
-
                 // String turnMessage = turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn";
                 // Console.WriteLine(turnMessage);
 
@@ -51,12 +48,8 @@ namespace Game
 
                 String move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
 
-                /*
-                if (move == "")
-                {
-
-                }
-                */
+                // increment the value of active player to the next player
+                activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
                 // player tried to make an invalid move. Force them to try again until they send a valid move
                 // the condition of the while loop makes the move. 
