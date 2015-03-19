@@ -63,7 +63,12 @@ namespace Game
                     String notValid = turn + "&0&0&INVALID&0%0%0%";
                     // construct a string that contains the turn number and the "invalid" message.
                    sendToAllPlayers(game.getPlayers(), numberPlayers, notValid);
+
+                   System.Threading.Thread.Sleep(500);
+
                    move = game.getPlayers()[activePlayer].getPlayerReader().ReadLine();
+
+                   
                 }
 
                 Console.WriteLine("The number of players is " + numberPlayers.ToString() );
@@ -80,6 +85,7 @@ namespace Game
                 // if the move was valid, then it was made when handlePlayerTurn is called 
                 // notify all players that a valid move was made 
                 sendToAllPlayers(game.getPlayers(), numberPlayers, toSend);
+                System.Threading.Thread.Sleep(500);
 
                 // increment the value of active player to the next player
                 activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
@@ -116,7 +122,6 @@ namespace Game
                     return false;
                 }
             }
-            
 
             return true;
         }
