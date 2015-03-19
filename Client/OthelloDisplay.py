@@ -1,4 +1,5 @@
 from GameDisplay import GameDisplay
+import pygame
 
 class OthelloDisplay(GameDisplay):
     
@@ -12,7 +13,7 @@ class OthelloDisplay(GameDisplay):
         self._piece1 = pygame.image.load('images/pieceBlack.png')
 
 
-    def _set_dimensions():
+    def _set_dimensions(self):
         OthelloDisplay.BOARD_WIDTH = 720
         OthelloDisplay.WINDOW_WIDTH = OthelloDisplay.BOARD_WIDTH + OthelloDisplay.SIDE_BAR_WIDTH
         OthelloDisplay.WINDOW_HEIGHT = 720
