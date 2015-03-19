@@ -204,7 +204,7 @@ namespace Game
                     // that also has room for an additional player
                     if (gameToJoin == -1)
                     {
-                        newPlayerNumber = "1";
+                        newPlayerNumber = "0";
                         Game_Generic newGame = null;
 
                         Console.Write("THIS IS WHAT I'M GET: " + p.getGame());
