@@ -3,8 +3,8 @@ import socket, time
 import Response
 import GamePiece
 
-#DEFAULT_IP = "169.234.206.158"
-DEFAULT_IP = "127.0.0.1"
+DEFAULT_IP = "169.234.206.158"
+# DEFAULT_IP = "127.0.0.1"
 DEFAULT_PORT = 3445
     
 CREATE_SUCC  = "CREATESUCC"
@@ -68,12 +68,12 @@ class ServerConnection:
         print 'scores: ', scores
         pieces = []
         
-        #if message.strip() != 'Starting Turn':
-        raw_pieces = category_tokens[4].split(MOVE_DELIM)
-        print 'raw pieces: ',raw_pieces
-        for piece in raw_pieces:
-            p = piece.split(VALU_DELIM)
-            pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
+        if message.strip() != 'Starting Turn':
+            raw_pieces = category_tokens[4].split(MOVE_DELIM)
+            print 'raw pieces: ',raw_pieces
+            for piece in raw_pieces:
+                p = piece.split(VALU_DELIM)
+                pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
         print 'pieces: ',pieces
         return Response.Response(turn_number, player_turn, scores, message, pieces)
 
