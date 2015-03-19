@@ -78,7 +78,7 @@ namespace Game
 
         public int getNumberPlayers()
         {
-            return currentPlayers.Count;
+            return numberPlayers;
         }
 
         public int getMaxPlayers()
@@ -118,7 +118,7 @@ namespace Game
             if (numberPlayers < maxPlayers)
             {
                 currentPlayers.Add(p);
-                numberPlayers = currentPlayers.Capacity;
+                numberPlayers = currentPlayers.Count;
             }
         }
 
