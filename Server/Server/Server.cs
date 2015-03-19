@@ -244,6 +244,7 @@ namespace Game
                     // found a matching game type that needs an additional player
                     else
                     {
+                        newGame = games[gameToJoin].getGame();
                         newPlayerNumber = games[gameToJoin].getGame().getNumberPlayers().ToString();
                         games[gameToJoin].getGame().addPlayer(p);
                     }
