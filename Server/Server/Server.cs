@@ -244,7 +244,7 @@ namespace Game
                         games[gameToJoin].getGame().addPlayer(p);
                     }
 
-                    if(games[gameToJoin].getGame().getNumberPlayers() == games[gameToJoin].getGame().getMaxPlayers() )
+                    if(newGame.getNumberPlayers() == newGame.getMaxPlayers() )
                     {
                         Console.WriteLine("Starting a new game.");
                         GameThread gt = new GameThread(newGame);
