@@ -235,6 +235,9 @@ namespace Game
                         newGame.addPlayer(p);
                         gameToPlay = p.getGame();
 
+                        GameThread gt = new GameThread(newGame);
+                        games.Add(gt);
+
                         Console.WriteLine("Finished adding player." );
                     }
 
@@ -250,12 +253,12 @@ namespace Game
                     if(newGame.getNumberPlayers() == newGame.getMaxPlayers() )
                     {
                         Console.WriteLine("Starting a new game.");
-                        GameThread gt = new GameThread(newGame);
-                        Thread gameThread = new Thread(new ThreadStart(gt.playGame) );
+                        
+                        Thread gameThread = new Thread(new ThreadStart(games[gameToJoin].playGame) );
                         Console.WriteLine("Attempting to run gameThread." );
                         gameThread.Start();
-                        gt.setThread(gameThread);
-                        games.Add(gt);
+                        games[gameToJoin].setThread(gameThread);
+                        
                     }
 
                     startMessage = newPlayerNumber;
