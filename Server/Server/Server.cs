@@ -242,6 +242,8 @@ namespace Game
 
                         gt = new GameThread(newGame);
                         games.Add(gt);
+
+                        gameToJoin = 0;
                     }
 
                     // found a matching game type that needs an additional player
