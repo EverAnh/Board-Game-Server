@@ -42,7 +42,7 @@ class BoardGameClient:
                 
                 
                 #################### DEBUG ##########################
-                #game_choice = ("generic")
+                ##game_choice = ("generic")
                 print 'user info entered'
                 #####################################################
                 
