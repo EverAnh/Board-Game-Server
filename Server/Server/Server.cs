@@ -251,13 +251,15 @@ namespace Game
                         games[gameToJoin].getGame().addPlayer(p);
                     }
 
+
+
                     startMessage = newPlayerNumber;
 
                     // the REAL message 4
                     // start string is constructed to tell the client which game to start 
                     p.getPlayerWriter().WriteLine(startMessage);
-                
-                    
+
+                    Console.WriteLine("Writing this message to client." + startMessage);
                 
                 }
             }
@@ -270,13 +272,13 @@ namespace Game
 
             public GameThread(Game_Generic newGame)
             {
-                currentGame = newGame;
+                Console.WriteLine("currentGame has been set to: " + newGame.getGameType());
+                currentGame = newGame;                  
             }
 
             public void playGame()
             {
                 Console.WriteLine("starting game loop on a thread " + currentGame.getGameType() );
-
                 currentGame.getLoop().gameLoop(currentGame);
             }
 
