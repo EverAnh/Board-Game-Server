@@ -19,6 +19,7 @@ class Game:
     def _init_board(self):
         ###### DEBUG ######
         ## self.add_piece(GamePiece.GamePiece(2,2,1))
+        pass
         ###################
 
     def update_board(self, changed_pieces):
