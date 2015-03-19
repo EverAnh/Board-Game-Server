@@ -54,6 +54,7 @@ class ServerConnection:
 
 
     def get_move(self):
+        print 'getting raw_response(sc)'
         raw_response = self._socket.recv(4096)
         print 'move: ' + raw_response
         category_tokens = raw_response.split(CATG_DELIM)

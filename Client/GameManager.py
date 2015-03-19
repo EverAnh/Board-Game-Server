@@ -13,6 +13,7 @@ class GameManager:
             print 'handling opponent move!'
             self.handle_opponent_move()
         else:
+            self
             print 'it is my turn!'
 
     def handle_my_move(self, location):
@@ -46,6 +47,7 @@ class GameManager:
 
     def handle_opponent_move(self):
         response = self._connection.get_move()
+        print 'got response(gm)'
         self._game.update_board(response.pieces)
         if response.player_turn == self._game.get_my_player_number():
             self._game.set_my_turn(True)
