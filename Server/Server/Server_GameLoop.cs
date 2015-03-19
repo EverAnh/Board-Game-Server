@@ -86,6 +86,8 @@ namespace Game
                 // increment the value of active player to the next player
                 activePlayer = getNextPlayerIndex(activePlayer, game.getMaxPlayers());
 
+                Console.WriteLine(" New Current player turn " + activePlayer);
+
                 /*
                 // check the gameState after each loop so we know when to "end" the game.
                 activeGame = game.getGameState();       // gets the existing game state

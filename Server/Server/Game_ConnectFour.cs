@@ -143,14 +143,14 @@ namespace Game
                 piece.setValue(2);
             }
             
-            int color = gamePieces[thePlayer].getValue();               // color: [1] for black, [2] for red. 
+            // int color = gamePieces[thePlayer].getValue();               // color: [1] for black, [2] for red. 
 
             gamePieces.Add(piece);
 
             // assignPiece to the place; if it is valid, the method will go ahead and place it.
             // On a not successful attempt, placeY will instead be null.
             
-            placeY = assignPiece(placeX, placeY, color);                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
+            placeY = assignPiece(placeX, placeY, piece.getValue() );                // assignPiece will "attempt" to place the piece there. it will then return the placeY value.
 
             // get input on where the piece has been placed and save it to gameBoard, check that the spot is already occupied.
             
