@@ -206,7 +206,7 @@ namespace Game
                     Game_Generic newGame = null;
                     if (gameToJoin == -1)
                     {
-                        newPlayerNumber = "1";
+                        // newPlayerNumber = "1";
 
                         Console.Write("THIS IS WHAT I'M GET: " + p.getGame());
 
