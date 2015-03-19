@@ -30,7 +30,7 @@ namespace Game
             Console.WriteLine("Starting game loop!");
 
             // should be message 5
-            sendToAllPlayers(game.getPlayers(), numberPlayers, turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn&1%2%1#2%1%2");
+            sendToAllPlayers(game.getPlayers(), numberPlayers, turn.ToString() + "&" + activePlayer.ToString() + "&&Starting Turn&1%2%1#2%1%2*");
 
             while (game.getGameState() )
             {

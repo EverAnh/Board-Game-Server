@@ -29,7 +29,7 @@ class ServerConnection:
         self._host_address = DEFAULT_IP
         self._host_port = DEFAULT_PORT
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+        self._turn_number = 1
 
     def open_connection(self):
         self._socket.connect( (self._host_address, self._host_port) )
@@ -60,14 +60,14 @@ class ServerConnection:
         main_token = raw_response.split(MAIN_DELIM)
         category_tokens = main_token[0].split(CATG_DELIM)
 
-        if len(category_tokens) == 5:
-            turn_number = 1
+        if len(category_tokens) == 4 or (len(category_tokens) == 5 and category_tokens[0] == ""):
+            self._turn_number += 1
             player_turn = int(category_tokens[0])
             raw_scores = category_tokens[1]
             message = category_tokens[2]
             raw_pieces = category_tokens[3].split(MOVE_DELIM)
         else:
-            turn_number = int(category_tokens[0])
+            self._turn_number = int(category_tokens[0])
             player_turn = int(category_tokens[1])
             raw_scores = category_tokens[2]
             message = category_tokens[3]
@@ -86,7 +86,7 @@ class ServerConnection:
             p = piece.split(VALU_DELIM)
             pieces.append(GamePiece.GamePiece(int(p[0]), int(p[1]), int(p[2])))
         print 'pieces: ',pieces
-        return Response.Response(turn_number, player_turn, scores, message, pieces)
+        return Response.Response(self._turn_number, player_turn, scores, message, pieces)
 
     def close_connection(self):
         pass
