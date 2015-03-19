@@ -237,7 +237,7 @@ namespace Game
                         }
 
                         // games.Add(newGame);
-                        newGame.addPlayer(p);
+                        
                         gameToPlay = p.getGame();
 
                         gt = new GameThread(newGame);
@@ -249,12 +249,13 @@ namespace Game
                     {
                         newGame = games[gameToJoin].getGame();
                         newPlayerNumber = games[gameToJoin].getGame().getNumberPlayers().ToString();
-                        newGame.addPlayer(p);
+                        // newGame.addPlayer(p);
                     }
 
                     Console.WriteLine("Finished adding player.");
 
                     p.setPlayerNumber(Convert.ToInt32(newPlayerNumber) );
+                    newGame.addPlayer(p);
 
                     if (gameToJoin >= 0)
                     {
