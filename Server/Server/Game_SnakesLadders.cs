@@ -236,7 +236,7 @@ namespace Game
 					newLocationx = currentLocationx - diceRoll;
 				}
 			} else {
-				if (currentLocationx + diceRoll > cols) {
+				if (currentLocationx + diceRoll >= cols) {
                     newLocationy = currentLocationy - 1;
 					newLocationx = cols - (Math.Abs (currentLocationx + diceRoll) % cols - 1);
 				} else {
